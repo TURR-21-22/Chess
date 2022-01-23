@@ -8,15 +8,17 @@ namespace ChessBoardModel
 {
     public class Cell
     {
-        public int RowNumber { get; set; }
-        public int ColumnNumber { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
         public bool CurrentlyOccupied { get; set; }
         public bool LegalNextMove { get; set; }
+        public Figure CellFigure { get; set; }
+        public bool Kick { get; set; }
 
         public Cell(int x, int y)
         {
-            RowNumber = x;
-            ColumnNumber = y;
+            X = x;
+            Y = y;
         }
     }
 }

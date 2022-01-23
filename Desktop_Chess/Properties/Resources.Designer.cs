@@ -63,9 +63,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap cell_default_black {
+        public static System.Drawing.Bitmap solid_bkg {
             get {
-                object obj = ResourceManager.GetObject("cell_default_black", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_bkg", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap cell_default_white {
+        public static System.Drawing.Bitmap solid_cell_black {
             get {
-                object obj = ResourceManager.GetObject("cell_default_white", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_cell_black", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap cell_test_green {
+        public static System.Drawing.Bitmap solid_cell_white {
             get {
-                object obj = ResourceManager.GetObject("cell_test_green", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_cell_white", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap cell_test_red {
+        public static System.Drawing.Bitmap solid_figure_black_dark_bastya {
             get {
-                object obj = ResourceManager.GetObject("cell_test_red", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_black_dark_bastya", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap cell_wood_black {
+        public static System.Drawing.Bitmap solid_figure_black_dark_futo {
             get {
-                object obj = ResourceManager.GetObject("cell_wood_black", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_black_dark_futo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap cell_wood_white {
+        public static System.Drawing.Bitmap solid_figure_black_dark_gyalog {
             get {
-                object obj = ResourceManager.GetObject("cell_wood_white", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_black_dark_gyalog", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap figures_default_black_bastya {
+        public static System.Drawing.Bitmap solid_figure_black_dark_huszar {
             get {
-                object obj = ResourceManager.GetObject("figures_default_black_bastya", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_black_dark_huszar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap figures_default_black_futo {
+        public static System.Drawing.Bitmap solid_figure_black_dark_kiraly {
             get {
-                object obj = ResourceManager.GetObject("figures_default_black_futo", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_black_dark_kiraly", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +143,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap figures_default_black_gyalog {
+        public static System.Drawing.Bitmap solid_figure_black_dark_kiralyno {
             get {
-                object obj = ResourceManager.GetObject("figures_default_black_gyalog", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_black_dark_kiralyno", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +153,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap figures_default_black_huszar {
+        public static System.Drawing.Bitmap solid_figure_black_light_bastya {
             get {
-                object obj = ResourceManager.GetObject("figures_default_black_huszar", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_black_light_bastya", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +163,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap figures_default_black_kiraly {
+        public static System.Drawing.Bitmap solid_figure_black_light_futo {
             get {
-                object obj = ResourceManager.GetObject("figures_default_black_kiraly", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_black_light_futo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +173,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap figures_default_black_vezer {
+        public static System.Drawing.Bitmap solid_figure_black_light_gyalog {
             get {
-                object obj = ResourceManager.GetObject("figures_default_black_vezer", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_black_light_gyalog", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,9 +183,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap figures_default_white_bastya {
+        public static System.Drawing.Bitmap solid_figure_black_light_huszar {
             get {
-                object obj = ResourceManager.GetObject("figures_default_white_bastya", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_black_light_huszar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,9 +193,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap figures_default_white_futo {
+        public static System.Drawing.Bitmap solid_figure_black_light_kiraly {
             get {
-                object obj = ResourceManager.GetObject("figures_default_white_futo", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_black_light_kiraly", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -203,9 +203,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap figures_default_white_gyalog {
+        public static System.Drawing.Bitmap solid_figure_black_light_kiralyno {
             get {
-                object obj = ResourceManager.GetObject("figures_default_white_gyalog", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_black_light_kiralyno", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,9 +213,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap figures_default_white_huszar {
+        public static System.Drawing.Bitmap solid_figure_white_dark_bastya {
             get {
-                object obj = ResourceManager.GetObject("figures_default_white_huszar", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_white_dark_bastya", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,9 +223,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap figures_default_white_kiraly {
+        public static System.Drawing.Bitmap solid_figure_white_dark_futo {
             get {
-                object obj = ResourceManager.GetObject("figures_default_white_kiraly", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_white_dark_futo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -233,9 +233,9 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap figures_default_white_vezer {
+        public static System.Drawing.Bitmap solid_figure_white_dark_gyalog {
             get {
-                object obj = ResourceManager.GetObject("figures_default_white_vezer", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_white_dark_gyalog", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -243,9 +243,359 @@ namespace Desktop_Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap misc_default_form {
+        public static System.Drawing.Bitmap solid_figure_white_dark_huszar {
             get {
-                object obj = ResourceManager.GetObject("misc_default_form", resourceCulture);
+                object obj = ResourceManager.GetObject("solid_figure_white_dark_huszar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap solid_figure_white_dark_kiraly {
+            get {
+                object obj = ResourceManager.GetObject("solid_figure_white_dark_kiraly", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap solid_figure_white_dark_kiralyno {
+            get {
+                object obj = ResourceManager.GetObject("solid_figure_white_dark_kiralyno", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap solid_figure_white_light_bastya {
+            get {
+                object obj = ResourceManager.GetObject("solid_figure_white_light_bastya", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap solid_figure_white_light_futo {
+            get {
+                object obj = ResourceManager.GetObject("solid_figure_white_light_futo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap solid_figure_white_light_gyalog {
+            get {
+                object obj = ResourceManager.GetObject("solid_figure_white_light_gyalog", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap solid_figure_white_light_huszar {
+            get {
+                object obj = ResourceManager.GetObject("solid_figure_white_light_huszar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap solid_figure_white_light_kiraly {
+            get {
+                object obj = ResourceManager.GetObject("solid_figure_white_light_kiraly", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap solid_figure_white_light_kiralyno {
+            get {
+                object obj = ResourceManager.GetObject("solid_figure_white_light_kiralyno", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_bkg {
+            get {
+                object obj = ResourceManager.GetObject("wood_bkg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_cell_black {
+            get {
+                object obj = ResourceManager.GetObject("wood_cell_black", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_cell_white {
+            get {
+                object obj = ResourceManager.GetObject("wood_cell_white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_black_dark_bastya {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_black_dark_bastya", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_black_dark_futo {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_black_dark_futo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_black_dark_gyalog {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_black_dark_gyalog", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_black_dark_huszar {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_black_dark_huszar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_black_dark_kiraly {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_black_dark_kiraly", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_black_dark_kiralyno {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_black_dark_kiralyno", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_black_light_bastya {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_black_light_bastya", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_black_light_futo {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_black_light_futo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_black_light_gyalog {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_black_light_gyalog", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_black_light_huszar {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_black_light_huszar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_black_light_kiraly {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_black_light_kiraly", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_black_light_kiralyno {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_black_light_kiralyno", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_white_dark_bastya {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_white_dark_bastya", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_white_dark_futo {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_white_dark_futo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_white_dark_gyalog {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_white_dark_gyalog", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_white_dark_huszar {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_white_dark_huszar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_white_dark_kiraly {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_white_dark_kiraly", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_white_dark_kiralyno {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_white_dark_kiralyno", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_white_light_bastya {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_white_light_bastya", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_white_light_futo {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_white_light_futo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_white_light_gyalog {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_white_light_gyalog", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_white_light_huszar {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_white_light_huszar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_white_light_kiraly {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_white_light_kiraly", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap wood_figure_white_light_kiralyno {
+            get {
+                object obj = ResourceManager.GetObject("wood_figure_white_light_kiralyno", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

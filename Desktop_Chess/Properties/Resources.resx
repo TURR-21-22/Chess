@@ -118,61 +118,166 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="figures_default_black_futo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\figures\default\figures_default_black_futo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_bkg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\background\solid_bkg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="figures_default_white_gyalog" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\figures\default\figures_default_white_gyalog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_cell_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\cells\solid_cell_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="cell_default_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\cells\default\cell_default_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_cell_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\cells\solid_cell_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="misc_default_form" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\misc\default\misc_default_form.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_black_dark_bastya" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_black_dark_bastya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="figures_default_black_kiraly" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\figures\default\figures_default_black_kiraly.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_black_dark_futo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_black_dark_futo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="figures_default_black_vezer" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\figures\default\figures_default_black_vezer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_black_dark_gyalog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_black_dark_gyalog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="figures_default_white_vezer" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\figures\default\figures_default_white_vezer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_black_dark_huszar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_black_dark_huszar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="figures_default_black_bastya" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\figures\default\figures_default_black_bastya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_black_dark_kiraly" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_black_dark_kiraly.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="cell_test_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\cells\test\cell_test_red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_black_dark_kiralyno" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_black_dark_kiralyno.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="figures_default_black_huszar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\figures\default\figures_default_black_huszar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_black_light_bastya" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_black_light_bastya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="cell_test_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\cells\test\cell_test_green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_black_light_futo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_black_light_futo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="figures_default_white_bastya" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\figures\default\figures_default_white_bastya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_black_light_gyalog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_black_light_gyalog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="figures_default_white_kiraly" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\figures\default\figures_default_white_kiraly.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_black_light_huszar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_black_light_huszar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="figures_default_white_huszar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\figures\default\figures_default_white_huszar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_black_light_kiraly" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_black_light_kiraly.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="cell_default_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\cells\default\cell_default_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_black_light_kiralyno" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_black_light_kiralyno.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="figures_default_black_gyalog" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\figures\default\figures_default_black_gyalog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_white_dark_bastya" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_white_dark_bastya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="figures_default_white_futo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\figures\default\figures_default_white_futo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_white_dark_futo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_white_dark_futo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="cell_wood_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\cells\wood\cell_wood_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_white_dark_gyalog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_white_dark_gyalog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="cell_wood_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\cells\wood\cell_wood_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="solid_figure_white_dark_huszar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_white_dark_huszar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="solid_figure_white_dark_kiraly" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_white_dark_kiraly.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="solid_figure_white_dark_kiralyno" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_white_dark_kiralyno.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="solid_figure_white_light_bastya" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_white_light_bastya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="solid_figure_white_light_futo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_white_light_futo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="solid_figure_white_light_gyalog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_white_light_gyalog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="solid_figure_white_light_huszar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_white_light_huszar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="solid_figure_white_light_kiraly" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_white_light_kiraly.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="solid_figure_white_light_kiralyno" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\solid\figures\solid_figure_white_light_kiralyno.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_bkg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\background\wood_bkg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_cell_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\cells\wood_cell_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_cell_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\cells\wood_cell_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_black_dark_bastya" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_black_dark_bastya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_black_dark_futo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_black_dark_futo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_black_dark_gyalog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_black_dark_gyalog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_black_dark_huszar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_black_dark_huszar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_black_dark_kiraly" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_black_dark_kiraly.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_black_dark_kiralyno" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_black_dark_kiralyno.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_black_light_bastya" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_black_light_bastya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_black_light_futo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_black_light_futo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_black_light_gyalog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_black_light_gyalog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_black_light_huszar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_black_light_huszar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_black_light_kiraly" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_black_light_kiraly.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_black_light_kiralyno" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_black_light_kiralyno.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_white_dark_bastya" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_white_dark_bastya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_white_dark_futo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_white_dark_futo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_white_dark_gyalog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_white_dark_gyalog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_white_dark_huszar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_white_dark_huszar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_white_dark_kiraly" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_white_dark_kiraly.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_white_dark_kiralyno" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_white_dark_kiralyno.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_white_light_bastya" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_white_light_bastya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_white_light_futo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_white_light_futo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_white_light_gyalog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_white_light_gyalog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_white_light_huszar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_white_light_huszar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_white_light_kiraly" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_white_light_kiraly.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wood_figure_white_light_kiralyno" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wood\figures\wood_figure_white_light_kiralyno.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

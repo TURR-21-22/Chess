@@ -20,6 +20,7 @@ namespace Desktop_Chess
             
 
             InitializeComponent();
+            
         }
 
         public void Grid_Button_Click(object sender, EventArgs e)
@@ -27,15 +28,15 @@ namespace Desktop_Chess
             Render.PlaceFigure(sender);
         }
 
-        public void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Render.ComboSelectFigure(sender);
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            Render.Init(2,0); // 1. paranmeter = cell skin set, 2. parameter = misc sckin set
+            Render.Init("wood"); // 1. paranmeter = skin set
 
+        }
+
+        private void comboBox_Skin_List_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Render.SelectSkin(sender);
         }
     }
 }
