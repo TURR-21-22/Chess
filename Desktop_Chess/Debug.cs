@@ -16,14 +16,17 @@ namespace Desktop_Chess
     public class Debug
     {
 
-        Form_Game mainBoard = null;
-        private static Board model_Board = RenderMain.model_Board;
+        public Form_Game form_game = null;
+        private static Board model_Board = RenderInit.model_Board;
         private bool swap = false;
         public Cell[,] model_Grid = model_Board.theGrid;
         public Label[,] debug_Grid = new Label[8, 8];
+        public static Panel container;
+        public static Panel debugPanel;
         public Debug(Form_Game ob) {
-            this.mainBoard = ob;
-            mainBoard = ob;
+            this.form_game = ob;
+            form_game = ob;
+        
         }
 
         private Color[] swapProps()
@@ -46,8 +49,9 @@ namespace Desktop_Chess
 
         public void GUIdebug()
         {
-            Panel container = mainBoard.panel_Container_Right;
-            Panel debugPanel = mainBoard.panel_Debug;
+            Panel container = form_game.panel_Container_Right;
+            Panel debugPanel = form_game.panel_Debug;
+
             debugPanel.Size = new Size(container.Width, container.Width+2);
             debugPanel.Location = new Point(0, 0);
             debugPanel.BackColor = Color.Red;

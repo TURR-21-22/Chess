@@ -1,12 +1,4 @@
-﻿using ChessBoardModel;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace Desktop_Chess
@@ -19,26 +11,20 @@ namespace Desktop_Chess
         public Form_Game()
         {
             Render = new RenderMain(this);
-
             Debug = new Debug(this);
-
             InitializeComponent();
-            
         }
 
         public void Grid_Button_Click(object sender, EventArgs e)
         {
-            Render.PlaceFigure(sender);
+            Render.PicFigure(sender);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Render.Init("wood"); // 1. paranmeter = skin set
-
-            
+            Render.Init();
             Debug.GUIdebug();
         }
-
         private void comboBox_Skin_List_SelectedIndexChanged(object sender, EventArgs e)
         {
             Render.SelectSkin(sender);
@@ -47,7 +33,6 @@ namespace Desktop_Chess
         private void button1_Click(object sender, EventArgs e)
         {
             Debug.RefreshtCellDatas(Debug.debug_Grid, Debug.model_Grid);
-            
         }
     }
 }
