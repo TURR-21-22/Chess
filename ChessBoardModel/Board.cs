@@ -93,14 +93,26 @@ namespace ChessBoardModel
 
         private void OneStepPath(Cell currentCell, int[,] arr)
         {
+            int x = currentCell.X;
+            int y = currentCell.Y;
             for (int i = 0; i < arr.GetLength(0); i++)
             {
+
+
                 if (currentCell.X + arr[i, 0] >= 0 &&
                     currentCell.Y + arr[i, 1] >= 0 &&
                     currentCell.X + arr[i, 0] < Size &&
                     currentCell.Y + arr[i, 1] < Size)
                 {
-                    theGrid[currentCell.X + arr[i, 0], currentCell.Y + arr[i, 1]].LegalNextMove = true;
+                    x = currentCell.X + arr[i, 0];
+                    y = currentCell.Y + arr[i, 1];
+                    if (!theGrid[x, y].CurrentlyOccupied)
+                    {
+                        theGrid[x, y].LegalNextMove = true; ;
+                    }
+
+                    
+                    //theGrid[currentCell.X + arr[i, 0], currentCell.Y + arr[i, 1]].LegalNextMove = true;
                 }
             }
         }
@@ -164,6 +176,7 @@ namespace ChessBoardModel
                     
                     if (theGrid[x, y].CurrentlyOccupied)
                     {
+
                         legal_List.Add(new int[] { x, y });
                         theGrid[x, y].LegalNextMove = true;
                         break;
