@@ -142,7 +142,7 @@ namespace ChessBoardModel
             int[,] diagonalSteps = new int[4, 4] { { -1, -1, 0, 0 }, { 1, -1, Size - 1, 0 }, { 1, 1, Size - 1, Size - 1 }, { -1, 1, 0, Size - 1 } };
             List<int[]> legal_List = new List<int[]>();
             List<int[]> kick_List = new List<int[]>();
-            
+            //Cell[,] grid = model_Board.theGrid;
             for (int i = 0; i < diagonalSteps.GetLength(0); i++)
             {
                 int x = currentCell.X;
@@ -154,11 +154,13 @@ namespace ChessBoardModel
                     if (x != diagonalSteps[i, 2]) { x = currentCell.X + (diagonalSteps[i, 0] * j); }
                     if (y != diagonalSteps[i, 3]) { y = currentCell.Y + (diagonalSteps[i, 1] * j); }
                     j++;
+                    
                     /*
                     if (theGrid[x, y].CurrentlyOccupied)
                     {
                         legal_List.Add(new int[] { x, y });
                         theGrid[x, y].LegalNextMove = true;
+              
                         break;
                     }
                     */

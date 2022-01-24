@@ -36,11 +36,17 @@ namespace ChessBoardModel
             WhiteFiguresON.Add(new Figure("white", "bastya", 1,     3, 6, false));
             WhiteFiguresON.Add(new Figure("white", "futo", 1,       6, 2, false));
 
+            WhiteFiguresON.Add(new Figure("white", "bastya", 1,       6, 3, false));
+            WhiteFiguresON.Add(new Figure("white", "kiralyno", 1,       4, 5, false));
+
             BlackFiguresON.Add(new Figure("black", "kiralyno", 1,   0, 1, false));
             BlackFiguresON.Add(new Figure("black", "huszar", 1,     4, 2, false));
             BlackFiguresON.Add(new Figure("black", "kiraly", 1,     6, 3, false));
             BlackFiguresON.Add(new Figure("black", "bastya", 1,     0, 0, false));
             BlackFiguresON.Add(new Figure("black", "futo", 1,       2, 6, false));
+
+            BlackFiguresON.Add(new Figure("black", "huszar", 1,     4, 1, false));
+            BlackFiguresON.Add(new Figure("black", "kiralyno", 1,       2, 4, false));
 
         }
 

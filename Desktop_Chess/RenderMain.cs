@@ -13,11 +13,15 @@ using System.Windows.Forms;
 namespace Desktop_Chess
 {
 
-    class RenderMain
+    public class RenderMain
     {
+        
+        
         Form_Game mainBoard = null;
         public RenderMain(Form_Game ob) { this.mainBoard = ob; }
-        
+
+        //public static RenderInit InitRender;
+
         public static Board model_Board = new Board(8);
         public static Figures model_Figures = new Figures();
 
@@ -50,8 +54,17 @@ namespace Desktop_Chess
                 );
         }
 
+
+        public RenderMain()
+        {
+            //InitRender = new RenderInit(this.mainBoard);
+            //InitRender.GUIdebug();
+        }
+        
+
         public void Init(string skin)
         {
+            
             // Setup layout
             string[] skins = new string[] { "solid", "wood" };
             foreach (var item in skins)
@@ -90,7 +103,10 @@ namespace Desktop_Chess
             mainBoard.listBox_Debug.Height = mainBoard.panel_Container_Left.Height / 2;
             mainBoard.listBox_Debug.Location = new Point(0, mainBoard.panel_Container_Left.Height / 2);
 
+            mainBoard.button_Rescan.BringToFront();
+            mainBoard.label_Rescan.BringToFront();
             populaBoardteGrid(skin);
+            
         }
 
         private void initSkin(string skin)
@@ -315,6 +331,9 @@ namespace Desktop_Chess
                 }
             }
         }
+
+        
+
 
         internal void SelectSkin(object sender)
         {

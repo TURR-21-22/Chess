@@ -13,11 +13,14 @@ namespace Desktop_Chess
 {
     public partial class Form_Game : Form
     {
-        static RenderMain Render = null;
+        static Debug Debug;
+        static RenderMain Render;
+        
         public Form_Game()
         {
             Render = new RenderMain(this);
-            
+
+            Debug = new Debug(this);
 
             InitializeComponent();
             
@@ -32,11 +35,19 @@ namespace Desktop_Chess
         {
             Render.Init("wood"); // 1. paranmeter = skin set
 
+            
+            Debug.GUIdebug();
         }
 
         private void comboBox_Skin_List_SelectedIndexChanged(object sender, EventArgs e)
         {
             Render.SelectSkin(sender);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Debug.RefreshtCellDatas(Debug.debug_Grid, Debug.model_Grid);
+            
         }
     }
 }

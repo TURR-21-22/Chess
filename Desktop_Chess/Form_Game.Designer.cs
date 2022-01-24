@@ -29,12 +29,14 @@ namespace Desktop_Chess
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.label_Skins = new System.Windows.Forms.Label();
             this.panel_ChessBoard = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.button_Rescan = new System.Windows.Forms.Button();
             this.panel_Container_Top = new System.Windows.Forms.Panel();
+            this.label_Rescan = new System.Windows.Forms.Label();
             this.comboBox_Skin_List = new System.Windows.Forms.ComboBox();
             this.panel_Container_Right = new System.Windows.Forms.Panel();
+            this.panel_Debug = new System.Windows.Forms.Panel();
             this.listBox_Debug = new System.Windows.Forms.ListBox();
             this.panel_Container_Left = new System.Windows.Forms.Panel();
             this.panel_Container_Top.SuspendLayout();
@@ -42,14 +44,16 @@ namespace Desktop_Chess
             this.panel_Container_Left.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // label_Skins
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(22, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(213, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Select the piece from drop down menu";
+            this.label_Skins.AutoSize = true;
+            this.label_Skins.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label_Skins.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label_Skins.Location = new System.Drawing.Point(9, 9);
+            this.label_Skins.Name = "label_Skins";
+            this.label_Skins.Size = new System.Drawing.Size(52, 23);
+            this.label_Skins.TabIndex = 0;
+            this.label_Skins.Text = "Skins";
             // 
             // panel_ChessBoard
             // 
@@ -61,38 +65,53 @@ namespace Desktop_Chess
             this.panel_ChessBoard.Size = new System.Drawing.Size(450, 450);
             this.panel_ChessBoard.TabIndex = 2;
             // 
-            // button1
+            // button_Rescan
             // 
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button1.Location = new System.Drawing.Point(854, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button_Rescan.BackColor = System.Drawing.SystemColors.Control;
+            this.button_Rescan.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_Rescan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_Rescan.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button_Rescan.Location = new System.Drawing.Point(818, 9);
+            this.button_Rescan.Name = "button_Rescan";
+            this.button_Rescan.Size = new System.Drawing.Size(116, 27);
+            this.button_Rescan.TabIndex = 3;
+            this.button_Rescan.Text = "Rescan";
+            this.button_Rescan.UseVisualStyleBackColor = false;
+            this.button_Rescan.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel_Container_Top
             // 
             this.panel_Container_Top.BackColor = System.Drawing.Color.Transparent;
+            this.panel_Container_Top.Controls.Add(this.label_Rescan);
+            this.panel_Container_Top.Controls.Add(this.label_Skins);
             this.panel_Container_Top.Controls.Add(this.comboBox_Skin_List);
-            this.panel_Container_Top.Controls.Add(this.button1);
-            this.panel_Container_Top.Controls.Add(this.label1);
+            this.panel_Container_Top.Controls.Add(this.button_Rescan);
             this.panel_Container_Top.Location = new System.Drawing.Point(12, 12);
             this.panel_Container_Top.Name = "panel_Container_Top";
             this.panel_Container_Top.Padding = new System.Windows.Forms.Padding(6);
             this.panel_Container_Top.Size = new System.Drawing.Size(960, 45);
             this.panel_Container_Top.TabIndex = 4;
             // 
+            // label_Rescan
+            // 
+            this.label_Rescan.AutoSize = true;
+            this.label_Rescan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label_Rescan.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label_Rescan.Location = new System.Drawing.Point(724, 9);
+            this.label_Rescan.Name = "label_Rescan";
+            this.label_Rescan.Size = new System.Drawing.Size(67, 23);
+            this.label_Rescan.TabIndex = 5;
+            this.label_Rescan.Text = "Rescan";
+            // 
             // comboBox_Skin_List
             // 
+            this.comboBox_Skin_List.BackColor = System.Drawing.SystemColors.Control;
             this.comboBox_Skin_List.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_Skin_List.FormattingEnabled = true;
             this.comboBox_Skin_List.Items.AddRange(new object[] {
             "solid",
             "wood"});
-            this.comboBox_Skin_List.Location = new System.Drawing.Point(405, 9);
+            this.comboBox_Skin_List.Location = new System.Drawing.Point(67, 9);
             this.comboBox_Skin_List.Name = "comboBox_Skin_List";
             this.comboBox_Skin_List.Size = new System.Drawing.Size(121, 23);
             this.comboBox_Skin_List.TabIndex = 4;
@@ -101,12 +120,23 @@ namespace Desktop_Chess
             // panel_Container_Right
             // 
             this.panel_Container_Right.BackColor = System.Drawing.Color.Transparent;
+            this.panel_Container_Right.Controls.Add(this.panel_Debug);
             this.panel_Container_Right.Controls.Add(this.listBox_Debug);
             this.panel_Container_Right.Location = new System.Drawing.Point(607, 63);
             this.panel_Container_Right.Name = "panel_Container_Right";
             this.panel_Container_Right.Padding = new System.Windows.Forms.Padding(6);
             this.panel_Container_Right.Size = new System.Drawing.Size(365, 592);
             this.panel_Container_Right.TabIndex = 0;
+            // 
+            // panel_Debug
+            // 
+            this.panel_Debug.BackColor = System.Drawing.Color.Transparent;
+            this.panel_Debug.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel_Debug.Location = new System.Drawing.Point(21, 23);
+            this.panel_Debug.Margin = new System.Windows.Forms.Padding(0);
+            this.panel_Debug.Name = "panel_Debug";
+            this.panel_Debug.Size = new System.Drawing.Size(250, 252);
+            this.panel_Debug.TabIndex = 3;
             // 
             // listBox_Debug
             // 
@@ -115,7 +145,7 @@ namespace Desktop_Chess
             this.listBox_Debug.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.listBox_Debug.FormattingEnabled = true;
             this.listBox_Debug.ItemHeight = 15;
-            this.listBox_Debug.Location = new System.Drawing.Point(9, 9);
+            this.listBox_Debug.Location = new System.Drawing.Point(21, 296);
             this.listBox_Debug.Name = "listBox_Debug";
             this.listBox_Debug.Size = new System.Drawing.Size(118, 240);
             this.listBox_Debug.TabIndex = 0;
@@ -158,9 +188,11 @@ namespace Desktop_Chess
         public System.Windows.Forms.Panel panel_Container_Left;
         public System.Windows.Forms.Panel panel_ChessBoard;
         public System.Windows.Forms.ListBox listBox_Debug;
-        public System.Windows.Forms.Label label1;
-        public System.Windows.Forms.Button button1;
+        public System.Windows.Forms.Label label_Skins;
+        public System.Windows.Forms.Button button_Rescan;
         public System.Windows.Forms.ComboBox comboBox_Skin_List;
+        public System.Windows.Forms.Panel panel_Debug;
+        public System.Windows.Forms.Label label_Rescan;
     }
 }
 
