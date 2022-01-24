@@ -128,10 +128,16 @@ namespace ChessBoardModel
                         cnt = Size-x;
                         break;
                 }
-                for (int j = 0; j < cnt; j++)
+                for (int j = 1; j < cnt; j++)
                 {
                     x = currentCell.X + linearSteps[i, 0]*j;
                     y = currentCell.Y + linearSteps[i, 1]*j;
+
+                    if ( theGrid[x, y].CurrentlyOccupied == true)
+                    {
+                        theGrid[x, y].LegalNextMove = true;
+                        break;
+                    }
                     theGrid[x, y].LegalNextMove = true;
                 }
             }
@@ -147,7 +153,7 @@ namespace ChessBoardModel
             {
                 int x = currentCell.X;
                 int y = currentCell.Y;
-                int j = 0;
+                int j = 1;
                 
                 while (x != diagonalSteps[i, 2] && y != diagonalSteps[i, 3])
                 {
@@ -155,15 +161,14 @@ namespace ChessBoardModel
                     if (y != diagonalSteps[i, 3]) { y = currentCell.Y + (diagonalSteps[i, 1] * j); }
                     j++;
                     
-                    /*
+                    
                     if (theGrid[x, y].CurrentlyOccupied)
                     {
                         legal_List.Add(new int[] { x, y });
                         theGrid[x, y].LegalNextMove = true;
-              
                         break;
                     }
-                    */
+                    
                     legal_List.Add(new int[] { x, y });
                     theGrid[x, y].LegalNextMove = true;
                 }
