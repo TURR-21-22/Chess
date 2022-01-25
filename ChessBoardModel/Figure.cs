@@ -11,22 +11,21 @@ namespace ChessBoardModel
         private string side;
         private string type;
         private int id;
-        private bool kick;
         public int X { get; set; }
         public int Y { get; set; }
         public string Side { get => side; set => side = value; }
         public string Type { get => type; set => type = value; }
         public int ID { get => id; set => id = value; }
-        public bool Kick { get => kick; set => kick = value; }
+        //public bool Kick { get ; set ; }
 
-        public Figure(string side, string type, int id,int x, int y, bool kick )
+        public Figure(string side, string type, int id,int x, int y) //, bool kick
         {
             Side = side;
             Type = type;
             ID = id;
             X = x;
             Y = y;
-            Kick = kick;
+//            Kick = kick;
         }
     }
 }

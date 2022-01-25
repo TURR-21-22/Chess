@@ -18,15 +18,16 @@ namespace Desktop_Chess
 
         public Form_Game form_game = null;
         private static Board model_Board = RenderInit.model_Board;
+        private static Gui_Cell[,] gui_Grid = RenderInit.gui_Grid;
+
         private bool swap = false;
-        public Cell[,] model_Grid = model_Board.theGrid;
-        public Label[,] debug_Grid = new Label[8, 8];
+        static public Cell[,] model_Grid = model_Board.theGrid;
+        static public Label[,] debug_Grid = new Label[8, 8];
         public static Panel container;
         public static Panel debugPanel;
         public Debug(Form_Game ob) {
             this.form_game = ob;
             form_game = ob;
-        
         }
 
         private Color[] swapProps()
@@ -44,7 +45,6 @@ namespace Desktop_Chess
             }
             swap = !swap;
             return colors;
-
         }
 
         public void GUIdebug()
@@ -52,8 +52,8 @@ namespace Desktop_Chess
             Panel container = form_game.panel_Container_Right;
             Panel debugPanel = form_game.panel_Debug;
 
-            debugPanel.Size = new Size(container.Width, container.Width+2);
-            debugPanel.Location = new Point(0, 0);
+            debugPanel.Size = new Size(Convert.ToInt32(container.Width*0.7)-24, Convert.ToInt32(container.Width*0.7)-24);
+            debugPanel.Location = new Point(12, 12);
             debugPanel.BackColor = Color.Red;
             Size debugCellSize = new Size(debugPanel.Width / 8, debugPanel.Width / 8);
             
@@ -70,34 +70,84 @@ namespace Desktop_Chess
                     colors = swapProps();
                     Label debugCell = new Label();
                     debug_Grid[x, y] = debugCell;
-                    SetCellDatas(container, x, y, debugCell, debugCellSize, colors, model_Grid);
+                    SetCellDatas(debugPanel, x, y, debugCell, debugCellSize, colors, model_Grid);
                 }
             }
         }
 
 
-        public void RefreshtCellDatas(Label[,] debug_Grid , Cell[,] model_Grid)
+        public void RefreshtCellDatas( string targetGrid)
         {
+            switch (targetGrid)//target_Grid.GetType()
+            {
+                case "model_Board":
+                    scanModelArray();
+                    break;
+                case "gui_Grid":
+                    scanGUIArray();
+                    break;
+            }
+        }
 
+        public void scanGUIArray()
+        {
             for (int x = 0; x < 8; x++)
             {
                 for (int y = 0; y < 8; y++)
                 {
-                    if (model_Grid[x, y].CurrentlyOccupied)
+                    Gui_Cell tmpCell = gui_Grid[x, y];
+                    
+                    if (tmpCell.CellFigure != null)
                     {
-                        if (debug_Grid.Length > 0)
+                        Figure tmpFigure = tmpCell.CellFigure;
+                        debug_Grid[x, y].Text = $"" +
+                        $"ID: {tmpFigure.ID}" +
+                        $"\nSide: {tmpFigure.Side}" +
+                        $"\nType: {tmpFigure.Type}";
+                    }
+                    else
+                    {
                         {
-                            debug_Grid[x, y].Text = $"Occupied" +
-                            $"\n{ model_Grid[x, y].CellFigure.ID}" +
-                            $"\n{ model_Grid[x, y].CellFigure.Type}" +
-                            $"\n{ model_Grid[x, y].CellFigure.Side}" +
-                            $"REFRESHED !";
+                            debug_Grid[x, y].Text = $"";
                         }
+                    }
+                }
+            }
+        }
+
+        public void scanModelArray()
+        {
+            for (int x = 0; x < 8; x++)
+            {
+                for (int y = 0; y < 8; y++)
+                {
+                    if (model_Grid[x, y].LegalNextMove)
+                    {
+                        if (model_Grid[x, y].KickThatShit)
+                        {
+                            Cell tmpCell = model_Board.theGrid[x, y];
+                            if (tmpCell.CellFigure != null)
+                            {
+                                Figure tmpFigure = model_Board.theGrid[x, y].CellFigure;
+                                debug_Grid[x, y].Text = $"" +
+                                    $"{ tmpFigure.ID}" +
+                                    $"\n{ tmpFigure.Type}" +
+                                    $"\n{ tmpFigure.Side}" +
+                                    $"\n{ tmpFigure.X } × { tmpFigure.Y }";
+                            }
+                        }
+                        else
+                        {
+                            debug_Grid[x, y].Text = $"legal";
+                        }
+                        
                     }
                     else
                     {
                         debug_Grid[x, y].Text = $"";
                     }
+
+
                 }
             }
         }
@@ -105,11 +155,11 @@ namespace Desktop_Chess
         private void SetCellDatas(Panel container, int x,int y,Label debugCell, Size debugCellSize, Color[] colors, Cell[,] model_Grid)
         {
             debugCell.Size = debugCellSize;
-            debugCell.Location = new Point(x * debugCellSize.Width, y * debugCellSize.Height);
-            debugCell.Font = new System.Drawing.Font("Arial Narrow", 10, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            debugCell.Location = new Point( x * debugCellSize.Width, y * debugCellSize.Height);
+            debugCell.Font = new System.Drawing.Font("Arial Narrow", 8, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             debugCell.BackColor = colors[0];
             debugCell.ForeColor = colors[1];
-            if (model_Grid[x, y].CurrentlyOccupied)
+            if (model_Grid[x, y].Occupied)
             {
                 debugCell.Text = $"Occupied" +
                     $"\n{ model_Grid[x, y].CellFigure.ID}" +

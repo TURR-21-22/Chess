@@ -16,51 +16,43 @@ namespace Desktop_Chess
 
         public static Board model_Board = new Board(8);
         public static Figures model_Figures = new Figures();
+        
+        public static Gui_Cell[,] gui_Grid = new Gui_Cell[model_Board.Size, model_Board.Size];
+        public static List<Button> gui_whiteFigures = new List<Button>(16);
+        public static List<Button> gui_blackFigures = new List<Button>(16);
 
-        public static Button[,] boardGrid = new Button[model_Board.Size, model_Board.Size];
-        public static List<Button> whiteFigures = new List<Button>(16);
-        public static List<Button> blackFigures = new List<Button>(16);
-
-        public string comboBoxFigure = "";
-        public string comboBoxSkin = "";
-
-        public static Dictionary<string, Image[]> cellImages = new Dictionary<string, Image[]>();
-        public static Dictionary<string, Image[]> backgroundImages = new Dictionary<string, Image[]>();
+        public static Dictionary<string, Image[]> gui_cellImages = new Dictionary<string, Image[]>();
+        public static Dictionary<string, Image[]> gui_backgroundImages = new Dictionary<string, Image[]>();
         
         public static Panel divTop;
         public static Panel divLeft;
         public static Panel divRight;
         public static Panel divChess;
         
-        public Dictionary<string, Image[]> figureImagesWhite = new Dictionary<string, Image[]>();
-        public Dictionary<string, Image[]> figureImagesBlack = new Dictionary<string, Image[]>();
+        public Dictionary<string, Image[]> gui_figureImagesWhite = new Dictionary<string, Image[]>();
+        public Dictionary<string, Image[]> gui_figureImagesBlack = new Dictionary<string, Image[]>();
 
         public bool CellProps = false;
 
         // game board containers layout width/height in percent of Form_Game
         private static object[,] Layout = new object[3, 3] {
-            { "Top",100, 9},
-            { "Left",70, 91 },
-            { "Right",30, 91}
+            { "Top",100, 6},
+            { "Left",60, 94 },
+            { "Right",40, 94}
         };
 
         public RenderInit(Form_Game ob)
         {
             this.form_game = ob;
-
             divChess = form_game.panel_ChessBoard;
             divTop = form_game.panel_Container_Top;
             divLeft = form_game.panel_Container_Left;
             divRight = form_game.panel_Container_Right;
-
-            //Render = new RenderMain(form_game);
-
             Init("wood");
         }
 
         public void Init(string skin)
         {
-            // Setup layout
             string[] skins = new string[] { "solid", "wood" };
             foreach (var item in skins)
             {
@@ -73,7 +65,7 @@ namespace Desktop_Chess
             {
                 form_game.Controls[$"panel_Container_{(string)Layout[i, 0]}"].Size = ContainerSize((int)Layout[i, 1], (int)Layout[i, 2], form_game);
             }
-            form_game.BackgroundImage = backgroundImages[skin][0];
+            form_game.BackgroundImage = gui_backgroundImages[skin][0];
             form_game.BackgroundImageLayout = ImageLayout.Tile;
 
             divTop.Location = new Point(0, 0);
@@ -94,10 +86,32 @@ namespace Desktop_Chess
             divChess.Location = new Point((divLeft.Width - divChess.Width) / 2, (divLeft.Height - divChess.Height) / 2);
             divTop.BackColor = Color.FromArgb(96, 0, 0, 0);
             divRight.BackColor = Color.FromArgb(96, 0, 0, 0);
-            
-            form_game.button_Rescan.BringToFront();
-            form_game.label_Rescan.BringToFront();
+
+            headerControlls(divTop);
             populaBoardteGrid(skin);
+        }
+
+        private void headerControlls(Panel divTop)
+        {
+            ComboBox debugCombo = form_game.comboBox_arrays;
+            Label debugComboLabel = form_game.label_Rescan;
+            HScrollBar debugScroll = form_game.hScrollBar_Debug;
+            ComboBox skinsCombo = form_game.comboBox_Skin_List;
+            Label skinsLabel = form_game.label_Skins;
+
+            debugCombo.Location = new Point(divTop.Width - debugCombo.Width - 32, (divTop.Height / 2) - (debugCombo.Height / 2));
+            debugComboLabel.Location = new Point(debugCombo.Location.X - debugComboLabel.Width - 6, debugCombo.Location.Y);
+            debugScroll.Location = new Point(debugComboLabel.Location.X - debugScroll.Width - 6, debugCombo.Location.Y);
+            debugScroll.Height = debugComboLabel.Height;
+            debugComboLabel.BackColor = Color.White;
+
+            skinsCombo.Location = new Point(32, (divTop.Height / 2) - (skinsCombo.Height / 2));
+            skinsLabel.Location = new Point( skinsCombo.Location.X + skinsCombo.Width +6, (divTop.Height / 2) - (skinsCombo.Height / 2));
+            skinsLabel.BackColor = Color.White;
+
+            debugCombo.BringToFront();
+            debugComboLabel.BringToFront();
+            debugScroll.BringToFront();
         }
 
 
@@ -117,15 +131,15 @@ namespace Desktop_Chess
                 tmpArray[i] = (Image)Properties.Resources.ResourceManager.GetObject($"{type[i]}");
             }
             Image[] value = new Image[1];
-            if (!cellImages.TryGetValue(skin, out value))
+            if (!gui_cellImages.TryGetValue(skin, out value))
             {
-                cellImages.Add(skin, tmpArray);
+                gui_cellImages.Add(skin, tmpArray);
             }
 
             value = new Image[1];
-            if (!backgroundImages.TryGetValue(skin, out value))
+            if (!gui_backgroundImages.TryGetValue(skin, out value))
             {
-                backgroundImages.Add(skin, new Image[]{
+                gui_backgroundImages.Add(skin, new Image[]{
                 (Image)Properties.Resources.ResourceManager.GetObject( $"{skin}_bkg" )
                 });
             }
@@ -133,15 +147,15 @@ namespace Desktop_Chess
             string[] mod = new string[2] { "light", "dark" };
             type = new string[6] { "kiraly", "kiralyno", "huszar", "futo", "bastya", "gyalog" };
             value = new Image[1];
-            if (!figureImagesWhite.TryGetValue(skin, out value))
+            if (!gui_figureImagesWhite.TryGetValue(skin, out value))
             {
-                figureImagesWhite.Add(skin, genFiguresImages(skin, "white", mod, type));
+                gui_figureImagesWhite.Add(skin, genFiguresImages(skin, "white", mod, type));
             }
 
             value = new Image[1];
-            if (!figureImagesBlack.TryGetValue(skin, out value))
+            if (!gui_figureImagesBlack.TryGetValue(skin, out value))
             {
-                figureImagesBlack.Add(skin, genFiguresImages(skin, "black", mod, type));
+                gui_figureImagesBlack.Add(skin, genFiguresImages(skin, "black", mod, type));
             }
         }
 
@@ -167,11 +181,11 @@ namespace Desktop_Chess
             object[] props = new object[3];
             if (CellProps == true)
             {
-                props = new object[3] { (Image)cellImages[skin][0], Color.Black, Color.White };
+                props = new object[3] { (Image)gui_cellImages[skin][0], Color.Black, Color.White };
             }
             else
             {
-                props = new object[3] { (Image)cellImages[skin][1], Color.White, Color.Black };
+                props = new object[3] { (Image)gui_cellImages[skin][1], Color.White, Color.Black };
             }
             CellProps = !CellProps;
             return props;
@@ -179,112 +193,81 @@ namespace Desktop_Chess
 
         public void populaBoardteGrid(string skin)
         {
-            //Panel divChess = form_game.panel_ChessBoard;
-            int buttonSize = divChess.Width / model_Board.Size;
+            int size = divChess.Width / model_Board.Size;
             divChess.Height = divChess.Width;
-
-            for (int i = 0; i < model_Board.Size; i++)
+            for (int x = 0; x < model_Board.Size; x++)
             {
                 object[] props = swapCellProps(skin);
-                for (int j = 0; j < model_Board.Size; j++)
+                for (int y = 0; y < model_Board.Size; y++)
                 {
                     props = swapCellProps(skin);
-                    boardGrid[i, j] = new Button();
-                    //Button gridCell = boardGrid[i, j];
-                    boardGrid[i, j].Height = buttonSize;
-                    boardGrid[i, j].Width = buttonSize;
-                    boardGrid[i, j].BackgroundImage = (Image)props[0];
-                    boardGrid[i, j].ForeColor = (Color)props[1];
-                    boardGrid[i, j].BackColor = (Color)props[2];
-                    boardGrid[i, j].BackgroundImageLayout = ImageLayout.Stretch;
-                    boardGrid[i, j].TextImageRelation = TextImageRelation.TextAboveImage;
-                    boardGrid[i, j].Margin = new Padding(0, 0, 0, 0);
-                    boardGrid[i, j].Padding = new Padding(0, 0, 0, 0);
-                    boardGrid[i, j].FlatStyle = FlatStyle.Standard;
-                    boardGrid[i, j].FlatAppearance.BorderSize = 0;
-                    boardGrid[i, j].FlatAppearance.BorderColor = Color.Yellow;
-                    boardGrid[i, j].FlatStyle = FlatStyle.Flat;
-                    boardGrid[i, j].Click += form_game.Grid_Button_Click;
-                    boardGrid[i, j].Location = new Point(i * buttonSize, j * buttonSize);
-                    //boardGrid[i, j].Text = i + " : " + j;
-                    boardGrid[i, j].Text = "";
-                    boardGrid[i, j].Font = new Font("Impact", 22);
-                    boardGrid[i, j].Tag = new Point(i, j);
-                    divChess.Controls.Add(boardGrid[i, j]);
+                    //Gui_Cell(int x, int y, Figure cellFigure)
+                    //Gui_Cell gui_Cell = new Gui_Cell(x,y,);
+                    //gui_Grid[x, y] = gui_Cell;
+                    Figure model_CellFigure = model_Board.theGrid[x,x].CellFigure;
+                    setCell(x,y, model_CellFigure, size, props);
                 }
             }
-
-
-            for (int i = 0; i < model_Figures.BlackFiguresON.Count; i++)
+            for (int i = 0; i < model_Figures.Model_blackFiguresON.Count; i++)
             {
-                whiteFigures.Add(new Button());
-                Button GUIButtonWhite = whiteFigures[i];
-                Figure modelFigureWhite = model_Figures.WhiteFiguresON[i];
-                Button GUICellWhite = boardGrid[modelFigureWhite.X, modelFigureWhite.Y];
-                Cell modelCellWhite = model_Board.theGrid[modelFigureWhite.X, modelFigureWhite.Y];
+                gui_whiteFigures.Add(new Button());
+                Figure model_FigureWhite = model_Figures.Model_whiteFiguresON[i];
+                Cell model_CellWhite = model_Board.theGrid[model_FigureWhite.X, model_FigureWhite.Y];
+                Button gui_FigureWhite = gui_whiteFigures[i];
+                Gui_Cell gui_CellWhite = gui_Grid[model_FigureWhite.X, model_FigureWhite.Y];
 
-                blackFigures.Add(new Button());
-                Button GUIButtonBlack = blackFigures[i];
-                Figure modelFigureBlack = model_Figures.BlackFiguresON[i];
-                Button GUICellBlack = boardGrid[modelFigureBlack.X, modelFigureBlack.Y];
-                Cell modelCellBlack = model_Board.theGrid[modelFigureBlack.X, modelFigureBlack.Y];
+                gui_blackFigures.Add(new Button());
+                Figure model_FigureBlack = model_Figures.Model_blackFiguresON[i];
+                Cell model_CellBlack = model_Board.theGrid[model_FigureBlack.X, model_FigureBlack.Y];
+                Button gui_FigureBlack = gui_blackFigures[i];
+                Gui_Cell gui_CellBlack = gui_Grid[model_FigureBlack.X, model_FigureBlack.Y];
 
-                setFigureStyle(skin, GUIButtonWhite, modelFigureWhite, GUICellWhite, modelCellWhite, buttonSize, i);
-                setFigureStyle(skin, GUIButtonBlack, modelFigureBlack, GUICellBlack, modelCellWhite, buttonSize, i);
-            }
-
-        }
-
-        public void loadFiguresSkin(string skin, Button GUIButton, Figure modelFigure, Button GUICell, Cell modelCell)
-        {
-            if (GUICell.BackColor == Color.Black)
-            {
-                GUIButton.ForeColor = Color.White;
-                GUIButton.BackColor = Color.Black;
-                GUIButton.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_figure_" +
-                    $"{modelFigure.Side}_" +
-                    $"{"dark"}_" +
-                    $"{modelFigure.Type}");
-            }
-            else
-            {
-                GUIButton.ForeColor = Color.Black;
-                GUIButton.BackColor = Color.White;
-                GUIButton.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_figure_" +
-                        $"{modelFigure.Side}_" +
-                        $"{"light"}_" +
-                        $"{modelFigure.Type}");
+                setFigure(skin, gui_FigureWhite, model_FigureWhite, gui_CellWhite, model_CellWhite, size, i);
+                setFigure(skin, gui_FigureBlack, model_FigureBlack, gui_CellBlack, model_CellBlack, size, i);
             }
         }
 
-        private void setFigureStyle(string skin, Button GUIButton, Figure modelFigure, Button GUICell, Cell modelCell, int size, int cnt)
+        private void setCell(int x, int y, Figure model_Cell, int size, Object[] props)
         {
-            GUIButton.Height = size;
-            GUIButton.Width = size;
-            loadFiguresSkin(skin, GUIButton, modelFigure, GUICell, modelCell);
-            GUIButton.TextImageRelation = TextImageRelation.TextAboveImage;
-            GUIButton.Font = new Font("Impact", 16);
-            GUIButton.FlatStyle = FlatStyle.Flat;
-            GUIButton.BackgroundImageLayout = ImageLayout.Stretch;
-            GUIButton.Margin = new Padding(0, 0, 0, 0);
-            GUIButton.Padding = new Padding(0, 0, 0, 0);
-            GUIButton.FlatStyle = FlatStyle.Flat;
-            GUIButton.FlatAppearance.BorderSize = 0;
-            GUIButton.FlatAppearance.BorderColor = Color.Yellow;
-            GUIButton.Location = new Point(modelFigure.X * size, modelFigure.Y * size);
-            GUIButton.Text = $""; //{myFigure}\n{myButton}\n
-            //myButton.Text = $"{cnt}\n{myFigure.ID}\n{myFigure.X}×{myFigure.Y}";
-            GUIButton.TextAlign = ContentAlignment.TopLeft;
-            GUIButton.Tag = modelFigure;
-            GUIButton.Click += form_game.Grid_Button_Click;
-            divChess.Controls.Add(GUIButton);
-            GUIButton.BringToFront();
+            Gui_Cell gui_Cell = new Gui_Cell(x, y,model_Cell);
+            gui_Grid[x, y] = gui_Cell;
+            gui_Cell.Width = size;
+            gui_Cell.Height = size;
+            gui_Cell.BackgroundImage = (Image)props[0];
+            gui_Cell.ForeColor = (Color)props[1];
+            gui_Cell.BackColor = (Color)props[2];
+            gui_Cell.Click += form_game.Board_Click;
+            gui_Cell.Location = new Point(x * size, y * size);
+            divChess.Controls.Add(gui_Cell);
+        }
+
+        private void setFigure(string skin, Button gui_Figure, Figure modelFigure, Gui_Cell gui_Cell, Cell modelCell, int size, int cnt)
+        {
+            gui_Figure.Height = size;
+            gui_Figure.Width = size;
+            loadFiguresSkin(skin, gui_Figure, modelFigure, gui_Cell, modelCell);
+            gui_Figure.TextImageRelation = TextImageRelation.TextAboveImage;
+            gui_Figure.Font = new Font("Impact", 16);
+            gui_Figure.FlatStyle = FlatStyle.Flat;
+            gui_Figure.BackgroundImageLayout = ImageLayout.Stretch;
+            gui_Figure.Margin = new Padding(0, 0, 0, 0);
+            gui_Figure.Padding = new Padding(0, 0, 0, 0);
+            gui_Figure.FlatStyle = FlatStyle.Flat;
+            gui_Figure.FlatAppearance.BorderSize = 0;
+            gui_Figure.FlatAppearance.BorderColor = Color.Yellow;
+            gui_Figure.Location = new Point(modelFigure.X * size, modelFigure.Y * size);
+            gui_Figure.Text = $"";
+            gui_Figure.TextAlign = ContentAlignment.TopLeft;
+            gui_Figure.Tag = modelFigure;
+            gui_Figure.Click += form_game.Board_Click;
+            divChess.Controls.Add(gui_Figure);
+            gui_Figure.BringToFront();
         }
 
         public void RestartGui(string skin)
         {
             CellProps = false;
-            form_game.BackgroundImage = backgroundImages[skin][0];
+            form_game.BackgroundImage = gui_backgroundImages[skin][0];
 
             for (int y = 0; y < model_Board.Size; y++)
             {
@@ -293,30 +276,52 @@ namespace Desktop_Chess
                 for (int x = 0; x < model_Board.Size; x++)
                 {
                     props = swapCellProps(skin);
-                    boardGrid[y, x].BackgroundImage = (Image)props[0];
-                    boardGrid[y, x].ForeColor = (Color)props[1];
-                    boardGrid[y, x].BackColor = (Color)props[2];
+                    gui_Grid[y, x].BackgroundImage = (Image)props[0];
+                    gui_Grid[y, x].ForeColor = (Color)props[1];
+                    gui_Grid[y, x].BackColor = (Color)props[2];
                 }
             }
 
-            for (int i = 0; i < whiteFigures.Count; i++)
+            for (int i = 0; i < gui_whiteFigures.Count; i++)
             {
-                Button GUIButtonWhite = whiteFigures[i];
-                Button GUIButtonBlack = blackFigures[i];
+                Button gui_FigureWhite = gui_whiteFigures[i];
+                Button gui_FigureBlack = gui_blackFigures[i];
 
-                Figure modelFigureWhite = model_Figures.WhiteFiguresON[i];
-                Figure modelFigureBlack = model_Figures.BlackFiguresON[i];
+                Figure model_FigureWhite = model_Figures.Model_whiteFiguresON[i];
+                Figure model_FigureBlack = model_Figures.Model_blackFiguresON[i];
 
-                Button GUICellWhite = boardGrid[modelFigureWhite.X, modelFigureWhite.Y];
-                Button GUICellBlack = boardGrid[modelFigureBlack.X, modelFigureBlack.Y];
+                Gui_Cell gui_CellWhite = gui_Grid[model_FigureWhite.X, model_FigureWhite.Y];
+                Gui_Cell gui_CellBlack = gui_Grid[model_FigureBlack.X, model_FigureBlack.Y];
 
-                Cell modelCellWhite = model_Board.theGrid[modelFigureWhite.X, modelFigureWhite.Y];
-                Cell modelCellBlack = model_Board.theGrid[modelFigureBlack.X, modelFigureBlack.Y];
+                Cell model_CellWhite = model_Board.theGrid[model_FigureWhite.X, model_FigureWhite.Y];
+                Cell model_CellBlack = model_Board.theGrid[model_FigureBlack.X, model_FigureBlack.Y];
 
-                loadFiguresSkin(skin, GUIButtonWhite, modelFigureWhite, GUICellWhite, modelCellWhite);
-                loadFiguresSkin(skin, GUIButtonBlack, modelFigureBlack, GUICellBlack, modelCellBlack);
+                loadFiguresSkin(skin, gui_FigureWhite, model_FigureWhite, gui_CellWhite, model_CellWhite);
+                loadFiguresSkin(skin, gui_FigureBlack, model_FigureBlack, gui_CellBlack, model_CellBlack);
 
             }
         }
+        public void loadFiguresSkin(string skin, Button gui_Figure, Figure model_Figure, Gui_Cell gui_Cell, Cell model_Cell)
+        {
+            if (gui_Cell.BackColor == Color.Black)
+            {
+                gui_Figure.ForeColor = Color.White;
+                gui_Figure.BackColor = Color.Black;
+                gui_Figure.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_figure_" +
+                    $"{model_Figure.Side}_" +
+                    $"{"dark"}_" +
+                    $"{model_Figure.Type}");
+            }
+            else
+            {
+                gui_Figure.ForeColor = Color.Black;
+                gui_Figure.BackColor = Color.White;
+                gui_Figure.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_figure_" +
+                        $"{model_Figure.Side}_" +
+                        $"{"light"}_" +
+                        $"{model_Figure.Type}");
+            }
+        }
+
     }
 }

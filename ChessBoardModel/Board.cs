@@ -26,20 +26,21 @@ namespace ChessBoardModel
                     Cell cell = new Cell(x, y);
                     theGrid[x, y] = cell;
                     cell.LegalNextMove = false;
-                    cell.CurrentlyOccupied = false;
+                    cell.Occupied = false;
                     cell.CellFigure = null;
+                    cell.KickThatShit = false;
                 }
             }
 
-            List<Figure> white = model_Figures.WhiteFiguresON;
-            List<Figure> black = model_Figures.BlackFiguresON;
+            List<Figure> white = model_Figures.Model_whiteFiguresON;
+            List<Figure> black = model_Figures.Model_blackFiguresON;
 
-            for (int i = 0; i < model_Figures.BlackFiguresON.Count; i++)
+            for (int i = 0; i < model_Figures.Model_blackFiguresON.Count; i++)
             {
 
-                theGrid[white[i].X, white[i].Y].CurrentlyOccupied = true;
+                theGrid[white[i].X, white[i].Y].Occupied = true;
                 theGrid[white[i].X, white[i].Y].CellFigure = white[i];
-                theGrid[black[i].X, black[i].Y].CurrentlyOccupied = true;
+                theGrid[black[i].X, black[i].Y].Occupied = true;
                 theGrid[black[i].X, black[i].Y].CellFigure = black[i];
             }
             
@@ -54,6 +55,7 @@ namespace ChessBoardModel
                 for (int y = 0; y < Size; y++)
                 {
                     theGrid[x, y].LegalNextMove = false;
+                    theGrid[x, y].KickThatShit = false;
                 }
             }
             
@@ -81,44 +83,81 @@ namespace ChessBoardModel
                 default:
                     break;
             }
-            //theGrid[currentCell.X, currentCell.Y].CurrentlyOccupied = true;
+            //theGrid[currentCell.X, currentCell.Y].Occupied = true;
         }
 
 
         private void gyalog(Cell currentCell)
         {
-            
+            int steps;
+            int x = currentCell.X;
+            int y = currentCell.Y;
+            int[,] stepsWhite = new int[2,2] { { -1, -1 }, { 1, -1 } };
+            int[,] stepsBlack = new int[2,2] { { -1, 1 }, { 1, 1 } };
+            int[,] arr = new int[2, 2];
+            string side = currentCell.CellFigure.Side;
+            if (side == "white") {
+                steps = -1;
+                arr = stepsWhite; 
+            } else {
+                steps = 1;
+                arr = stepsBlack; 
+            }
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+                if (currentCell.X + arr[i, 0] >= 0 &&
+                    currentCell.Y + arr[i, 1] >= 0 &&
+                    currentCell.X + arr[i, 0] < Size &&
+                    currentCell.Y + arr[i, 1] < Size )
+                {
+                    x = currentCell.X + arr[i, 0];
+                    y = currentCell.Y + arr[i, 1];
+                    if (theGrid[x, y].Occupied && theGrid[x, y].CellFigure.Side != side)
+                    {
+                        theGrid[x, y].LegalNextMove = true;
+                        theGrid[x, y].KickThatShit = true;
+                    }
+                }
+            }
+            x = currentCell.X;
+            y = currentCell.Y;
+            if (!theGrid[x, y + steps].Occupied)
+            {
+                theGrid[x, y + steps].LegalNextMove = true;
+            }
         }
 
 
         private void OneStepPath(Cell currentCell, int[,] arr)
         {
+            string side = currentCell.CellFigure.Side;
             int x = currentCell.X;
             int y = currentCell.Y;
             for (int i = 0; i < arr.GetLength(0); i++)
             {
-
-
                 if (currentCell.X + arr[i, 0] >= 0 &&
                     currentCell.Y + arr[i, 1] >= 0 &&
                     currentCell.X + arr[i, 0] < Size &&
-                    currentCell.Y + arr[i, 1] < Size)
+                    currentCell.Y + arr[i, 1] < Size )
                 {
                     x = currentCell.X + arr[i, 0];
                     y = currentCell.Y + arr[i, 1];
-                    if (!theGrid[x, y].CurrentlyOccupied)
+                    if (!theGrid[x, y].Occupied)
                     {
-                        theGrid[x, y].LegalNextMove = true; ;
+                        theGrid[x, y].LegalNextMove = true;
                     }
-
-                    
-                    //theGrid[currentCell.X + arr[i, 0], currentCell.Y + arr[i, 1]].LegalNextMove = true;
+                    else if (theGrid[x, y].CellFigure.Side != side)
+                    {
+                        theGrid[x, y].LegalNextMove = true;
+                        theGrid[x, y].KickThatShit = true;
+                    }
                 }
             }
         }
 
         private void LinearPath(Cell currentCell)
         {
+            string side = currentCell.CellFigure.Side;
             int[,] linearSteps = new int[4, 2] { { 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 } };
             int cnt = 0;
             for (int i = 0; i < linearSteps.GetLength(0); i++)
@@ -145,9 +184,13 @@ namespace ChessBoardModel
                     x = currentCell.X + linearSteps[i, 0]*j;
                     y = currentCell.Y + linearSteps[i, 1]*j;
 
-                    if ( theGrid[x, y].CurrentlyOccupied == true)
+                    if ( theGrid[x, y].Occupied)
                     {
-                        theGrid[x, y].LegalNextMove = true;
+                        if (theGrid[x, y].CellFigure.Side != side)
+                        {
+                            theGrid[x, y].LegalNextMove = true;
+                            theGrid[x, y].KickThatShit = true;
+                        }
                         break;
                     }
                     theGrid[x, y].LegalNextMove = true;
@@ -156,44 +199,34 @@ namespace ChessBoardModel
         }
         private void DiagonalPath(Cell currentCell)
         {
-            
+            string side = currentCell.CellFigure.Side;
             int[,] diagonalSteps = new int[4, 4] { { -1, -1, 0, 0 }, { 1, -1, Size - 1, 0 }, { 1, 1, Size - 1, Size - 1 }, { -1, 1, 0, Size - 1 } };
-            //List<int[]> legal_List = new List<int[]>();
-            //List<int[]> kick_List = new List<int[]>();
-            //Cell[,] grid = model_Board.theGrid;
             for (int i = 0; i < diagonalSteps.GetLength(0); i++)
             {
                 int x = currentCell.X;
                 int y = currentCell.Y;
                 int j = 1;
-                
                 while (x != diagonalSteps[i, 2] && y != diagonalSteps[i, 3])
                 {
                     if (x != diagonalSteps[i, 2]) { x = currentCell.X + (diagonalSteps[i, 0] * j); }
                     if (y != diagonalSteps[i, 3]) { y = currentCell.Y + (diagonalSteps[i, 1] * j); }
                     j++;
-                    
-                    
-                    if (theGrid[x, y].CurrentlyOccupied)
+                    if (theGrid[x, y].Occupied)
                     {
-
-                        //legal_List.Add(new int[] { x, y });
-                        theGrid[x, y].LegalNextMove = true;
-                        break;
+                        if (theGrid[x, y].CellFigure.Side != side)
+                        {
+                            theGrid[x, y].LegalNextMove = true;
+                            theGrid[x, y].KickThatShit = true;
+                            break;
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
-                    
-                    //legal_List.Add(new int[] { x, y });
                     theGrid[x, y].LegalNextMove = true;
                 }
             }
-            /*
-            for (int i = 0; i < arrayList.Count; i++)
-            {
-                int x = arrayList[i][0];
-                int y = arrayList[i][1];
-                theGrid[x, y].LegalNextMove = true;
-            }
-            */
         }
 
 

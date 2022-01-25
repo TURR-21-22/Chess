@@ -15,9 +15,9 @@ namespace Desktop_Chess
             InitializeComponent();
         }
 
-        public void Grid_Button_Click(object sender, EventArgs e)
+        public void Board_Click(object sender, EventArgs e)
         {
-            Render.PicFigure(sender);
+            Render.Board_Click(sender);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -25,14 +25,23 @@ namespace Desktop_Chess
             Render.Init();
             Debug.GUIdebug();
         }
-        private void comboBox_Skin_List_SelectedIndexChanged(object sender, EventArgs e)
+       
+        private void comboBox_Skins(object sender, EventArgs e)
         {
             Render.SelectSkin(sender);
         }
 
+        private void comboBox_DebugArrays(object sender, EventArgs e)
+        {
+            ComboBox combo = (ComboBox)sender;
+            Debug.RefreshtCellDatas(combo.Text);
+            
+        }
+
+
         private void button1_Click(object sender, EventArgs e)
         {
-            Debug.RefreshtCellDatas(Debug.debug_Grid, Debug.model_Grid);
+
         }
     }
 }

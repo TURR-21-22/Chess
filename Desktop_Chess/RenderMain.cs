@@ -18,8 +18,9 @@ namespace Desktop_Chess
         Form_Game form_game = null;
         //public RenderMain(Form_Game ob) { this.form_game = ob; }
         static RenderInit renderInit;
+        static Debug debug;
         private static Board model_Board = RenderInit.model_Board;
-        public static Button[,] boardGrid = RenderInit.boardGrid;
+        public static Gui_Cell[,] gui_Grid = RenderInit.gui_Grid;
 
         public RenderMain(Form_Game ob)
         {
@@ -29,26 +30,36 @@ namespace Desktop_Chess
         public void Init() 
         {
             renderInit = new RenderInit(form_game);
+            debug = new Debug(form_game);
         }
 
-        internal void PicFigure(object sender)
+        internal void Board_Click(object sender)
         {
-            Button clickedButton = (Button)sender;
+
             Point location;
             string figureType;
             Figure clickedFigure;
-            if (clickedButton.Tag.GetType() == typeof(Figure))
+            
+            if (sender.GetType().Name == "Button")
             {
-                clickedFigure = (Figure)clickedButton.Tag;
-                location = new Point( clickedFigure.X, clickedFigure.Y );
-                figureType = clickedFigure.Type;
+                Button clickedButton = (Button)sender;
+                if (clickedButton.Tag.GetType() == typeof(Figure))
+                {
+                    clickedFigure = (Figure)clickedButton.Tag;
+                    location = new Point(clickedFigure.X, clickedFigure.Y);
+                    figureType = clickedFigure.Type;
+                    draw2Debug(location, figureType);
+                }
             }
-            else
+            else if (sender.GetType().Name == "Gui_Cell")
             {
-                //location = (Point)clickedButton.Tag;
                 return;
             }
- 
+
+        }
+
+        private void draw2Debug(Point location, string figureType)
+        {
             Cell currenCell = model_Board.theGrid[location.X, location.Y];
 
             model_Board.MarkNextLegalMove(currenCell, figureType);
@@ -56,23 +67,37 @@ namespace Desktop_Chess
             {
                 for (int y = 0; y < model_Board.Size; y++)
                 {
-                    boardGrid[x, y].Text = "";
+                    //gui_Grid[x, y].Text = "";
+                    Debug.debug_Grid[x, y].Text = "";
                     if (model_Board.theGrid[x, y].LegalNextMove)
                     {
-                        boardGrid[x, y].Text = "Legal";
-                        if (model_Board.theGrid[x, y].CurrentlyOccupied)
+                        if (model_Board.theGrid[x, y].KickThatShit)
                         {
-                            clickedButton.Text = "AAAAA";
-                            if (boardGrid[x, y].Tag.GetType() == typeof(Figure))
+
+
+                            Cell tmpCell = model_Board.theGrid[x, y];
+                            if (tmpCell.CellFigure != null)
                             {
-                                Figure figure = (Figure)boardGrid[x, y].Tag;
-                                
+                                Figure tmpFigure = model_Board.theGrid[x, y].CellFigure;
+                                Debug.debug_Grid[x, y].Text = $"" +
+                                    $"{ tmpFigure.ID}" +
+                                    $"\n{ tmpFigure.Type}" +
+                                    $"\n{ tmpFigure.Side}" +
+                                    $"\n{ tmpFigure.X } × { tmpFigure.Y }";
                             }
-                            
                         }
+                        else
+                        {
+                            Debug.debug_Grid[x, y].Text = $"Legal";
+                        }
+                    }
+                    else
+                    {
+                        Debug.debug_Grid[x, y].Text = "";
                     }
                 }
             }
+
         }
 
         internal void SelectSkin(object sender)
