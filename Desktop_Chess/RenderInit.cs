@@ -18,9 +18,12 @@ namespace Desktop_Chess
         public static Figures model_Figures = new Figures();
         
         public static Gui_Cell[,] gui_Grid = new Gui_Cell[model_Board.Size, model_Board.Size];
-        public static List<Button> gui_whiteFigures = new List<Button>(16);
-        public static List<Button> gui_blackFigures = new List<Button>(16);
+        //public static List<Button> gui_whiteFigures = new List<Button>(16);
+        //public static List<Button> gui_blackFigures = new List<Button>(16);
+        public static List<Gui_Figure> gui_whiteFigures = new List<Gui_Figure>(16);
+        public static List<Gui_Figure> gui_blackFigures = new List<Gui_Figure>(16);
 
+        
         public static Dictionary<string, Image[]> gui_cellImages = new Dictionary<string, Image[]>();
         public static Dictionary<string, Image[]> gui_backgroundImages = new Dictionary<string, Image[]>();
         
@@ -188,11 +191,11 @@ namespace Desktop_Chess
                 {
                     Gui_Cell gui_Cell = new Gui_Cell(x, y);
                     gui_Grid[x, y] = gui_Cell;
+                    gui_Cell.LegalNextMove = model_Board.theGrid[x, y].LegalNextMove;
                     gui_Cell.Width = size;
                     gui_Cell.Height = size;
                     gui_Cell.ForeColor = Color.White;
                     gui_Cell.BackColor = Color.Black;
-                    
                     switch (model_Board.theGrid[x, y].CellBkgColor)
                     {
                         case "light":
@@ -211,16 +214,18 @@ namespace Desktop_Chess
             }
             for (int i = 0; i < model_Figures.Model_blackFiguresON.Count; i++)
             {
-                gui_whiteFigures.Add(new Button());
+                gui_whiteFigures.Add(new Gui_Figure());
+
                 Figure model_FigureWhite = model_Figures.Model_whiteFiguresON[i];
+                
                 Cell model_CellWhite = model_Board.theGrid[model_FigureWhite.X, model_FigureWhite.Y];
-                Button gui_FigureWhite = gui_whiteFigures[i];
+                Gui_Figure gui_FigureWhite = gui_whiteFigures[i];
                 Gui_Cell gui_CellWhite = gui_Grid[model_FigureWhite.X, model_FigureWhite.Y];
 
-                gui_blackFigures.Add(new Button());
+                gui_blackFigures.Add(new Gui_Figure());
                 Figure model_FigureBlack = model_Figures.Model_blackFiguresON[i];
                 Cell model_CellBlack = model_Board.theGrid[model_FigureBlack.X, model_FigureBlack.Y];
-                Button gui_FigureBlack = gui_blackFigures[i];
+                Gui_Figure gui_FigureBlack = gui_blackFigures[i];
                 Gui_Cell gui_CellBlack = gui_Grid[model_FigureBlack.X, model_FigureBlack.Y];
 
                 setFigure(skin, gui_FigureWhite, model_FigureWhite, gui_CellWhite, model_CellWhite, size, i);
@@ -228,37 +233,24 @@ namespace Desktop_Chess
             }
         }
 
-        private void setCell(int x, int y, Figure model_Cell, int size, Object[] props)
-        {
-            Gui_Cell gui_Cell = new Gui_Cell(x, y);
-            gui_Grid[x, y] = gui_Cell;
-            gui_Cell.Width = size;
-            gui_Cell.Height = size;
-            gui_Cell.BackgroundImage = (Image)props[0]; //(Image)props[0];
-            gui_Cell.BackColor = (Color)Color.Black; //(Color)props[1];
-            gui_Cell.Click += form_game.Board_Click;
-            gui_Cell.Location = new Point(x * size, y * size);
-            divChess.Controls.Add(gui_Cell);
-        }
-
-        private void setFigure(string skin, Button gui_Figure, Figure modelFigure, Gui_Cell gui_Cell, Cell modelCell, int size, int cnt)
+        private void setFigure(string skin, Gui_Figure gui_Figure, Figure modelFigure, Gui_Cell gui_Cell, Cell modelCell, int size, int cnt)
         {
             gui_Cell.CellFigure = gui_Figure;
+            gui_Figure.X = modelCell.X;
+            gui_Figure.Y = modelCell.Y;
+            gui_Figure.Side = modelFigure.Side;
+            gui_Figure.Type = modelFigure.Type;
+            gui_Figure.LegalNextMove = modelFigure.LegalNextMove;
+            gui_Figure.Kick = modelFigure.Kick;
             gui_Figure.Height = size;
             gui_Figure.Width = size;
             loadFiguresSkin(skin, gui_Figure, modelFigure, gui_Cell, modelCell);
-            gui_Figure.TextImageRelation = TextImageRelation.TextAboveImage;
             gui_Figure.Font = new Font("Impact", 16);
-            gui_Figure.FlatStyle = FlatStyle.Flat;
             gui_Figure.BackgroundImageLayout = ImageLayout.Stretch;
             gui_Figure.Margin = new Padding(0, 0, 0, 0);
             gui_Figure.Padding = new Padding(0, 0, 0, 0);
-            gui_Figure.FlatStyle = FlatStyle.Flat;
-            gui_Figure.FlatAppearance.BorderSize = 0;
-            gui_Figure.FlatAppearance.BorderColor = Color.Yellow;
             gui_Figure.Location = new Point(modelFigure.X * size, modelFigure.Y * size);
             gui_Figure.Text = $"";
-            gui_Figure.TextAlign = ContentAlignment.TopLeft;
             gui_Figure.Tag = modelFigure;
             gui_Figure.Click += form_game.Board_Click;
             divChess.Controls.Add(gui_Figure);
@@ -292,9 +284,9 @@ namespace Desktop_Chess
 
             for (int i = 0; i < gui_whiteFigures.Count; i++)
             {
-                Button gui_FigureWhite = gui_whiteFigures[i];
-                Button gui_FigureBlack = gui_blackFigures[i];
-
+                Gui_Figure gui_FigureWhite = gui_whiteFigures[i];
+                Gui_Figure gui_FigureBlack = gui_blackFigures[i];
+                
                 Figure model_FigureWhite = model_Figures.Model_whiteFiguresON[i];
                 Figure model_FigureBlack = model_Figures.Model_blackFiguresON[i];
 
@@ -309,7 +301,7 @@ namespace Desktop_Chess
 
             }
         }
-        public void loadFiguresSkin(string skin, Button gui_Figure, Figure model_Figure, Gui_Cell gui_Cell, Cell model_Cell)
+        public void loadFiguresSkin(string skin, Gui_Figure gui_Figure, Figure model_Figure, Gui_Cell gui_Cell, Cell model_Cell)
         {
             gui_Figure.ForeColor = Color.White;
             gui_Figure.BackColor = Color.Black;

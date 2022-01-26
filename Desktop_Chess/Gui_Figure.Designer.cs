@@ -29,8 +29,14 @@ namespace Desktop_Chess
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.SuspendLayout();
+            // 
+            // Gui_Figure
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Name = "Gui_Figure";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

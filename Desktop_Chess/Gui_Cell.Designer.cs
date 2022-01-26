@@ -39,7 +39,7 @@ namespace Desktop_Chess
             this.Font = new System.Drawing.Font("Impact", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "Gui_Cell";
-            this.Size = new System.Drawing.Size(32, 32);
+            this.Size = new System.Drawing.Size(64, 64);
             this.ResumeLayout(false);
 
         }

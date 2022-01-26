@@ -131,7 +131,7 @@ namespace Desktop_Chess
                         $"\n{tmpGuiCell.X} × {tmpGuiCell.Y}";
                     if (tmpGuiCell.CellFigure != null)
                     {
-                        Button tmpGuiFigure = tmpGuiCell.CellFigure;
+                        Gui_Figure tmpGuiFigure = tmpGuiCell.CellFigure;
                         text = $"" +
                             $"{tmpGuiFigure.Location.X}×{tmpGuiFigure.Location.Y}";
                     }
