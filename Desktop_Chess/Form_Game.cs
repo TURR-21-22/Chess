@@ -34,7 +34,7 @@ namespace Desktop_Chess
         private void comboBox_DebugArrays(object sender, EventArgs e)
         {
             ComboBox combo = (ComboBox)sender;
-            Debug.RefreshtCellDatas(combo.Text);
+            Debug.debugScanArray(combo.Text);
             
         }
 

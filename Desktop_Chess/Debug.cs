@@ -15,36 +15,20 @@ namespace Desktop_Chess
 {
     public class Debug
     {
-
         public Form_Game form_game = null;
         private static Board model_Board = RenderInit.model_Board;
         private static Gui_Cell[,] gui_Grid = RenderInit.gui_Grid;
-
-        private bool swap = false;
         static public Cell[,] model_Grid = model_Board.theGrid;
         static public Label[,] debug_Grid = new Label[8, 8];
-        public static Panel container;
-        public static Panel debugPanel;
+        public Panel container;
+        public Panel debugPanel;
+        public static Size debugCellSize;
+        public bool props = true;
+
         public Debug(Form_Game ob) {
             this.form_game = ob;
             form_game = ob;
-        }
-
-        private Color[] swapProps()
-        {
-            Color[] colors = new Color[2];
-            if (swap == true)
-            {
-                colors[0] = Color.DarkBlue;
-                colors[1] = Color.White;
-            }
-            else
-            {
-                colors[0] = Color.CadetBlue;
-                colors[1] = Color.Black;
-            }
-            swap = !swap;
-            return colors;
+            
         }
 
         public void GUIdebug()
@@ -56,121 +40,118 @@ namespace Desktop_Chess
             debugPanel.Location = new Point(12, 12);
             debugPanel.BackColor = Color.Red;
             Size debugCellSize = new Size(debugPanel.Width / 8, debugPanel.Width / 8);
-            
             debugPanel.BringToFront();
-            
-            Color[] colors;
-            Random r = new Random();
 
-            for (int x = 0; x < 8; x++)
-            {
-                colors = swapProps();
-                for (int y = 0; y < 8; y++)
-                {
-                    colors = swapProps();
-                    Label debugCell = new Label();
-                    debug_Grid[x, y] = debugCell;
-                    SetCellDatas(debugPanel, x, y, debugCell, debugCellSize, colors, model_Grid);
-                }
-            }
+            DebugMatrix(debugPanel, debugCellSize,"draw",null);
         }
 
-
-        public void RefreshtCellDatas( string targetGrid)
+        private void DebugMatrix(Panel debugPanel, Size debugCellSize, string action, string grid)
         {
-            switch (targetGrid)//target_Grid.GetType()
-            {
-                case "model_Board":
-                    scanModelArray();
-                    break;
-                case "gui_Grid":
-                    scanGUIArray();
-                    break;
-            }
-        }
-
-        public void scanGUIArray()
-        {
+            Color[] colors = new Color[2];
             for (int x = 0; x < 8; x++)
             {
                 for (int y = 0; y < 8; y++)
                 {
-                    Gui_Cell tmpCell = gui_Grid[x, y];
+                    if ( action == "draw")
+                    {
+                        Label tmpDebugCell = new Label();
+                        debug_Grid[x, y] = tmpDebugCell;
+                        Cell tmpModelCell = model_Board.theGrid[x, y];
+                        Gui_Cell tmpGuiCell = gui_Grid[x, y];
 
-                    if (tmpCell.CellFigure != null)
-                    {
-                        Button tmpFigure = tmpCell.CellFigure;
-                        debug_Grid[x, y].Text = $"";
-                    }
-                    else
-                    {
+                        switch (tmpModelCell.CellBkgColor)
                         {
-                            debug_Grid[x, y].Text = $"";
-                        }
-                    }
-                }
-            }
-        }
-
-        public void scanModelArray()
-        {
-            for (int x = 0; x < 8; x++)
-            {
-                for (int y = 0; y < 8; y++)
-                {
-                    if (model_Grid[x, y].LegalNextMove)
-                    {
-                        Cell tmpCell = model_Board.theGrid[x, y];
-                        if (tmpCell.CellFigure != null)
-                        {
-                            if (model_Grid[x, y].CellFigure.Kick)
-                            {
-                                Figure tmpFigure = model_Board.theGrid[x, y].CellFigure;
-                                debug_Grid[x, y].Text = $"" +
-                                     $"{ tmpFigure.Type }" +
-                                     $"\n{ tmpFigure.Side }" +
-                                     $"\n{ tmpFigure.ID } :: ({ tmpFigure.X } × { tmpFigure.Y })";
-                            }
-                        }
-                        else
-                        {
-                            debug_Grid[x, y].Text = $"legal";
+                            case "light":
+                                colors = new Color[] { Color.White, Color.Black };
+                                break;
+                            case "dark":
+                                colors = new Color[] { Color.Black, Color.White };
+                                break;
                         }
                         
+                        tmpDebugCell.Size = debugCellSize;
+                        tmpDebugCell.Location = new Point(x * debugCellSize.Width, y * debugCellSize.Height);
+                        tmpDebugCell.Font = new System.Drawing.Font("Impact", 8, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+                        tmpDebugCell.BackColor = colors[0];
+                        tmpDebugCell.ForeColor = colors[1];
+                        debugPanel.Controls.Add(tmpDebugCell);
+                        tmpDebugCell.BringToFront();
+                        tmpDebugCell.Text = getBoardInfo(tmpModelCell);
                     }
                     else
                     {
-                        debug_Grid[x, y].Text = $"";
+
+                        Label tmpDebugCell = debug_Grid[x, y];
+                        Cell tmpModelCell = model_Board.theGrid[x, y];
+                        Gui_Cell tmpGuiCell = gui_Grid[x, y];
+                        switch (grid)
+                        {
+                            case "model":
+                                tmpDebugCell.Text = getBoardInfo(tmpModelCell);
+                                break;
+                            case "gui":
+                                tmpDebugCell.Text = getBoardInfo(tmpGuiCell);
+                                break;
+                            default:
+                                break;
+                        }
                     }
-
-
                 }
             }
         }
 
-        private void SetCellDatas(Panel container, int x,int y,Label debugCell, Size debugCellSize, Color[] colors, Cell[,] model_Grid)
+        private string getBoardInfo(object cell)
         {
-            debugCell.Size = debugCellSize;
-            debugCell.Location = new Point( x * debugCellSize.Width, y * debugCellSize.Height);
-            debugCell.Font = new System.Drawing.Font("Impact", 12, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            debugCell.BackColor = colors[0];
-            debugCell.ForeColor = colors[1];
-            if (model_Grid[x, y].Occupied)
+            string text = "";
+            switch (cell.GetType().Name)
             {
-                debugCell.Text = $"Occupied" +
-                    $"\n{ model_Grid[x, y].CellFigure.ID}" +
-                    $"\n{ model_Grid[x, y].CellFigure.Type}" +
-                    $"\n{ model_Grid[x, y].CellFigure.Side}" +
-                    $"";
+                case "Cell":
+                    Cell tmpModelCell = (Cell)cell;
+                    text = $"" +
+                        $"{tmpModelCell.CellBkgColor}" +
+                        $"\nOccupied: {tmpModelCell.Occupied}" +
+                        $"\nLegal: {tmpModelCell.LegalNextMove}" +
+                        $"\n{tmpModelCell.X}×{tmpModelCell.Y}";
+                    if (tmpModelCell.CellFigure != null)
+                    {
+                        Figure tmpModelFigure = tmpModelCell.CellFigure;
+                        text = $"" +
+                            $"Type: {tmpModelFigure.Type}" +
+                            $"\nSide: {tmpModelFigure.Side}" +
+                            $"\nID: {tmpModelFigure.ID}, KIck: {tmpModelFigure.Kick}" +
+                            $"\nCellBkg: {tmpModelFigure.FigureCell.CellBkgColor}" +
+                            $"\nCellCoord: {tmpModelFigure.FigureCell.X} × {tmpModelFigure.FigureCell.Y}" +
+                            $"\n{tmpModelFigure.X}×{tmpModelFigure.Y}";
+                    }
+                    break;
+                case "Gui_Cell":
+                    Gui_Cell tmpGuiCell = (Gui_Cell)cell;
+                    text = $"" +
+                        $"Legal: {tmpGuiCell.LegalNextMove}" +
+                        $"\n{tmpGuiCell.X} × {tmpGuiCell.Y}";
+                    if (tmpGuiCell.CellFigure != null)
+                    {
+                        Button tmpGuiFigure = tmpGuiCell.CellFigure;
+                        text = $"" +
+                            $"{tmpGuiFigure.Location.X}×{tmpGuiFigure.Location.Y}";
+                    }
+                    break;
             }
-            else
-            {
-                debugCell.Text = $"";
-            }
-            container.Controls.Add(debugCell);
-            debugCell.BringToFront();
+            return text;
         }
 
-
+        public void debugScanArray( string targetGrid)
+        {
+            
+            switch (targetGrid)//target_Grid.GetType()
+            {
+                case "model":
+                    DebugMatrix(debugPanel, debugCellSize, "scan","model");
+                    break;
+                case "gui":
+                    DebugMatrix(debugPanel, debugCellSize, "scan","gui");
+                    break;
+            }
+        }
     }
 }

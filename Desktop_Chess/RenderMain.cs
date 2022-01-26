@@ -16,11 +16,11 @@ namespace Desktop_Chess
     public class RenderMain
     {
         Form_Game form_game = null;
-        //public RenderMain(Form_Game ob) { this.form_game = ob; }
         static RenderInit renderInit;
         static Debug debug;
         private static Board model_Board = RenderInit.model_Board;
         public static Gui_Cell[,] gui_Grid = RenderInit.gui_Grid;
+        public static Label[,] debug_Grid = Debug.debug_Grid;
 
         public RenderMain(Form_Game ob)
         {
@@ -66,29 +66,45 @@ namespace Desktop_Chess
                 RenderInit.gui_whiteFigures[i].BackColor = Color.Black;
                 RenderInit.gui_blackFigures[i].BackColor = Color.Black;
             }
-
-
-                model_Board.MarkNextLegalMove(currenCell, figureType);
+            
+            model_Board.MarkNextLegalMove(currenCell, figureType);
+            
             for (int x = 0; x < model_Board.Size; x++)
             {
-                
                 for (int y = 0; y < model_Board.Size; y++)
                 {
-                    gui_Grid[x, y].BackColor = Color.Black;
-                    
-                    Debug.debug_Grid[x, y].Text = "";
-                    
+                    Cell tmpModelCell = model_Board.theGrid[x, y];
+                    Gui_Cell  tmpGuiCell = gui_Grid[x, y];
+                    Label tmpDebugCell = debug_Grid[x, y];
+                    Color[] tmpCellBkgColors = { Color.White,Color.Black };
+
+                    tmpDebugCell.Text = $"" +
+                       $"{tmpModelCell.CellBkgColor}";
+
+                    switch (tmpModelCell.CellBkgColor)
+                    {
+                        case "light":
+                            tmpDebugCell.BackColor = tmpCellBkgColors[0];
+                            tmpDebugCell.ForeColor = tmpCellBkgColors[1];
+                            break;
+                        case "dark":
+                            tmpDebugCell.BackColor = tmpCellBkgColors[1];
+                            tmpDebugCell.ForeColor = tmpCellBkgColors[0];
+                            break;
+                        default:
+                            break;
+                    }
                     if (model_Board.theGrid[x, y].LegalNextMove)
                     {
-                        Cell tmpCell = model_Board.theGrid[x, y];
-                        if (tmpCell.CellFigure != null)
+                        
+                        if (tmpModelCell.CellFigure != null)
                         {
                             if (model_Board.theGrid[x, y].CellFigure.Kick)
                             {
-                                
-                                gui_Grid[x, y].CellFigure.BackColor = Color.Red;
-                                Figure tmpFigure = model_Board.theGrid[x, y].CellFigure;
-                                Debug.debug_Grid[x, y].Text = $"Kick";
+
+                                tmpGuiCell.BackColor = Color.Red;
+                                Figure tmpFigure = tmpModelCell.CellFigure;
+                                tmpDebugCell.Text += $"\n>> Kick <<";
                                 /*
                                 Debug.debug_Grid[x, y].Text = $"" +
                                     $"{ tmpFigure.Type }" +
@@ -100,7 +116,8 @@ namespace Desktop_Chess
                         else
                         {
                             gui_Grid[x, y].BackColor = Color.White;
-                            Debug.debug_Grid[x, y].Text = $"Legal";
+                            tmpDebugCell.Text = $"Legal" +
+                                $"\n{tmpModelCell.CellBkgColor}";
                         }
                     }
 

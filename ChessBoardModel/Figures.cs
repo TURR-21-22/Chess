@@ -10,26 +10,32 @@ namespace ChessBoardModel
     {
         public Figures()
         {
-            //createFigures(0, "black", model_blackFiguresON, 1);
-            //createFigures(7, "white", model_whiteFiguresON, -1);
-            testFigures();
+            createFigures(0, "black", model_blackFiguresON, 1 );
+            createFigures(7, "white", model_whiteFiguresON, -1 );
+          //  testFigures2();
         }
-
-        private void createFigures(int y, string side, List<Figure> list, int direction)
+        
+        
+        public void createFigures(int y, string side, List<Figure> list, int direction)
         {
+            int x;
+            string type;
             for (int i = 0; i < nobles.Count; i++)
             {
                 for (int j = 0; j < nobles.ElementAt(i).Value.Length; j++)
                 {
-                    list.Add(new Figure(side, nobles.ElementAt(i).Key, j, nobles.ElementAt(i).Value[j], y));
+                    x = nobles.ElementAt(i).Value[j];
+                    type = nobles.ElementAt(i).Key;
+                    list.Add( new Figure(x, y, side, type, j) ); //, modelCell
                 }
             }
-            for (int i = 0; i < 8; i++)
+
+            /*for (int i = 0; i < 8; i++)
             {
                 list.Add(new Figure(side, "gyalog", i, i, y + direction));
-            }
+            }*/
         }
-
+        
         private Dictionary<string, int[]> nobles = new Dictionary<string, int[]>() 
         {
             { "kiraly",new int[]{4} },
@@ -48,10 +54,11 @@ namespace ChessBoardModel
         public List<Figure> Model_whiteFiguresOFF { get { return model_whiteFiguresOFF; } set { model_whiteFiguresOFF = value; } }
         public List<Figure> Model_blackFiguresOFF { get { return model_blackFiguresOFF; } set { model_blackFiguresOFF = value; } }
 
+        /*
         private void testFigures()
         {
             // only for testing purpose
-            /* Side = side, Type = type, ID = id, X = x, Y = y, Kick = kick */
+            // Side = side, Type = type, ID = id, X = x, Y = y, Kick = kick 
             model_whiteFiguresON.Add(new Figure("white", "kiralyno", 1, 0, 7));
             model_whiteFiguresON.Add(new Figure("white", "huszar", 1, 7, 7));
             model_whiteFiguresON.Add(new Figure("white", "kiraly", 1, 3, 3));
@@ -70,7 +77,6 @@ namespace ChessBoardModel
             model_blackFiguresON.Add(new Figure("black", "kiralyno", 1, 2, 4));
             model_blackFiguresON.Add(new Figure("black", "gyalog", 1, 5, 4));
         }
-
-
+    */
     }
 }

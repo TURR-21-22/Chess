@@ -92,8 +92,8 @@ namespace Desktop_Chess
             this.comboBox_arrays.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_arrays.FormattingEnabled = true;
             this.comboBox_arrays.Items.AddRange(new object[] {
-            "model_Board",
-            "gui_Grid"});
+            "model",
+            "gui"});
             this.comboBox_arrays.Location = new System.Drawing.Point(830, 9);
             this.comboBox_arrays.Name = "comboBox_arrays";
             this.comboBox_arrays.Size = new System.Drawing.Size(121, 23);

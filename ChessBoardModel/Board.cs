@@ -11,41 +11,50 @@ namespace ChessBoardModel
         
         public int Size { get; set; }
         public Cell[,] theGrid { get; set; }
-
         public static Figures model_Figures = new Figures();
-        
+        public bool CellProps = true;
 
         public Board (int s)
         {
             Size = s;
             theGrid = new Cell[Size, Size];
+           
             for (int x = 0; x < Size; x++)
             {
+                CellProps = !CellProps;
                 for (int y = 0; y < Size; y++)
                 {
+                    CellProps = !CellProps;
                     Cell cell = new Cell(x, y);
                     theGrid[x, y] = cell;
                     cell.LegalNextMove = false;
                     cell.Occupied = false;
                     cell.CellFigure = null;
+                    if (CellProps) { cell.CellBkgColor = "light"; } else { cell.CellBkgColor = "dark"; }
                 }
             }
 
             List<Figure> white = model_Figures.Model_whiteFiguresON;
             List<Figure> black = model_Figures.Model_blackFiguresON;
 
-                for (int i = 0; i < white.Count; i++)
-                {
-                    //Figure figure = new Figure(side, string type, int id, int x, int y);
+            for (int i = 0; i < white.Count; i++)
+            {
+                theGrid[white[i].X, white[i].Y].CellFigure = white[i];
+                white[i].FigureCell = theGrid[white[i].X, white[i].Y];
 
-                    theGrid[white[i].X, white[i].Y].Occupied = true;
-                    theGrid[white[i].X, white[i].Y].CellFigure = white[i];
-                    theGrid[black[i].X, black[i].Y].Occupied = true;
-                    theGrid[black[i].X, black[i].Y].CellFigure = black[i];
-                }
+                theGrid[black[i].X, black[i].Y].CellFigure = black[i];
+                black[i].FigureCell = theGrid[black[i].X, black[i].Y];
+            }
+            
+            for (int i = 0; i < white.Count; i++)
+            {
+
+                theGrid[white[i].X, white[i].Y].Occupied = true;
+                theGrid[white[i].X, white[i].Y].CellFigure = white[i];
+                theGrid[black[i].X, black[i].Y].Occupied = true;
+                theGrid[black[i].X, black[i].Y].CellFigure = black[i];
+            }
         }
-
-
         public void MarkNextLegalMove(Cell currentCell, string chessPiece)
         {
             for (int x = 0; x < Size; x++)
@@ -86,7 +95,6 @@ namespace ChessBoardModel
                 default:
                     break;
             }
-            //theGrid[currentCell.X, currentCell.Y].Occupied = true;
         }
 
 

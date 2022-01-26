@@ -29,8 +29,8 @@ namespace Desktop_Chess
         public static Panel divRight;
         public static Panel divChess;
         
-        public Dictionary<string, Image[]> gui_figureImagesWhite = new Dictionary<string, Image[]>();
-        public Dictionary<string, Image[]> gui_figureImagesBlack = new Dictionary<string, Image[]>();
+        //public Dictionary<string, Image[]> gui_figureImagesWhite = new Dictionary<string, Image[]>();
+        //public Dictionary<string, Image[]> gui_figureImagesBlack = new Dictionary<string, Image[]>();
 
         public bool CellProps = false;
 
@@ -144,6 +144,7 @@ namespace Desktop_Chess
                 });
             }
 
+            /*
             string[] mod = new string[2] { "light", "dark" };
             type = new string[6] { "kiraly", "kiralyno", "huszar", "futo", "bastya", "gyalog" };
             value = new Image[1];
@@ -157,6 +158,7 @@ namespace Desktop_Chess
             {
                 gui_figureImagesBlack.Add(skin, genFiguresImages(skin, "black", mod, type));
             }
+            */
         }
 
         private Image[] genFiguresImages(string skin, string side, string[] mod, string[] type)
@@ -176,46 +178,35 @@ namespace Desktop_Chess
             return tmp;
         }
 
-        public object[] swapCellProps(string skin)
-        {
-            object[] props = new object[3];
-            if (CellProps == true)
-            {
-                props = new object[3] { (Image)gui_cellImages[skin][0], Color.Black, Color.White };
-            }
-            else
-            {
-                props = new object[3] { (Image)gui_cellImages[skin][1], Color.White, Color.Black };
-            }
-            CellProps = !CellProps;
-            return props;
-        }
-
         public void populaBoardteGrid(string skin)
         {
             int size = divChess.Width / model_Board.Size;
             divChess.Height = divChess.Width;
             for (int x = 0; x < model_Board.Size; x++)
             {
-                object[] props = swapCellProps(skin);
                 for (int y = 0; y < model_Board.Size; y++)
                 {
-                    props = swapCellProps(skin);
-                    //Gui_Cell(int x, int y, Figure cellFigure)
-                    //Gui_Cell gui_Cell = new Gui_Cell(x,y,);
-                    //gui_Grid[x, y] = gui_Cell;
-
-                    Cell tmpCell = model_Board.theGrid[x, x];
-                    if (tmpCell.CellFigure != null)
-                    {
-                        Figure model_CellFigure = model_Board.theGrid[x, x].CellFigure;
-                        setCell(x, y, model_CellFigure, size, props);
-                    }
-                    else
-                    {
-                        setCell(x, y, null,size, props);
-                    }
+                    Gui_Cell gui_Cell = new Gui_Cell(x, y);
+                    gui_Grid[x, y] = gui_Cell;
+                    gui_Cell.Width = size;
+                    gui_Cell.Height = size;
+                    gui_Cell.ForeColor = Color.White;
+                    gui_Cell.BackColor = Color.Black;
                     
+                    switch (model_Board.theGrid[x, y].CellBkgColor)
+                    {
+                        case "light":
+                            gui_Cell.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"" +
+                                $"{skin}_cell_white");
+                            break;
+                        case "dark":
+                            gui_Cell.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"" +
+                                $"{skin}_cell_black");
+                            break;
+                    }
+                    gui_Cell.Click += form_game.Board_Click;
+                    gui_Cell.Location = new Point(x * size, y * size);
+                    divChess.Controls.Add(gui_Cell);
                 }
             }
             for (int i = 0; i < model_Figures.Model_blackFiguresON.Count; i++)
@@ -276,19 +267,26 @@ namespace Desktop_Chess
 
         public void RestartGui(string skin)
         {
-            CellProps = false;
             form_game.BackgroundImage = gui_backgroundImages[skin][0];
-
             for (int y = 0; y < model_Board.Size; y++)
             {
-                object[] props = swapCellProps(skin);
-
                 for (int x = 0; x < model_Board.Size; x++)
                 {
-                    props = swapCellProps(skin);
-                    gui_Grid[y, x].BackgroundImage = (Image)props[0];
-                    //gui_Grid[y, x].ForeColor = (Color)props[1];
-                    gui_Grid[y, x].BackColor = (Color)props[2];
+                    gui_Grid[y, x].ForeColor = Color.White;
+                    gui_Grid[y, x].BackColor = Color.Black;
+                    switch (model_Board.theGrid[x, y].CellBkgColor)
+                    {
+                        case "light":
+                            gui_Grid[y, x].BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"" +
+                                $"{skin}_cell_white");
+                                
+                            break;
+                        case "dark":
+                            gui_Grid[y, x].BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"" +
+                                $"{skin}_cell_black");
+                                
+                            break;
+                    }
                 }
             }
 
@@ -313,25 +311,27 @@ namespace Desktop_Chess
         }
         public void loadFiguresSkin(string skin, Button gui_Figure, Figure model_Figure, Gui_Cell gui_Cell, Cell model_Cell)
         {
-            if (gui_Cell.BackColor == Color.Black)
+            gui_Figure.ForeColor = Color.White;
+            gui_Figure.BackColor = Color.Black;
+            switch (model_Cell.CellBkgColor)
             {
-                gui_Figure.ForeColor = Color.White;
-                gui_Figure.BackColor = Color.Black;
-                gui_Figure.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_figure_" +
-                    $"{model_Figure.Side}_" +
-                    $"{"dark"}_" +
-                    $"{model_Figure.Type}");
-            }
-            else
-            {
-                gui_Figure.ForeColor = Color.Black;
-                gui_Figure.BackColor = Color.White;
-                gui_Figure.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_figure_" +
+                case "light":
+                    gui_Figure.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_figure_" +
                         $"{model_Figure.Side}_" +
                         $"{"light"}_" +
                         $"{model_Figure.Type}");
+
+                    break;
+                case "dark":
+                    gui_Figure.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_figure_" +
+                        $"{model_Figure.Side}_" +
+                        $"{"dark"}_" +
+                        $"{model_Figure.Type}");
+
+                    break;
             }
         }
+
 
     }
 }
