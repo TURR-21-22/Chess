@@ -52,7 +52,7 @@ namespace Desktop_Chess
             Panel container = form_game.panel_Container_Right;
             Panel debugPanel = form_game.panel_Debug;
 
-            debugPanel.Size = new Size(Convert.ToInt32(container.Width*0.7)-24, Convert.ToInt32(container.Width*0.7)-24);
+            debugPanel.Size = new Size(Convert.ToInt32(container.Width*1)-24, Convert.ToInt32(container.Width*1)-24);
             debugPanel.Location = new Point(12, 12);
             debugPanel.BackColor = Color.Red;
             Size debugCellSize = new Size(debugPanel.Width / 8, debugPanel.Width / 8);
@@ -96,14 +96,11 @@ namespace Desktop_Chess
                 for (int y = 0; y < 8; y++)
                 {
                     Gui_Cell tmpCell = gui_Grid[x, y];
-                    
+
                     if (tmpCell.CellFigure != null)
                     {
-                        Figure tmpFigure = tmpCell.CellFigure;
-                        debug_Grid[x, y].Text = $"" +
-                        $"ID: {tmpFigure.ID}" +
-                        $"\nSide: {tmpFigure.Side}" +
-                        $"\nType: {tmpFigure.Type}";
+                        Button tmpFigure = tmpCell.CellFigure;
+                        debug_Grid[x, y].Text = $"";
                     }
                     else
                     {
@@ -123,17 +120,16 @@ namespace Desktop_Chess
                 {
                     if (model_Grid[x, y].LegalNextMove)
                     {
-                        if (model_Grid[x, y].KickThatShit)
+                        Cell tmpCell = model_Board.theGrid[x, y];
+                        if (tmpCell.CellFigure != null)
                         {
-                            Cell tmpCell = model_Board.theGrid[x, y];
-                            if (tmpCell.CellFigure != null)
+                            if (model_Grid[x, y].CellFigure.Kick)
                             {
                                 Figure tmpFigure = model_Board.theGrid[x, y].CellFigure;
                                 debug_Grid[x, y].Text = $"" +
-                                    $"{ tmpFigure.ID}" +
-                                    $"\n{ tmpFigure.Type}" +
-                                    $"\n{ tmpFigure.Side}" +
-                                    $"\n{ tmpFigure.X } × { tmpFigure.Y }";
+                                     $"{ tmpFigure.Type }" +
+                                     $"\n{ tmpFigure.Side }" +
+                                     $"\n{ tmpFigure.ID } :: ({ tmpFigure.X } × { tmpFigure.Y })";
                             }
                         }
                         else
@@ -156,7 +152,7 @@ namespace Desktop_Chess
         {
             debugCell.Size = debugCellSize;
             debugCell.Location = new Point( x * debugCellSize.Width, y * debugCellSize.Height);
-            debugCell.Font = new System.Drawing.Font("Arial Narrow", 8, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            debugCell.Font = new System.Drawing.Font("Impact", 12, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             debugCell.BackColor = colors[0];
             debugCell.ForeColor = colors[1];
             if (model_Grid[x, y].Occupied)

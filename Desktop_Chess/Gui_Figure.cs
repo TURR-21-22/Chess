@@ -11,20 +11,17 @@ using System.Windows.Forms;
 
 namespace Desktop_Chess
 {
-    public partial class Gui_Cell : UserControl
+    public partial class Gui_Figure : UserControl
     {
-
         public int X { get; set; }
         public int Y { get; set; }
-        public Button CellFigure { get; set; }
-        public bool Occupied { get; set; }
+        public string Side { get; set; }
+        public string Type { get; set; }
+        public int ID { get; set; }
         public bool LegalNextMove { get; set; }
-//        public bool Kick { get; set; }
-
-        public Gui_Cell(int x, int y)
+        public bool Kick { get; set; }
+        public Gui_Figure()
         {
-            X = x;
-            Y = y;
             InitializeComponent();
         }
     }

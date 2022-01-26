@@ -16,6 +16,9 @@ namespace ChessBoardModel
         public string Side { get => side; set => side = value; }
         public string Type { get => type; set => type = value; }
         public int ID { get => id; set => id = value; }
+        public bool LegalNextMove { get; set; }
+        public bool Kick { get; set; }
+
         //public bool Kick { get ; set ; }
 
         public Figure(string side, string type, int id,int x, int y) //, bool kick

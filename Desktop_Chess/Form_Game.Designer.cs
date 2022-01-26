@@ -48,10 +48,10 @@ namespace Desktop_Chess
             // 
             this.label_Skins.AutoSize = true;
             this.label_Skins.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label_Skins.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label_Skins.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label_Skins.Location = new System.Drawing.Point(9, 9);
             this.label_Skins.Name = "label_Skins";
-            this.label_Skins.Size = new System.Drawing.Size(52, 23);
+            this.label_Skins.Size = new System.Drawing.Size(45, 20);
             this.label_Skins.TabIndex = 0;
             this.label_Skins.Text = "Skins";
             // 

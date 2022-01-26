@@ -58,43 +58,59 @@ namespace Desktop_Chess
 
         }
 
-        private void draw2Debug(Point location, string figureType)
+        public void draw2Debug(Point location, string figureType)
         {
             Cell currenCell = model_Board.theGrid[location.X, location.Y];
+            for (int i = 0; i < RenderInit.gui_whiteFigures.Count; i++)
+            {
+                RenderInit.gui_whiteFigures[i].BackColor = Color.Black;
+                RenderInit.gui_blackFigures[i].BackColor = Color.Black;
+            }
 
-            model_Board.MarkNextLegalMove(currenCell, figureType);
+
+                model_Board.MarkNextLegalMove(currenCell, figureType);
             for (int x = 0; x < model_Board.Size; x++)
             {
+                
                 for (int y = 0; y < model_Board.Size; y++)
                 {
-                    //gui_Grid[x, y].Text = "";
+                    gui_Grid[x, y].BackColor = Color.Black;
+                    
                     Debug.debug_Grid[x, y].Text = "";
+                    
                     if (model_Board.theGrid[x, y].LegalNextMove)
                     {
-                        if (model_Board.theGrid[x, y].KickThatShit)
+                        Cell tmpCell = model_Board.theGrid[x, y];
+                        if (tmpCell.CellFigure != null)
                         {
-
-
-                            Cell tmpCell = model_Board.theGrid[x, y];
-                            if (tmpCell.CellFigure != null)
+                            if (model_Board.theGrid[x, y].CellFigure.Kick)
                             {
+                                
+                                gui_Grid[x, y].CellFigure.BackColor = Color.Red;
                                 Figure tmpFigure = model_Board.theGrid[x, y].CellFigure;
+                                Debug.debug_Grid[x, y].Text = $"Kick";
+                                /*
                                 Debug.debug_Grid[x, y].Text = $"" +
-                                    $"{ tmpFigure.ID}" +
-                                    $"\n{ tmpFigure.Type}" +
-                                    $"\n{ tmpFigure.Side}" +
-                                    $"\n{ tmpFigure.X } × { tmpFigure.Y }";
+                                    $"{ tmpFigure.Type }" +
+                                    $"\n{ tmpFigure.Side }" +
+                                    $"\n{ tmpFigure.ID } :: ({ tmpFigure.X } × { tmpFigure.Y })";
+                            */
                             }
                         }
                         else
                         {
+                            gui_Grid[x, y].BackColor = Color.White;
                             Debug.debug_Grid[x, y].Text = $"Legal";
                         }
                     }
+
+                    /*
                     else
                     {
+                        gui_Grid[x, y].BackColor = Color.Black;
                         Debug.debug_Grid[x, y].Text = "";
                     }
+                    */
                 }
             }
 

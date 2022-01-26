@@ -13,7 +13,7 @@ namespace ChessBoardModel
         public bool Occupied { get; set; }
         public bool LegalNextMove { get; set; }
         public Figure CellFigure { get; set; }
-        public bool KickThatShit { get; set; }
+        //public bool Kick { get; set; }
 
         public Cell(int x, int y)
         {

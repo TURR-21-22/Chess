@@ -204,8 +204,18 @@ namespace Desktop_Chess
                     //Gui_Cell(int x, int y, Figure cellFigure)
                     //Gui_Cell gui_Cell = new Gui_Cell(x,y,);
                     //gui_Grid[x, y] = gui_Cell;
-                    Figure model_CellFigure = model_Board.theGrid[x,x].CellFigure;
-                    setCell(x,y, model_CellFigure, size, props);
+
+                    Cell tmpCell = model_Board.theGrid[x, x];
+                    if (tmpCell.CellFigure != null)
+                    {
+                        Figure model_CellFigure = model_Board.theGrid[x, x].CellFigure;
+                        setCell(x, y, model_CellFigure, size, props);
+                    }
+                    else
+                    {
+                        setCell(x, y, null,size, props);
+                    }
+                    
                 }
             }
             for (int i = 0; i < model_Figures.Model_blackFiguresON.Count; i++)
@@ -229,13 +239,12 @@ namespace Desktop_Chess
 
         private void setCell(int x, int y, Figure model_Cell, int size, Object[] props)
         {
-            Gui_Cell gui_Cell = new Gui_Cell(x, y,model_Cell);
+            Gui_Cell gui_Cell = new Gui_Cell(x, y);
             gui_Grid[x, y] = gui_Cell;
             gui_Cell.Width = size;
             gui_Cell.Height = size;
-            gui_Cell.BackgroundImage = (Image)props[0];
-            gui_Cell.ForeColor = (Color)props[1];
-            gui_Cell.BackColor = (Color)props[2];
+            gui_Cell.BackgroundImage = (Image)props[0]; //(Image)props[0];
+            gui_Cell.BackColor = (Color)Color.Black; //(Color)props[1];
             gui_Cell.Click += form_game.Board_Click;
             gui_Cell.Location = new Point(x * size, y * size);
             divChess.Controls.Add(gui_Cell);
@@ -243,6 +252,7 @@ namespace Desktop_Chess
 
         private void setFigure(string skin, Button gui_Figure, Figure modelFigure, Gui_Cell gui_Cell, Cell modelCell, int size, int cnt)
         {
+            gui_Cell.CellFigure = gui_Figure;
             gui_Figure.Height = size;
             gui_Figure.Width = size;
             loadFiguresSkin(skin, gui_Figure, modelFigure, gui_Cell, modelCell);
@@ -277,7 +287,7 @@ namespace Desktop_Chess
                 {
                     props = swapCellProps(skin);
                     gui_Grid[y, x].BackgroundImage = (Image)props[0];
-                    gui_Grid[y, x].ForeColor = (Color)props[1];
+                    //gui_Grid[y, x].ForeColor = (Color)props[1];
                     gui_Grid[y, x].BackColor = (Color)props[2];
                 }
             }

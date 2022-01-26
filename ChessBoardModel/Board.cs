@@ -28,23 +28,21 @@ namespace ChessBoardModel
                     cell.LegalNextMove = false;
                     cell.Occupied = false;
                     cell.CellFigure = null;
-                    cell.KickThatShit = false;
                 }
             }
 
             List<Figure> white = model_Figures.Model_whiteFiguresON;
             List<Figure> black = model_Figures.Model_blackFiguresON;
 
-            for (int i = 0; i < model_Figures.Model_blackFiguresON.Count; i++)
-            {
+                for (int i = 0; i < white.Count; i++)
+                {
+                    //Figure figure = new Figure(side, string type, int id, int x, int y);
 
-                theGrid[white[i].X, white[i].Y].Occupied = true;
-                theGrid[white[i].X, white[i].Y].CellFigure = white[i];
-                theGrid[black[i].X, black[i].Y].Occupied = true;
-                theGrid[black[i].X, black[i].Y].CellFigure = black[i];
-            }
-            
-
+                    theGrid[white[i].X, white[i].Y].Occupied = true;
+                    theGrid[white[i].X, white[i].Y].CellFigure = white[i];
+                    theGrid[black[i].X, black[i].Y].Occupied = true;
+                    theGrid[black[i].X, black[i].Y].CellFigure = black[i];
+                }
         }
 
 
@@ -55,7 +53,12 @@ namespace ChessBoardModel
                 for (int y = 0; y < Size; y++)
                 {
                     theGrid[x, y].LegalNextMove = false;
-                    theGrid[x, y].KickThatShit = false;
+                    if (theGrid[x, y].CellFigure != null)
+                    {
+                        theGrid[x, y].CellFigure.Kick = false;
+                    }
+                        
+                    
                 }
             }
             
@@ -115,7 +118,7 @@ namespace ChessBoardModel
                     if (theGrid[x, y].Occupied && theGrid[x, y].CellFigure.Side != side)
                     {
                         theGrid[x, y].LegalNextMove = true;
-                        theGrid[x, y].KickThatShit = true;
+                        theGrid[x, y].CellFigure.Kick = true;
                     }
                 }
             }
@@ -149,7 +152,7 @@ namespace ChessBoardModel
                     else if (theGrid[x, y].CellFigure.Side != side)
                     {
                         theGrid[x, y].LegalNextMove = true;
-                        theGrid[x, y].KickThatShit = true;
+                        theGrid[x, y].CellFigure.Kick = true;
                     }
                 }
             }
@@ -189,7 +192,7 @@ namespace ChessBoardModel
                         if (theGrid[x, y].CellFigure.Side != side)
                         {
                             theGrid[x, y].LegalNextMove = true;
-                            theGrid[x, y].KickThatShit = true;
+                            theGrid[x, y].CellFigure.Kick = true;
                         }
                         break;
                     }
@@ -216,7 +219,7 @@ namespace ChessBoardModel
                         if (theGrid[x, y].CellFigure.Side != side)
                         {
                             theGrid[x, y].LegalNextMove = true;
-                            theGrid[x, y].KickThatShit = true;
+                            theGrid[x, y].CellFigure.Kick = true;
                             break;
                         }
                         else
