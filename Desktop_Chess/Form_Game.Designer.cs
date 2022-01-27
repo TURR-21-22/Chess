@@ -32,7 +32,6 @@ namespace Desktop_Chess
             this.label_Skins = new System.Windows.Forms.Label();
             this.panel_ChessBoard = new System.Windows.Forms.Panel();
             this.panel_Container_Top = new System.Windows.Forms.Panel();
-            this.hScrollBar_Debug = new System.Windows.Forms.HScrollBar();
             this.comboBox_arrays = new System.Windows.Forms.ComboBox();
             this.label_Rescan = new System.Windows.Forms.Label();
             this.comboBox_Skin_List = new System.Windows.Forms.ComboBox();
@@ -68,7 +67,6 @@ namespace Desktop_Chess
             // panel_Container_Top
             // 
             this.panel_Container_Top.BackColor = System.Drawing.Color.Transparent;
-            this.panel_Container_Top.Controls.Add(this.hScrollBar_Debug);
             this.panel_Container_Top.Controls.Add(this.comboBox_arrays);
             this.panel_Container_Top.Controls.Add(this.label_Rescan);
             this.panel_Container_Top.Controls.Add(this.label_Skins);
@@ -78,13 +76,6 @@ namespace Desktop_Chess
             this.panel_Container_Top.Padding = new System.Windows.Forms.Padding(6);
             this.panel_Container_Top.Size = new System.Drawing.Size(960, 45);
             this.panel_Container_Top.TabIndex = 4;
-            // 
-            // hScrollBar_Debug
-            // 
-            this.hScrollBar_Debug.Location = new System.Drawing.Point(373, 9);
-            this.hScrollBar_Debug.Name = "hScrollBar_Debug";
-            this.hScrollBar_Debug.Size = new System.Drawing.Size(351, 17);
-            this.hScrollBar_Debug.TabIndex = 5;
             // 
             // comboBox_arrays
             // 
@@ -110,6 +101,7 @@ namespace Desktop_Chess
             this.label_Rescan.Size = new System.Drawing.Size(67, 23);
             this.label_Rescan.TabIndex = 5;
             this.label_Rescan.Text = "Rescan";
+            this.label_Rescan.Click += new System.EventHandler(this.label_Rescan_Click);
             // 
             // comboBox_Skin_List
             // 
@@ -188,7 +180,6 @@ namespace Desktop_Chess
         public System.Windows.Forms.ComboBox comboBox_arrays;
         public System.Windows.Forms.Panel panel_Debug;
         public System.Windows.Forms.Panel panel_Container_Right;
-        public System.Windows.Forms.HScrollBar hScrollBar_Debug;
     }
 }
 

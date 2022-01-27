@@ -54,12 +54,12 @@ namespace Desktop_Chess
                 {
                     if ( action == "draw")
                     {
-                        Label tmpDebugCell = new Label();
-                        debug_Grid[x, y] = tmpDebugCell;
-                        Cell tmpModelCell = model_Board.theGrid[x, y];
-                        Gui_Cell tmpGuiCell = gui_Grid[x, y];
+                        Label debugCell = new Label();
+                        debug_Grid[x, y] = debugCell;
+                        Cell modelCell = model_Board.theGrid[x, y];
+                        Gui_Cell guiCell = gui_Grid[x, y];
 
-                        switch (tmpModelCell.CellBkgColor)
+                        switch (modelCell.CellBkgColor)
                         {
                             case "light":
                                 colors = new Color[] { Color.White, Color.Black };
@@ -69,28 +69,28 @@ namespace Desktop_Chess
                                 break;
                         }
                         
-                        tmpDebugCell.Size = debugCellSize;
-                        tmpDebugCell.Location = new Point(x * debugCellSize.Width, y * debugCellSize.Height);
-                        tmpDebugCell.Font = new System.Drawing.Font("Impact", 8, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-                        tmpDebugCell.BackColor = colors[0];
-                        tmpDebugCell.ForeColor = colors[1];
-                        debugPanel.Controls.Add(tmpDebugCell);
-                        tmpDebugCell.BringToFront();
-                        tmpDebugCell.Text = getBoardInfo(tmpModelCell);
+                        debugCell.Size = debugCellSize;
+                        debugCell.Location = new Point(x * debugCellSize.Width, y * debugCellSize.Height);
+                        debugCell.Font = new System.Drawing.Font("Impact", 8, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+                        debugCell.BackColor = colors[0];
+                        debugCell.ForeColor = colors[1];
+                        debugPanel.Controls.Add(debugCell);
+                        debugCell.BringToFront();
+                        debugCell.Text = getBoardInfo(modelCell);
                     }
                     else
                     {
 
-                        Label tmpDebugCell = debug_Grid[x, y];
-                        Cell tmpModelCell = model_Board.theGrid[x, y];
-                        Gui_Cell tmpGuiCell = gui_Grid[x, y];
+                        Label debugCell = debug_Grid[x, y];
+                        Cell modelCell = model_Board.theGrid[x, y];
+                        Gui_Cell guiCell = gui_Grid[x, y];
                         switch (grid)
                         {
                             case "model":
-                                tmpDebugCell.Text = getBoardInfo(tmpModelCell);
+                                debugCell.Text = getBoardInfo(modelCell);
                                 break;
                             case "gui":
-                                tmpDebugCell.Text = getBoardInfo(tmpGuiCell);
+                                debugCell.Text = getBoardInfo(guiCell);
                                 break;
                             default:
                                 break;
@@ -106,15 +106,15 @@ namespace Desktop_Chess
             switch (cell.GetType().Name)
             {
                 case "Cell":
-                    Cell tmpModelCell = (Cell)cell;
+                    Cell modelCell = (Cell)cell;
                     text = $"" +
-                        $"{tmpModelCell.CellBkgColor}" +
-                        $"\nOccupied: {tmpModelCell.Occupied}" +
-                        $"\nLegal: {tmpModelCell.LegalNextMove}" +
-                        $"\n{tmpModelCell.X}×{tmpModelCell.Y}";
-                    if (tmpModelCell.CellFigure != null)
+                        $"{modelCell.CellBkgColor}" +
+                        $"\nOccupied: {modelCell.Occupied}" +
+                        $"\nLegal: {modelCell.LegalNextMove}" +
+                        $"\n{modelCell.X}×{modelCell.Y}";
+                    if (modelCell.CellFigure != null)
                     {
-                        Figure tmpModelFigure = tmpModelCell.CellFigure;
+                        Figure tmpModelFigure = modelCell.CellFigure;
                         text = $"" +
                             $"Type: {tmpModelFigure.Type}" +
                             $"\nSide: {tmpModelFigure.Side}" +
@@ -125,15 +125,15 @@ namespace Desktop_Chess
                     }
                     break;
                 case "Gui_Cell":
-                    Gui_Cell tmpGuiCell = (Gui_Cell)cell;
+                    Gui_Cell guiCell = (Gui_Cell)cell;
                     text = $"" +
-                        $"Legal: {tmpGuiCell.LegalNextMove}" +
-                        $"\n{tmpGuiCell.X} × {tmpGuiCell.Y}";
-                    if (tmpGuiCell.CellFigure != null)
+                        $"Legal: {guiCell.LegalNextMove}" +
+                        $"\n{guiCell.X} × {guiCell.Y}";
+                    if (guiCell.CellFigure != null)
                     {
-                        Gui_Figure tmpGuiFigure = tmpGuiCell.CellFigure;
+                        Gui_Figure guiFigure = guiCell.CellFigure;
                         text = $"" +
-                            $"{tmpGuiFigure.Location.X}×{tmpGuiFigure.Location.Y}";
+                            $"{guiFigure.Location.X}×{guiFigure.Location.Y}";
                     }
                     break;
             }

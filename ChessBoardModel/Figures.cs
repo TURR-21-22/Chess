@@ -29,11 +29,11 @@ namespace ChessBoardModel
                     list.Add( new Figure(x, y, side, type, j) ); //, modelCell
                 }
             }
-
-            /*for (int i = 0; i < 8; i++)
+            return;
+            for (int i = 0; i < 8; i++)
             {
-                list.Add(new Figure(side, "gyalog", i, i, y + direction));
-            }*/
+                list.Add(new Figure(i, y + direction, side, "gyalog", i ));
+            }
         }
         
         private Dictionary<string, int[]> nobles = new Dictionary<string, int[]>() 

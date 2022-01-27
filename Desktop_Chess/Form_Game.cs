@@ -39,7 +39,9 @@ namespace Desktop_Chess
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
+        
+
+        private void label_Rescan_Click(object sender, EventArgs e)
         {
 
         }

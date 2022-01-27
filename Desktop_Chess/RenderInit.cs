@@ -98,14 +98,14 @@ namespace Desktop_Chess
         {
             ComboBox debugCombo = form_game.comboBox_arrays;
             Label debugComboLabel = form_game.label_Rescan;
-            HScrollBar debugScroll = form_game.hScrollBar_Debug;
+            
             ComboBox skinsCombo = form_game.comboBox_Skin_List;
             Label skinsLabel = form_game.label_Skins;
 
-            debugCombo.Location = new Point(divTop.Width - debugCombo.Width - 32, (divTop.Height / 2) - (debugCombo.Height / 2));
-            debugComboLabel.Location = new Point(debugCombo.Location.X - debugComboLabel.Width - 6, debugCombo.Location.Y);
-            debugScroll.Location = new Point(debugComboLabel.Location.X - debugScroll.Width - 6, debugCombo.Location.Y);
-            debugScroll.Height = debugComboLabel.Height;
+
+            debugComboLabel.Location = new Point(divTop.Width - debugComboLabel.Width - 32, (divTop.Height / 2) - (debugComboLabel.Height / 2));
+            debugCombo.Location = new Point(debugComboLabel.Location.X - debugCombo.Width - 6, debugComboLabel.Location.Y);
+            
             debugComboLabel.BackColor = Color.White;
 
             skinsCombo.Location = new Point(32, (divTop.Height / 2) - (skinsCombo.Height / 2));
@@ -114,7 +114,7 @@ namespace Desktop_Chess
 
             debugCombo.BringToFront();
             debugComboLabel.BringToFront();
-            debugScroll.BringToFront();
+            
         }
 
 
@@ -189,6 +189,7 @@ namespace Desktop_Chess
             {
                 for (int y = 0; y < model_Board.Size; y++)
                 {
+
                     Gui_Cell gui_Cell = new Gui_Cell(x, y);
                     gui_Grid[x, y] = gui_Cell;
                     gui_Cell.LegalNextMove = model_Board.theGrid[x, y].LegalNextMove;

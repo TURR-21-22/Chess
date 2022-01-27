@@ -20,6 +20,7 @@ namespace Desktop_Chess
         public int ID { get; set; }
         public bool LegalNextMove { get; set; }
         public bool Kick { get; set; }
+        
         public Gui_Figure()
         {
             InitializeComponent();
