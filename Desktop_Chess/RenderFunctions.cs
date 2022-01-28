@@ -11,66 +11,96 @@ namespace Desktop_Chess
 {
     class RenderFunctions
     {
-
         Form_Game form_game = null;
         public static RenderMain renderMain;
-        static RenderInit renderInit;
-        private Gui_Cell[,] guiGrid = RenderInit.gui_Grid;
-        private Label[,] debugGrid =  Debug.debugGrid;
+        //static RenderInit renderInit;
+        static Debug debug;
+        private static Gui_Cell[,] guiGrid = RenderInit.gui_Grid;
+        private static Label[,] debugGrid =  Debug.debugGrid;
         private static Board model_Board = RenderInit.model_Board;
-        
-
-
+        private static Cell[,] modelGrid = model_Board.theGrid;
         public RenderFunctions(Form_Game ob)
         {
             this.form_game = ob;
+            
             renderMain = new RenderMain(form_game);
-            //renderInit = new RenderInit();
+            debug = new Debug(form_game);
+            //renderInit = new RenderInit(form_game);
+            
         }
 
-        public void drawDebug(Cell[,] modelGrid)
+        public void DrawLegalPath(Gui_Figure source)
         {
-            var r = new Random();
-            foreach (var item in debugGrid)
+            //Gui_Figure guiFigure = (Gui_Figure)source;
+            int sourceX = source.X;
+            int sourceY = source.Y;
+            string figureType = source.Type;
+            Cell modelCell = modelGrid[sourceX, sourceY];
+            //Figure modelFigure = modelCell.Figure;
+            model_Board.MarkNextLegalMove(modelCell, figureType);
+            debugMain(new Point(sourceX, sourceY), figureType);
+            debug.drawDebug(modelGrid);
+        }
+        public void MoveFigure(Figure source, Gui_Cell targetGuiCell, string skin)
+        {
+            if (source == null)
             {
+                return;
+            }
+            // set target_modelCell props ( clickedFigure, Occupied = true)
+            // set source modelCell props (Figure Cell = null, Occupied = false)
+            // set source modelFigure props (targetX,targetY, target_modelCell)
+            
+            // set target_guiCell props ( Gui_Figure Figure,      //Occupied = true)
+            // set source guiFigure props ( targetX,targetY)
+            // set source guiFigure location to target_guiCell.Location
 
-                item.BackColor = Color.FromArgb(255,
-                    0,
-                    Convert.ToInt32(r.Next(64, 255)),
-                    0
-                    );
-                item.ForeColor = Color.White;
-            }
-            for (int x = 0; x < model_Board.Size; x++)
+            Cell target_modelCell = modelGrid[targetGuiCell.X, targetGuiCell.Y];
+            target_modelCell.Occupied = true;
+            target_modelCell.Figure = source;
+
+            Cell source_modelCell = modelGrid[source.X, source.Y];
+            source_modelCell.Figure = null;
+            source_modelCell.Occupied = false;
+            Gui_Figure guiFigure = guiGrid[source.X, source.Y].Figure;
+
+            source.X = targetGuiCell.X;
+            source.Y = targetGuiCell.Y;
+            source.Cell = target_modelCell;
+            targetGuiCell.Figure = guiFigure;
+
+            guiFigure.X = targetGuiCell.X;
+            guiFigure.Y = targetGuiCell.Y;
+            guiFigure.Location = targetGuiCell.Location;
+            
+            switch (target_modelCell.CellBkgColor)
             {
-                for (int y = 0; y < model_Board.Size; y++)
-                {
-                    Cell modelCell = modelGrid[x, y];
-                    Label debugCell = debugGrid[x, y];
-                    if (modelCell.LegalNextMove)
-                    {
-                        if (modelCell.CellFigure != null && modelCell.CellFigure.Kick)
-                        {
-                            debugCell.BackColor = Color.Red;
-                            debugCell.ForeColor = Color.White;
-                        }
-                        else
-                        {
-                            debugCell.BackColor = Color.Yellow;
-                            debugCell.ForeColor = Color.Black;
-                        }
-                    }
-                    else
-                    {
-                        debugCell.Text = $"";
-                    }
-                }
+                case "light":
+                guiFigure.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject(
+                        $"{ skin}_figure_" +
+                        $"{ source.Side }_" +
+                        $"{ "light" }_" +
+                        $"{ source.Type }");
+
+                    break;
+                case "dark":
+                guiFigure.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject(
+                        $"{skin}_figure_" +
+                        $"{source.Side}_" +
+                        $"{"dark"}_" +
+                        $"{source.Type}");
+                    break;
             }
+            clearMainboardCellsBorder();
+            model_Board.ClearBoard();
+            debug.drawDebug(modelGrid);
+            
         }
 
-        public void drawMain(Point location, string figureType)
+
+        public void debugMain(Point location, string figureType)
         {
-            if (renderMain.debugSwitch)
+            if (form_game.debugIs)
             {
                 clearMainboardCellsBorder();
                 for (int x = 0; x < model_Board.Size; x++)
@@ -81,11 +111,11 @@ namespace Desktop_Chess
                         Gui_Cell guiCell = guiGrid[x, y];
                         if (modelCell.LegalNextMove)
                         {
-                            if (modelCell.CellFigure != null && modelCell.CellFigure.Kick)
+                            if (modelCell.Figure != null && modelCell.Figure.Kick)
                             {
-                                if (guiCell.CellFigure != null)
+                                if (guiCell.Figure != null)
                                 {
-                                    guiCell.CellFigure.BackColor = Color.Red;
+                                    guiCell.Figure.BackColor = Color.Red;
                                 }
                                 guiCell.BackColor = Color.Red;
                             }
@@ -98,9 +128,6 @@ namespace Desktop_Chess
                 }
             }
         }
-
-
-
         public void clearMainboardCellsBorder()
         {
             for (int i = 0; i < RenderInit.gui_whiteFigures.Count; i++)
@@ -110,7 +137,6 @@ namespace Desktop_Chess
             }
             foreach (var item in guiGrid) { item.BackColor = Color.Black; }
         }
-    }
 
-    
+    }
 }

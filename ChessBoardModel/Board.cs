@@ -29,7 +29,7 @@ namespace ChessBoardModel
                     theGrid[x, y] = cell;
                     cell.LegalNextMove = false;
                     cell.Occupied = false;
-                    cell.CellFigure = null;
+                    cell.Figure = null;
                     if (CellProps) { cell.CellBkgColor = "light"; } else { cell.CellBkgColor = "dark"; }
                 }
             }
@@ -40,29 +40,30 @@ namespace ChessBoardModel
             for (int i = 0; i < white.Count; i++)
             {
                 theGrid[white[i].X, white[i].Y].Occupied = true;
-                theGrid[white[i].X, white[i].Y].CellFigure = white[i];
-                white[i].FigureCell = theGrid[white[i].X, white[i].Y];
+                theGrid[white[i].X, white[i].Y].Figure = white[i];
+                white[i].Cell = theGrid[white[i].X, white[i].Y];
                 theGrid[black[i].X, black[i].Y].Occupied = true;
-                theGrid[black[i].X, black[i].Y].CellFigure = black[i];
-                black[i].FigureCell = theGrid[black[i].X, black[i].Y];
+                theGrid[black[i].X, black[i].Y].Figure = black[i];
+                black[i].Cell = theGrid[black[i].X, black[i].Y];
 
+            }
+        }
+
+        public void ClearBoard()
+        {
+            foreach (var item in theGrid)
+            {
+                item.LegalNextMove = false;
+                if (item.Figure != null)
+                {
+                    item.Figure.Kick = false;
+                }
             }
         }
 
         public void MarkNextLegalMove(Cell currentCell, string chessPiece)
         {
-            for (int x = 0; x < Size; x++)
-            {
-                for (int y = 0; y < Size; y++)
-                {
-                    theGrid[x, y].LegalNextMove = false;
-                    if (theGrid[x, y].CellFigure != null)
-                    {
-                        theGrid[x, y].CellFigure.Kick = false;
-                    }
-                }
-            }
-            
+            ClearBoard();
             switch (chessPiece)
             {
                 case "huszar":
@@ -98,7 +99,7 @@ namespace ChessBoardModel
             int[,] stepsWhite = new int[2,2] { { -1, -1 }, { 1, -1 } };
             int[,] stepsBlack = new int[2,2] { { -1, 1 }, { 1, 1 } };
             int[,] arr = new int[2, 2];
-            string side = currentCell.CellFigure.Side;
+            string side = currentCell.Figure.Side;
             if (side == "white") {
                 steps = -1;
                 arr = stepsWhite; 
@@ -115,10 +116,10 @@ namespace ChessBoardModel
                 {
                     x = currentCell.X + arr[i, 0];
                     y = currentCell.Y + arr[i, 1];
-                    if (theGrid[x, y].Occupied && theGrid[x, y].CellFigure.Side != side)
+                    if (theGrid[x, y].Occupied && theGrid[x, y].Figure.Side != side)
                     {
                         theGrid[x, y].LegalNextMove = true;
-                        theGrid[x, y].CellFigure.Kick = true;
+                        theGrid[x, y].Figure.Kick = true;
                     }
                 }
             }
@@ -132,14 +133,12 @@ namespace ChessBoardModel
                     theGrid[x, y + steps].LegalNextMove = true;
                 }
             }
-            
-            
         }
 
 
         private void OneStepPath(Cell currentCell, int[,] arr)
         {
-            string side = currentCell.CellFigure.Side;
+            string side = currentCell.Figure.Side;
             int x = currentCell.X;
             int y = currentCell.Y;
             for (int i = 0; i < arr.GetLength(0); i++)
@@ -155,10 +154,10 @@ namespace ChessBoardModel
                     {
                         theGrid[x, y].LegalNextMove = true;
                     }
-                    else if (theGrid[x, y].CellFigure.Side != side)
+                    else if (theGrid[x, y].Figure.Side != side)
                     {
                         theGrid[x, y].LegalNextMove = true;
-                        theGrid[x, y].CellFigure.Kick = true;
+                        theGrid[x, y].Figure.Kick = true;
                     }
                 }
             }
@@ -166,7 +165,7 @@ namespace ChessBoardModel
 
         private void LinearPath(Cell currentCell)
         {
-            string side = currentCell.CellFigure.Side;
+            string side = currentCell.Figure.Side;
             int[,] linearSteps = new int[4, 2] { { 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 } };
             int cnt = 0;
             for (int i = 0; i < linearSteps.GetLength(0); i++)
@@ -195,10 +194,10 @@ namespace ChessBoardModel
 
                     if ( theGrid[x, y].Occupied)
                     {
-                        if (theGrid[x, y].CellFigure.Side != side)
+                        if (theGrid[x, y].Figure.Side != side)
                         {
                             theGrid[x, y].LegalNextMove = true;
-                            theGrid[x, y].CellFigure.Kick = true;
+                            theGrid[x, y].Figure.Kick = true;
                         }
                         break;
                     }
@@ -208,7 +207,7 @@ namespace ChessBoardModel
         }
         private void DiagonalPath(Cell currentCell)
         {
-            string side = currentCell.CellFigure.Side;
+            string side = currentCell.Figure.Side;
             int[,] diagonalSteps = new int[4, 4] { { -1, -1, 0, 0 }, { 1, -1, Size - 1, 0 }, { 1, 1, Size - 1, Size - 1 }, { -1, 1, 0, Size - 1 } };
             for (int i = 0; i < diagonalSteps.GetLength(0); i++)
             {
@@ -222,10 +221,10 @@ namespace ChessBoardModel
                     j++;
                     if (theGrid[x, y].Occupied)
                     {
-                        if (theGrid[x, y].CellFigure.Side != side)
+                        if (theGrid[x, y].Figure.Side != side)
                         {
                             theGrid[x, y].LegalNextMove = true;
-                            theGrid[x, y].CellFigure.Kick = true;
+                            theGrid[x, y].Figure.Kick = true;
                             break;
                         }
                         else

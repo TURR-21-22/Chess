@@ -32,6 +32,8 @@ namespace Desktop_Chess
         public static Panel divRight;
         public static Panel divChess;
         public string Skin;
+        public static int cellSize;
+
         //public Dictionary<string, Image[]> gui_figureImagesWhite = new Dictionary<string, Image[]>();
         //public Dictionary<string, Image[]> gui_figureImagesBlack = new Dictionary<string, Image[]>();
 
@@ -99,27 +101,12 @@ namespace Desktop_Chess
 
         private void headerControlls(Panel divTop)
         {
-            ComboBox debugCombo = form_game.comboBox_arrays;
-            Label debugComboLabel = form_game.label_Rescan;
-            
             ComboBox skinsCombo = form_game.comboBox_Skin_List;
             Label skinsLabel = form_game.label_Skins;
-
-
-            debugComboLabel.Location = new Point(divTop.Width - debugComboLabel.Width - 32, (divTop.Height / 2) - (debugComboLabel.Height / 2));
-            debugCombo.Location = new Point(debugComboLabel.Location.X - debugCombo.Width - 6, debugComboLabel.Location.Y);
-            
-            debugComboLabel.BackColor = Color.White;
-
             skinsCombo.Location = new Point(32, (divTop.Height / 2) - (skinsCombo.Height / 2));
             skinsLabel.Location = new Point( skinsCombo.Location.X + skinsCombo.Width +6, (divTop.Height / 2) - (skinsCombo.Height / 2));
             skinsLabel.BackColor = Color.White;
-
-            debugCombo.BringToFront();
-            debugComboLabel.BringToFront();
-            
         }
-
 
         private Size ContainerSize(int width, int height, Form container)
         {
@@ -149,22 +136,6 @@ namespace Desktop_Chess
                 (Image)Properties.Resources.ResourceManager.GetObject( $"{skin}_bkg" )
                 });
             }
-
-            /*
-            string[] mod = new string[2] { "light", "dark" };
-            type = new string[6] { "kiraly", "kiralyno", "huszar", "futo", "bastya", "gyalog" };
-            value = new Image[1];
-            if (!gui_figureImagesWhite.TryGetValue(skin, out value))
-            {
-                gui_figureImagesWhite.Add(skin, genFiguresImages(skin, "white", mod, type));
-            }
-
-            value = new Image[1];
-            if (!gui_figureImagesBlack.TryGetValue(skin, out value))
-            {
-                gui_figureImagesBlack.Add(skin, genFiguresImages(skin, "black", mod, type));
-            }
-            */
         }
 
         private Image[] genFiguresImages(string skin, string side, string[] mod, string[] type)
@@ -186,7 +157,7 @@ namespace Desktop_Chess
 
         public void populaBoardteGrid(string skin)
         {
-            int size = divChess.Width / model_Board.Size;
+            cellSize = divChess.Width / model_Board.Size;
             divChess.Height = divChess.Width;
             for (int x = 0; x < model_Board.Size; x++)
             {
@@ -196,8 +167,8 @@ namespace Desktop_Chess
                     Gui_Cell gui_Cell = new Gui_Cell(x, y);
                     gui_Grid[x, y] = gui_Cell;
                     gui_Cell.LegalNextMove = model_Board.theGrid[x, y].LegalNextMove;
-                    gui_Cell.Width = size;
-                    gui_Cell.Height = size;
+                    gui_Cell.Width = cellSize;
+                    gui_Cell.Height = cellSize;
                     gui_Cell.ForeColor = Color.White;
                     gui_Cell.BackColor = Color.Black;
                     switch (model_Board.theGrid[x, y].CellBkgColor)
@@ -212,7 +183,7 @@ namespace Desktop_Chess
                             break;
                     }
                     gui_Cell.Click += form_game.Board_Click;
-                    gui_Cell.Location = new Point(x * size, y * size);
+                    gui_Cell.Location = new Point(x * cellSize, y * cellSize);
                     divChess.Controls.Add(gui_Cell);
                 }
             }
@@ -232,14 +203,14 @@ namespace Desktop_Chess
                 Gui_Figure gui_FigureBlack = gui_blackFigures[i];
                 Gui_Cell gui_CellBlack = gui_Grid[model_FigureBlack.X, model_FigureBlack.Y];
 
-                setFigure(skin, gui_FigureWhite, model_FigureWhite, gui_CellWhite, model_CellWhite, size, i);
-                setFigure(skin, gui_FigureBlack, model_FigureBlack, gui_CellBlack, model_CellBlack, size, i);
+                setFigure(skin, gui_FigureWhite, model_FigureWhite, gui_CellWhite, model_CellWhite, cellSize, i);
+                setFigure(skin, gui_FigureBlack, model_FigureBlack, gui_CellBlack, model_CellBlack, cellSize, i);
             }
         }
 
         private void setFigure(string skin, Gui_Figure gui_Figure, Figure modelFigure, Gui_Cell gui_Cell, Cell modelCell, int size, int cnt)
         {
-            gui_Cell.CellFigure = gui_Figure;
+            gui_Cell.Figure = gui_Figure;
             gui_Figure.X = modelCell.X;
             gui_Figure.Y = modelCell.Y;
             gui_Figure.Side = modelFigure.Side;
@@ -254,8 +225,6 @@ namespace Desktop_Chess
             gui_Figure.Margin = new Padding(0, 0, 0, 0);
             gui_Figure.Padding = new Padding(0, 0, 0, 0);
             gui_Figure.Location = new Point(modelFigure.X * size, modelFigure.Y * size);
-            gui_Figure.Text = $"";
-            gui_Figure.Tag = modelFigure;
             gui_Figure.Click += form_game.Board_Click;
             divChess.Controls.Add(gui_Figure);
             gui_Figure.BringToFront();
@@ -327,6 +296,8 @@ namespace Desktop_Chess
                     break;
             }
         }
+
+        
 
 
     }

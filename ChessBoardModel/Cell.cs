@@ -8,12 +8,13 @@ namespace ChessBoardModel
 {
     public class Cell
     {
-        public int X { get; set; }
-        public int Y { get; set; }
         public bool Occupied { get; set; }
         public bool LegalNextMove { get; set; }
-        public Figure CellFigure { get; set; }
+        public Figure Figure { get; set; }
         public string CellBkgColor{ get; set; }
+
+        public int X { get; set; }
+        public int Y { get; set; }
 
         //public string mod 
         //public bool Kick { get; set; }

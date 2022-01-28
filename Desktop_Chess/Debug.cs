@@ -16,6 +16,8 @@ namespace Desktop_Chess
     public class Debug
     {
         public Form_Game form_game = null;
+        public static RenderMain renderMain;
+        static RenderFunctions renderFunctions;
         private static Board model_Board = RenderInit.model_Board;
         private static Gui_Cell[,] gui_Grid = RenderInit.gui_Grid;
         static public Cell[,] model_Grid = model_Board.theGrid;
@@ -24,80 +26,97 @@ namespace Desktop_Chess
         public Panel debugPanel;
         public static Size debugCellSize;
         public bool props = true;
-
-        public Debug(Form_Game ob) {
+        public ComboBox debugCombo;
+        public Label debugComboLabel;
+        
+        public Debug(Form_Game ob) { 
             this.form_game = ob;
-            
             
         }
 
-        
-
         public void GUIdebug()
         {
+            renderFunctions = new RenderFunctions(form_game);
+            debugCombo = form_game.comboBox_DebugArrays;
+            debugComboLabel = form_game.label_DebugSwitch;
+            debugComboLabel.Location = new Point(RenderInit.divTop.Width - debugComboLabel.Width - 32, (RenderInit.divTop.Height / 2) - (debugComboLabel.Height / 2));
+            debugCombo.Location = new Point(debugComboLabel.Location.X - debugCombo.Width - 6, debugComboLabel.Location.Y);
+            debugComboLabel.ForeColor = Color.White;
+            debugCombo.Visible = false;
+            debugCombo.BringToFront();
+            debugComboLabel.BringToFront();
+                        
             Panel container = form_game.panel_Container_Right;
-            Panel debugPanel = form_game.panel_Debug;
+            debugPanel = form_game.panel_Debug;
 
             debugPanel.Size = new Size(Convert.ToInt32(container.Width*1)-24, Convert.ToInt32(container.Width*1)-24);
             debugPanel.Location = new Point(12, 12);
             debugPanel.BackColor = Color.Red;
             Size debugCellSize = new Size(debugPanel.Width / 8, debugPanel.Width / 8);
+            
             debugPanel.BringToFront();
 
-            DebugMatrix(debugPanel, debugCellSize,"draw",null);
+            if (form_game.debugIs) { debugComboLabel.BackColor = Color.Red; }
+            else { debugComboLabel.BackColor = Color.Green; }
+
+            if (form_game.debugIs) {
+                debugComboLabel.BackColor = Color.Green;
+                debugPanel.Visible = true;
+                debugCombo.Visible = true;
+            }
+            else
+            {
+                debugComboLabel.BackColor = Color.Red;
+                debugPanel.Visible = false;
+                debugCombo.Visible = false;
+            }
+            
+
+            
+            DebugMatrix(debugPanel, debugCellSize);
         }
 
-        private void DebugMatrix(Panel debugPanel, Size debugCellSize, string action, string grid)
+        private void DebugMatrix(Panel debugPanel, Size debugCellSize)
         {
-            Color[] colors = new Color[2];
+            var r = new Random();
             for (int x = 0; x < 8; x++)
             {
                 for (int y = 0; y < 8; y++)
                 {
-                    if ( action == "draw")
+                    Label debugCell = new Label();
+                    debugGrid[x, y] = debugCell;
+                    Cell modelCell = model_Board.theGrid[x, y];
+                    Gui_Cell guiCell = gui_Grid[x, y];
+                    debugCell.Size = debugCellSize;
+                    debugCell.Location = new Point(x * debugCellSize.Width, y * debugCellSize.Height);
+                    debugCell.Font = new System.Drawing.Font("Impact", 8, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+                    debugCell.Text = getBoardInfo(modelCell);
+                    debugCell.TextAlign = ContentAlignment.MiddleCenter;
+                    if (modelCell.Occupied)
                     {
-                        Label debugCell = new Label();
-                        debugGrid[x, y] = debugCell;
-                        Cell modelCell = model_Board.theGrid[x, y];
-                        Gui_Cell guiCell = gui_Grid[x, y];
-
-                        switch (modelCell.CellBkgColor)
+                        switch (modelCell.Figure.Side)
                         {
-                            case "light":
-                                colors = new Color[] { Color.White, Color.Black };
+                            case "white":
+                                debugCell.BackColor = Color.White;
+                                debugCell.ForeColor = Color.Black;
                                 break;
-                            case "dark":
-                                colors = new Color[] { Color.Black, Color.White };
+                            case "black":
+                                debugCell.BackColor = Color.Black;
+                                debugCell.ForeColor = Color.White;
                                 break;
                         }
-                        
-                        debugCell.Size = debugCellSize;
-                        debugCell.Location = new Point(x * debugCellSize.Width, y * debugCellSize.Height);
-                        debugCell.Font = new System.Drawing.Font("Impact", 8, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-                        debugCell.BackColor = colors[0];
-                        debugCell.ForeColor = colors[1];
-                        debugPanel.Controls.Add(debugCell);
-                        debugCell.BringToFront();
+                        debugCell.TextAlign = ContentAlignment.TopLeft;
                         debugCell.Text = getBoardInfo(modelCell);
                     }
                     else
                     {
-
-                        Label debugCell = debugGrid[x, y];
-                        Cell modelCell = model_Board.theGrid[x, y];
-                        Gui_Cell guiCell = gui_Grid[x, y];
-                        switch (grid)
-                        {
-                            case "model":
-                                debugCell.Text = getBoardInfo(modelCell);
-                                break;
-                            case "gui":
-                                debugCell.Text = getBoardInfo(guiCell);
-                                break;
-                            default:
-                                break;
-                        }
+                        debugCell.BackColor = Color.FromArgb(255, 0, 0, Convert.ToInt32(r.Next(128, 255)));
+                        debugCell.ForeColor = Color.Black;
+                        debugCell.TextAlign = ContentAlignment.MiddleCenter;
+                        debugCell.Text = getBoardInfo(modelCell);
                     }
+                    debugPanel.Controls.Add(debugCell);
+                    debugCell.BringToFront();
                 }
             }
         }
@@ -110,20 +129,16 @@ namespace Desktop_Chess
                 case "Cell":
                     Cell modelCell = (Cell)cell;
                     text = $"" +
-                        $"{modelCell.CellBkgColor}" +
-                        $"\nOccupied: {modelCell.Occupied}" +
-                        $"\nLegal: {modelCell.LegalNextMove}" +
-                        $"\n{modelCell.X}×{modelCell.Y}";
-                    if (modelCell.CellFigure != null)
+                        $"{modelCell.X}×{modelCell.Y}";
+                    if (modelCell.Figure != null)
                     {
-                        Figure tmpModelFigure = modelCell.CellFigure;
+                        Figure modelFigure = modelCell.Figure;
                         text = $"" +
-                            $"Type: {tmpModelFigure.Type}" +
-                            $"\nSide: {tmpModelFigure.Side}" +
-                            $"\nID: {tmpModelFigure.ID}, KIck: {tmpModelFigure.Kick}" +
-                            $"\nCellBkg: {tmpModelFigure.FigureCell.CellBkgColor}" +
-                            $"\nCellCoord: {tmpModelFigure.FigureCell.X} × {tmpModelFigure.FigureCell.Y}" +
-                            $"\n{tmpModelFigure.X}×{tmpModelFigure.Y}";
+                            $"Side: {modelFigure.Side}" +
+                            $"\nType: {modelFigure.Type}" +
+                            $"\nID: {modelFigure.ID}" +
+                            $"\nKIck: {modelFigure.Kick}" +
+                            $"\n{modelFigure.X}×{modelFigure.Y}";
                     }
                     break;
                 case "Gui_Cell":
@@ -131,9 +146,9 @@ namespace Desktop_Chess
                     text = $"" +
                         $"Legal: {guiCell.LegalNextMove}" +
                         $"\n{guiCell.X} × {guiCell.Y}";
-                    if (guiCell.CellFigure != null)
+                    if (guiCell.Figure != null)
                     {
-                        Gui_Figure guiFigure = guiCell.CellFigure;
+                        Gui_Figure guiFigure = guiCell.Figure;
                         text = $"" +
                             $"{guiFigure.Location.X}×{guiFigure.Location.Y}";
                     }
@@ -142,18 +157,82 @@ namespace Desktop_Chess
             return text;
         }
 
-        public void debugScanArray( string targetGrid)
+
+        public void drawDebug(Cell[,] modelGrid)
         {
             
-            switch (targetGrid)//target_Grid.GetType()
+            var r = new Random();
+            for (int x = 0; x < model_Board.Size; x++)
             {
-                case "model":
-                    DebugMatrix(debugPanel, debugCellSize, "scan","model");
-                    break;
-                case "gui":
-                    DebugMatrix(debugPanel, debugCellSize, "scan","gui");
-                    break;
+                for (int y = 0; y < model_Board.Size; y++)
+                {
+                    Cell modelCell = modelGrid[x, y];
+                    Label debugCell = debugGrid[x, y];
+                    debugCell.BackColor = Color.FromArgb(255, 0,0, Convert.ToInt32(r.Next(196, 255)));
+                    debugCell.ForeColor = Color.White;
+                    debugCell.TextAlign = ContentAlignment.MiddleCenter;
+                    debugCell.Text = getBoardInfo(modelCell);
+                    if (modelCell.Occupied)
+                    {
+                        switch (modelCell.Figure.Side)
+                        {
+                            case "white":
+                                debugCell.BackColor = Color.White;
+                                debugCell.ForeColor = Color.Black;
+                                break;
+                            case "black":
+                                debugCell.BackColor = Color.Black;
+                                debugCell.ForeColor = Color.White;
+                                break;
+                        }
+                        debugCell.TextAlign = ContentAlignment.TopLeft;
+                        debugCell.Text = getBoardInfo(modelCell);
+                    }
+                    else
+                    {
+                        debugCell.BackColor = Color.FromArgb(255, 0, 0, Convert.ToInt32(r.Next(128, 255)));
+                        debugCell.ForeColor = Color.Black;
+                        debugCell.TextAlign = ContentAlignment.MiddleCenter;
+                        debugCell.Text = getBoardInfo(modelCell);
+                        
+                        debugCell.Text += $"\n{RenderMain.clickCounter}";
+                    }
+                    if (modelCell.LegalNextMove)
+                    {
+                        debugCell.BackColor = Color.Yellow;
+                        debugCell.Text = getBoardInfo(modelCell);
+                        debugCell.ForeColor = Color.Green;
+                        if (modelCell.Figure != null && modelCell.Figure.Kick)
+                        {
+                            debugCell.ForeColor = Color.Red;
+                        }
+                    }
+
+
+                }
             }
         }
+
+
+
+        public void debugSwitch()
+        {
+            if (form_game.debugIs)
+            {
+                renderFunctions.clearMainboardCellsBorder();
+                form_game.debugIs = false;
+                debugCombo.Visible = false;
+                debugPanel.Visible = false;
+                debugComboLabel.BackColor = Color.Red;
+            }
+            else
+            {
+                form_game.debugIs = true;
+                debugCombo.Visible = true;
+                debugPanel.Visible = true;
+                debugComboLabel.BackColor = Color.Green;
+            }
+        }
+
     }
 }

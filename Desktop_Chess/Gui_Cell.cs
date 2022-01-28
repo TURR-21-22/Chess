@@ -16,7 +16,7 @@ namespace Desktop_Chess
 
         public int X { get; set; }
         public int Y { get; set; }
-        public Gui_Figure CellFigure { get; set; }
+        public Gui_Figure Figure { get; set; }
 //        public bool Occupied { get; set; }
         public bool LegalNextMove { get; set; }
 

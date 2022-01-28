@@ -8,11 +8,14 @@ namespace Desktop_Chess
         static Debug debug;
         static RenderMain render;
         static RenderFunctions renderFunctions;
+        public bool debugIs = true;
+
         public Form_Game()
         {
             render = new RenderMain(this);
             renderFunctions = new RenderFunctions(this);
-            debug = new Debug(this);
+            
+
             InitializeComponent();
         }
 
@@ -24,6 +27,7 @@ namespace Desktop_Chess
         private void Form1_Load(object sender, EventArgs e)
         {
             render.Init();
+            debug = new Debug(this);
             debug.GUIdebug();
         }
        
@@ -32,19 +36,9 @@ namespace Desktop_Chess
             render.SelectSkin(sender);
         }
 
-        private void comboBox_DebugArrays(object sender, EventArgs e)
+        private void label_DebugSwitch_Click(object sender, EventArgs e)
         {
-            ComboBox combo = (ComboBox)sender;
-            debug.debugScanArray(combo.Text);
-            
-        }
-
-
-        
-
-        private void label_Rescan_Click(object sender, EventArgs e)
-        {
-
+            debug.debugSwitch();
         }
     }
 }
