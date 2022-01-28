@@ -19,7 +19,7 @@ namespace Desktop_Chess
         private static Board model_Board = RenderInit.model_Board;
         private static Gui_Cell[,] gui_Grid = RenderInit.gui_Grid;
         static public Cell[,] model_Grid = model_Board.theGrid;
-        static public Label[,] debug_Grid = new Label[8, 8];
+        static public Label[,] debugGrid = new Label[8, 8];
         public Panel container;
         public Panel debugPanel;
         public static Size debugCellSize;
@@ -27,9 +27,11 @@ namespace Desktop_Chess
 
         public Debug(Form_Game ob) {
             this.form_game = ob;
-            form_game = ob;
+            
             
         }
+
+        
 
         public void GUIdebug()
         {
@@ -55,7 +57,7 @@ namespace Desktop_Chess
                     if ( action == "draw")
                     {
                         Label debugCell = new Label();
-                        debug_Grid[x, y] = debugCell;
+                        debugGrid[x, y] = debugCell;
                         Cell modelCell = model_Board.theGrid[x, y];
                         Gui_Cell guiCell = gui_Grid[x, y];
 
@@ -81,7 +83,7 @@ namespace Desktop_Chess
                     else
                     {
 
-                        Label debugCell = debug_Grid[x, y];
+                        Label debugCell = debugGrid[x, y];
                         Cell modelCell = model_Board.theGrid[x, y];
                         Gui_Cell guiCell = gui_Grid[x, y];
                         switch (grid)

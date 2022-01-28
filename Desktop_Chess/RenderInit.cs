@@ -31,7 +31,7 @@ namespace Desktop_Chess
         public static Panel divLeft;
         public static Panel divRight;
         public static Panel divChess;
-        
+        public string Skin;
         //public Dictionary<string, Image[]> gui_figureImagesWhite = new Dictionary<string, Image[]>();
         //public Dictionary<string, Image[]> gui_figureImagesBlack = new Dictionary<string, Image[]>();
 
@@ -43,7 +43,8 @@ namespace Desktop_Chess
             { "Left",60, 94 },
             { "Right",40, 94}
         };
-
+                
+        
         public RenderInit(Form_Game ob)
         {
             this.form_game = ob;
@@ -53,9 +54,11 @@ namespace Desktop_Chess
             divRight = form_game.panel_Container_Right;
             Init("wood");
         }
+      
 
         public void Init(string skin)
         {
+            Skin = skin;
             string[] skins = new string[] { "solid", "wood" };
             foreach (var item in skins)
             {
@@ -68,7 +71,7 @@ namespace Desktop_Chess
             {
                 form_game.Controls[$"panel_Container_{(string)Layout[i, 0]}"].Size = ContainerSize((int)Layout[i, 1], (int)Layout[i, 2], form_game);
             }
-            form_game.BackgroundImage = gui_backgroundImages[skin][0];
+            form_game.BackgroundImage = gui_backgroundImages[Skin][0];
             form_game.BackgroundImageLayout = ImageLayout.Tile;
 
             divTop.Location = new Point(0, 0);
@@ -245,7 +248,7 @@ namespace Desktop_Chess
             gui_Figure.Kick = modelFigure.Kick;
             gui_Figure.Height = size;
             gui_Figure.Width = size;
-            loadFiguresSkin(skin, gui_Figure, modelFigure, gui_Cell, modelCell);
+            loadFiguresSkin(skin, gui_Figure, modelFigure, modelCell);
             gui_Figure.Font = new Font("Impact", 16);
             gui_Figure.BackgroundImageLayout = ImageLayout.Stretch;
             gui_Figure.Margin = new Padding(0, 0, 0, 0);
@@ -291,18 +294,18 @@ namespace Desktop_Chess
                 Figure model_FigureWhite = model_Figures.Model_whiteFiguresON[i];
                 Figure model_FigureBlack = model_Figures.Model_blackFiguresON[i];
 
-                Gui_Cell gui_CellWhite = gui_Grid[model_FigureWhite.X, model_FigureWhite.Y];
-                Gui_Cell gui_CellBlack = gui_Grid[model_FigureBlack.X, model_FigureBlack.Y];
+                //Gui_Cell gui_CellWhite = gui_Grid[model_FigureWhite.X, model_FigureWhite.Y];
+                //Gui_Cell gui_CellBlack = gui_Grid[model_FigureBlack.X, model_FigureBlack.Y];
 
                 Cell model_CellWhite = model_Board.theGrid[model_FigureWhite.X, model_FigureWhite.Y];
                 Cell model_CellBlack = model_Board.theGrid[model_FigureBlack.X, model_FigureBlack.Y];
 
-                loadFiguresSkin(skin, gui_FigureWhite, model_FigureWhite, gui_CellWhite, model_CellWhite);
-                loadFiguresSkin(skin, gui_FigureBlack, model_FigureBlack, gui_CellBlack, model_CellBlack);
+                loadFiguresSkin(skin, gui_FigureWhite, model_FigureWhite, model_CellWhite);
+                loadFiguresSkin(skin, gui_FigureBlack, model_FigureBlack, model_CellBlack);
 
             }
         }
-        public void loadFiguresSkin(string skin, Gui_Figure gui_Figure, Figure model_Figure, Gui_Cell gui_Cell, Cell model_Cell)
+        public void loadFiguresSkin(string skin, Gui_Figure gui_Figure, Figure model_Figure, Cell model_Cell)
         {
             gui_Figure.ForeColor = Color.White;
             gui_Figure.BackColor = Color.Black;

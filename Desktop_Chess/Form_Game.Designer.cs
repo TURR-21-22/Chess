@@ -48,7 +48,7 @@ namespace Desktop_Chess
             this.label_Skins.AutoSize = true;
             this.label_Skins.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label_Skins.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label_Skins.Location = new System.Drawing.Point(9, 9);
+            this.label_Skins.Location = new System.Drawing.Point(136, 8);
             this.label_Skins.Name = "label_Skins";
             this.label_Skins.Size = new System.Drawing.Size(45, 20);
             this.label_Skins.TabIndex = 0;
@@ -57,7 +57,6 @@ namespace Desktop_Chess
             // panel_ChessBoard
             // 
             this.panel_ChessBoard.BackColor = System.Drawing.Color.Transparent;
-            this.panel_ChessBoard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel_ChessBoard.Location = new System.Drawing.Point(0, 0);
             this.panel_ChessBoard.Margin = new System.Windows.Forms.Padding(0);
             this.panel_ChessBoard.Name = "panel_ChessBoard";
@@ -85,7 +84,7 @@ namespace Desktop_Chess
             this.comboBox_arrays.Items.AddRange(new object[] {
             "model",
             "gui"});
-            this.comboBox_arrays.Location = new System.Drawing.Point(830, 9);
+            this.comboBox_arrays.Location = new System.Drawing.Point(757, 13);
             this.comboBox_arrays.Name = "comboBox_arrays";
             this.comboBox_arrays.Size = new System.Drawing.Size(121, 23);
             this.comboBox_arrays.TabIndex = 6;
@@ -96,7 +95,7 @@ namespace Desktop_Chess
             this.label_Rescan.AutoSize = true;
             this.label_Rescan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label_Rescan.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label_Rescan.Location = new System.Drawing.Point(744, 9);
+            this.label_Rescan.Location = new System.Drawing.Point(884, 13);
             this.label_Rescan.Name = "label_Rescan";
             this.label_Rescan.Size = new System.Drawing.Size(67, 23);
             this.label_Rescan.TabIndex = 5;
@@ -111,7 +110,7 @@ namespace Desktop_Chess
             this.comboBox_Skin_List.Items.AddRange(new object[] {
             "solid",
             "wood"});
-            this.comboBox_Skin_List.Location = new System.Drawing.Point(67, 9);
+            this.comboBox_Skin_List.Location = new System.Drawing.Point(9, 8);
             this.comboBox_Skin_List.Name = "comboBox_Skin_List";
             this.comboBox_Skin_List.Size = new System.Drawing.Size(121, 23);
             this.comboBox_Skin_List.Sorted = true;
@@ -131,7 +130,7 @@ namespace Desktop_Chess
             // 
             this.panel_Debug.BackColor = System.Drawing.Color.Transparent;
             this.panel_Debug.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel_Debug.Location = new System.Drawing.Point(21, 23);
+            this.panel_Debug.Location = new System.Drawing.Point(6, 6);
             this.panel_Debug.Margin = new System.Windows.Forms.Padding(0);
             this.panel_Debug.Name = "panel_Debug";
             this.panel_Debug.Size = new System.Drawing.Size(250, 252);

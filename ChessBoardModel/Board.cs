@@ -39,22 +39,16 @@ namespace ChessBoardModel
 
             for (int i = 0; i < white.Count; i++)
             {
-                theGrid[white[i].X, white[i].Y].CellFigure = white[i];
-                white[i].FigureCell = theGrid[white[i].X, white[i].Y];
-
-                theGrid[black[i].X, black[i].Y].CellFigure = black[i];
-                black[i].FigureCell = theGrid[black[i].X, black[i].Y];
-            }
-            
-            for (int i = 0; i < white.Count; i++)
-            {
-
                 theGrid[white[i].X, white[i].Y].Occupied = true;
                 theGrid[white[i].X, white[i].Y].CellFigure = white[i];
+                white[i].FigureCell = theGrid[white[i].X, white[i].Y];
                 theGrid[black[i].X, black[i].Y].Occupied = true;
                 theGrid[black[i].X, black[i].Y].CellFigure = black[i];
+                black[i].FigureCell = theGrid[black[i].X, black[i].Y];
+
             }
         }
+
         public void MarkNextLegalMove(Cell currentCell, string chessPiece)
         {
             for (int x = 0; x < Size; x++)
@@ -66,8 +60,6 @@ namespace ChessBoardModel
                     {
                         theGrid[x, y].CellFigure.Kick = false;
                     }
-                        
-                    
                 }
             }
             
@@ -130,12 +122,18 @@ namespace ChessBoardModel
                     }
                 }
             }
+            
             x = currentCell.X;
             y = currentCell.Y;
-            if (!theGrid[x, y + steps].Occupied)
+            if ( y + steps >= 0 && y + steps < Size)
             {
-                theGrid[x, y + steps].LegalNextMove = true;
+                if (!theGrid[x, y + steps].Occupied)
+                {
+                    theGrid[x, y + steps].LegalNextMove = true;
+                }
             }
+            
+            
         }
 
 

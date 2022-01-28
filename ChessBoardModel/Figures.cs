@@ -10,12 +10,12 @@ namespace ChessBoardModel
     {
         public Figures()
         {
-            createFigures(0, "black", model_blackFiguresON, 1 );
-            createFigures(7, "white", model_whiteFiguresON, -1 );
-          //  testFigures2();
+            //createFigures(0, "black", model_blackFiguresON, 1 );
+            //createFigures(7, "white", model_whiteFiguresON, -1 );
+            testFigures();
         }
-        
-        
+
+
         public void createFigures(int y, string side, List<Figure> list, int direction)
         {
             int x;
@@ -26,17 +26,16 @@ namespace ChessBoardModel
                 {
                     x = nobles.ElementAt(i).Value[j];
                     type = nobles.ElementAt(i).Key;
-                    list.Add( new Figure(x, y, side, type, j) ); //, modelCell
+                    list.Add(new Figure(x, y, side, type, j));
                 }
             }
-            return;
             for (int i = 0; i < 8; i++)
             {
-                list.Add(new Figure(i, y + direction, side, "gyalog", i ));
+                list.Add(new Figure(i, y + direction, side, "gyalog", i));
             }
         }
-        
-        private Dictionary<string, int[]> nobles = new Dictionary<string, int[]>() 
+
+        private Dictionary<string, int[]> nobles = new Dictionary<string, int[]>()
         {
             { "kiraly",new int[]{4} },
             { "kiralyno",new int[]{3} },
@@ -54,29 +53,75 @@ namespace ChessBoardModel
         public List<Figure> Model_whiteFiguresOFF { get { return model_whiteFiguresOFF; } set { model_whiteFiguresOFF = value; } }
         public List<Figure> Model_blackFiguresOFF { get { return model_blackFiguresOFF; } set { model_blackFiguresOFF = value; } }
 
-        /*
+
         private void testFigures()
         {
-            // only for testing purpose
-            // Side = side, Type = type, ID = id, X = x, Y = y, Kick = kick 
-            model_whiteFiguresON.Add(new Figure("white", "kiralyno", 1, 0, 7));
-            model_whiteFiguresON.Add(new Figure("white", "huszar", 1, 7, 7));
-            model_whiteFiguresON.Add(new Figure("white", "kiraly", 1, 3, 3));
-            model_whiteFiguresON.Add(new Figure("white", "bastya", 1, 3, 6));
-            model_whiteFiguresON.Add(new Figure("white", "futo", 1, 6, 2));
-            model_whiteFiguresON.Add(new Figure("white", "bastya", 1, 6, 3));
-            model_whiteFiguresON.Add(new Figure("white", "kiralyno", 1, 4, 5));
-            model_whiteFiguresON.Add(new Figure("white", "gyalog", 1, 3, 7));
 
-            model_blackFiguresON.Add(new Figure("black", "kiralyno", 1, 0, 1));
-            model_blackFiguresON.Add(new Figure("black", "huszar", 1, 4, 2));
-            model_blackFiguresON.Add(new Figure("black", "kiraly", 1, 6, 3));
-            model_blackFiguresON.Add(new Figure("black", "bastya", 1, 0, 0));
-            model_blackFiguresON.Add(new Figure("black", "futo", 1, 2, 6));
-            model_blackFiguresON.Add(new Figure("black", "huszar", 1, 4, 1));
-            model_blackFiguresON.Add(new Figure("black", "kiralyno", 1, 2, 4));
-            model_blackFiguresON.Add(new Figure("black", "gyalog", 1, 5, 4));
+            object[,] whiteGroup = new object[8, 5]{
+
+                { 4, 3, "white", "kiraly",1 },
+                { 7, 7, "white", "kiralyno",1 },
+                { 7, 2, "white", "bastya", 1 },
+                { 4, 2, "white", "huszar", 1 },
+                { 3, 0, "white", "futo", 1 },
+                { 5, 5, "white", "gyalog", 1 },
+                { 3, 5, "white", "gyalog", 1 },
+                { 7, 0, "white", "gyalog", 1 }
+            };
+            object[,] blackGroup = new object[8,5] {
+                { 0, 0, "black", "kiraly",1 },
+                { 1, 1, "black", "kiralyno",1 },
+                { 2, 4, "black", "bastya", 1 },
+                { 3, 5, "black", "huszar", 1 },
+                { 4, 5, "black", "futo", 1 },
+                { 5, 4, "black", "gyalog", 1 },
+                { 6, 2, "black", "gyalog", 1 },
+                { 6, 7, "black", "gyalog", 1 }
+            };
+           
+            for (int i = 0; i < whiteGroup.GetLength(0); i++)
+            {
+                model_whiteFiguresON.Add(new Figure(
+                    (int)whiteGroup[i,0],
+                    (int)whiteGroup[i,1],
+                    (string)whiteGroup[i,2],
+                    (string)whiteGroup[i,3],
+                    (int)whiteGroup[i,4]));
+                model_blackFiguresON.Add(new Figure(
+                    (int)blackGroup[i,0],
+                    (int)blackGroup[i,1],
+                    (string)blackGroup[i,2],
+                    (string)blackGroup[i,3],
+                    (int)blackGroup[i,4]));
+            };
+
+            //model_blackFiguresON
+            //model_whiteFiguresON
+
+            // only for testing purpose
+            // list.Add( new Figure(x, y, side, type, id)
+            /*
+             * ;
+                // Side = side, Type = type, ID = id, X = x, Y = y, Kick = kick 
+                model_whiteFiguresON.Add(new Figure("white", "kiralyno", 1, 0, 7));
+                model_whiteFiguresON.Add(new Figure("white", "huszar", 1, 7, 7));
+                model_whiteFiguresON.Add(new Figure("white", "kiraly", 1, 3, 3));
+                model_whiteFiguresON.Add(new Figure("white", "bastya", 1, 3, 6));
+                model_whiteFiguresON.Add(new Figure("white", "futo", 1, 6, 2));
+                model_whiteFiguresON.Add(new Figure("white", "bastya", 1, 6, 3));
+                model_whiteFiguresON.Add(new Figure("white", "kiralyno", 1, 4, 5));
+                model_whiteFiguresON.Add(new Figure("white", "gyalog", 1, 3, 7));
+
+                model_blackFiguresON.Add(new Figure("black", "kiralyno", 1, 0, 1));
+                model_blackFiguresON.Add(new Figure("black", "huszar", 1, 4, 2));
+                model_blackFiguresON.Add(new Figure("black", "kiraly", 1, 6, 3));
+                model_blackFiguresON.Add(new Figure("black", "bastya", 1, 0, 0));
+                model_blackFiguresON.Add(new Figure("black", "futo", 1, 2, 6));
+                model_blackFiguresON.Add(new Figure("black", "huszar", 1, 4, 1));
+                model_blackFiguresON.Add(new Figure("black", "kiralyno", 1, 2, 4));
+                model_blackFiguresON.Add(new Figure("black", "gyalog", 1, 5, 4));
+            }
+        */
         }
-    */
     }
 }
