@@ -16,19 +16,12 @@ namespace Desktop_Chess
 
         public static Board model_Board = new Board(8);
         public static Figures model_Figures = new Figures();
-        
         public static Gui_Cell[,] guiGrid = new Gui_Cell[model_Board.Size, model_Board.Size];
         public static List<Gui_Figure> gui_whiteFigures = new List<Gui_Figure>(16);
         public static List<Gui_Figure> gui_blackFigures = new List<Gui_Figure>(16);
-
-        
         public static Dictionary<string, Image[]> gui_cellImages = new Dictionary<string, Image[]>();
         public static Dictionary<string, Image[]> gui_backgroundImages = new Dictionary<string, Image[]>();
-        
-        public static Panel divTop;
-        public static Panel divLeft;
-        public static Panel divRight;
-        public static Panel divChess;
+        public static Panel divTop, divLeft, divRight, divChess, kickedWhitesContainer, kickedBlacksContainer, kickedWhites, kickedBlacks;
         public string Skin;
         public static int cellSize;
 
@@ -52,9 +45,13 @@ namespace Desktop_Chess
             divTop = mainForm.panel_Container_Top;
             divLeft = mainForm.panel_Container_Left;
             divRight = mainForm.panel_Container_Right;
+            kickedWhitesContainer = mainForm.panel_kicked_container_white;
+            kickedBlacksContainer = mainForm.panel_kicked_container_black;
+            kickedWhites = mainForm.panel_kicked_white;
+            kickedBlacks = mainForm.panel_kicked_black;
+           
             Init("wood");
         }
-      
 
         public void Init(string skin)
         {
@@ -93,11 +90,12 @@ namespace Desktop_Chess
             divTop.BackColor = Color.FromArgb(96, 0, 0, 0);
             divRight.BackColor = Color.FromArgb(96, 0, 0, 0);
 
-            headerControlls(divTop);
+            headerControlls();
+            kickedPanels();
             populaBoardteGrid(skin);
         }
 
-        private void headerControlls(Panel divTop)
+        private void headerControlls()
         {
             ComboBox skinsCombo = mainForm.comboBox_Skin_List;
             Label skinsLabel = mainForm.label_Skins;
@@ -105,6 +103,21 @@ namespace Desktop_Chess
             skinsLabel.Location = new Point( skinsCombo.Location.X + skinsCombo.Width +6, (divTop.Height / 2) - (skinsCombo.Height / 2));
             skinsLabel.BackColor = Color.White;
         }
+
+        private void kickedPanels()
+        {
+            kickedWhitesContainer.Size = new Size(divRight.Width - 24, (divRight.Width/8)*2);
+            kickedBlacksContainer.Size = kickedWhitesContainer.Size;
+            kickedWhitesContainer.Location = new Point(12, 12);
+            kickedBlacksContainer.Location = new Point(12, kickedWhitesContainer.Location.Y + kickedWhitesContainer.Height + 6);
+            kickedWhites.Size = new Size(kickedWhitesContainer.Width - 16, ((kickedWhitesContainer.Width - 38) / 8) * 2);
+            kickedWhites.Location = new Point(8, 8);
+            kickedBlacks.Size = kickedWhites.Size;
+            kickedBlacks.Location = new Point(8, 8);
+            kickedWhites.Tag = new Point(0, 0);
+            kickedBlacks.Tag = new Point(0, 0);
+        }
+
 
         private Size ContainerSize(int width, int height, Form container)
         {

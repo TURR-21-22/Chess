@@ -13,7 +13,6 @@ namespace Desktop_Chess
     {
         Main mainForm = null;
         public static RenderMain renderMain;
-        //static RenderInit renderInit;
         static Debug debug;
         private static Gui_Cell[,] guiGrid = RenderInit.guiGrid;
         private static Label[,] debugGrid =  Debug.debugGrid;
@@ -144,6 +143,7 @@ namespace Desktop_Chess
             }
             foreach (var item in guiGrid) { item.BackColor = Color.Black; }
         }
+        
 
     }
 }

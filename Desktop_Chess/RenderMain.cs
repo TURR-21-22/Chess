@@ -80,7 +80,6 @@ namespace Desktop_Chess
             
         }
 
-
         public void SelectSkin(object sender)
         {
             ComboBox cmb = (ComboBox)sender;

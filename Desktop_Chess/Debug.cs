@@ -25,54 +25,40 @@ namespace Desktop_Chess
         public Panel container;
         public Panel debugPanel;
         public static Size debugCellSize;
-        public bool props = true;
-        public ComboBox debugCombo;
-        public Label debugComboLabel;
+        //public bool props = true;
+        public Label debugLabel;
         
         public Debug(Main ob) { 
             this.mainForm = ob;
-            
         }
 
         public void GUIdebug()
         {
             renderFunctions = new RenderFunctions(mainForm);
-            debugCombo = mainForm.comboBox_DebugArrays;
-            debugComboLabel = mainForm.label_DebugSwitch;
-            debugComboLabel.Location = new Point(RenderInit.divTop.Width - debugComboLabel.Width - 32, (RenderInit.divTop.Height / 2) - (debugComboLabel.Height / 2));
-            debugCombo.Location = new Point(debugComboLabel.Location.X - debugCombo.Width - 6, debugComboLabel.Location.Y);
-            debugComboLabel.ForeColor = Color.White;
-            debugCombo.Visible = false;
-            debugCombo.BringToFront();
-            debugComboLabel.BringToFront();
-                        
+            debugLabel = mainForm.label_DebugSwitch;
+            debugLabel.Location = new Point(RenderInit.divRight.Width - debugLabel.Width - 12, (RenderInit.divRight.Height - debugLabel.Height - 12 ) );
+            debugLabel.ForeColor = Color.White;
+            debugLabel.BringToFront();
             Panel container = mainForm.panel_Container_Right;
             debugPanel = mainForm.panel_Debug;
-
             debugPanel.Size = new Size(Convert.ToInt32(container.Width*1)-24, Convert.ToInt32(container.Width*1)-24);
-            debugPanel.Location = new Point(12, 12);
+            debugPanel.Location = new Point(12, debugLabel.Location.Y - debugPanel.Height - 6);
             debugPanel.BackColor = Color.Red;
             Size debugCellSize = new Size(debugPanel.Width / 8, debugPanel.Width / 8);
-            
             debugPanel.BringToFront();
 
-            if (mainForm.debugIs) { debugComboLabel.BackColor = Color.Red; }
-            else { debugComboLabel.BackColor = Color.Green; }
+            if (mainForm.debugIs) { debugLabel.BackColor = Color.Red; }
+            else { debugLabel.BackColor = Color.Green; }
 
             if (mainForm.debugIs) {
-                debugComboLabel.BackColor = Color.Green;
+                debugLabel.BackColor = Color.Green;
                 debugPanel.Visible = true;
-                debugCombo.Visible = true;
             }
             else
             {
-                debugComboLabel.BackColor = Color.Red;
+                debugLabel.BackColor = Color.Red;
                 debugPanel.Visible = false;
-                debugCombo.Visible = false;
             }
-            
-
-            
             DebugMatrix(debugPanel, debugCellSize);
         }
 
@@ -161,7 +147,6 @@ namespace Desktop_Chess
 
         public void drawDebug(Cell[,] modelGrid)
         {
-            
             var r = new Random();
             for (int x = 0; x < model_Board.Size; x++)
             {
@@ -208,30 +193,23 @@ namespace Desktop_Chess
                             debugCell.ForeColor = Color.Red;
                         }
                     }
-
-
                 }
             }
         }
-
-
-
         public void debugSwitch()
         {
             if (mainForm.debugIs)
             {
                 renderFunctions.clearMainboardCellsBorder();
                 mainForm.debugIs = false;
-                debugCombo.Visible = false;
                 debugPanel.Visible = false;
-                debugComboLabel.BackColor = Color.Red;
+                debugLabel.BackColor = Color.Red;
             }
             else
             {
                 mainForm.debugIs = true;
-                debugCombo.Visible = true;
                 debugPanel.Visible = true;
-                debugComboLabel.BackColor = Color.Green;
+                debugLabel.BackColor = Color.Green;
             }
         }
 
