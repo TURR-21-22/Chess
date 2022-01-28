@@ -15,29 +15,29 @@ namespace Desktop_Chess
 
     public class RenderMain
     {
-        Form_Game form_game = null;
+        Main mainForm = null;
         static RenderInit renderInit;
         static RenderFunctions renderFunctions;
         static Debug debug;
         private static Board model_Board = RenderInit.model_Board;
         private static Cell[,] modelGrid = model_Board.theGrid;
-        public static Gui_Cell[,] gui_Grid = RenderInit.gui_Grid;
+        public static Gui_Cell[,] guiGrid = RenderInit.guiGrid;
         public static Label[,] debugGrid = Debug.debugGrid;
-
         
         public static int clickCounter = 0;
         public Figure clickedFigure = null;
+        public Gui_Figure oldFigure = null;
 
-        public RenderMain(Form_Game ob)
+        public RenderMain(Main ob)
         {
-            this.form_game = ob;
+            this.mainForm = ob;
         }
 
         public void Init() 
         {
-            renderInit = new RenderInit(form_game);
-            renderFunctions = new RenderFunctions(form_game);
-            debug = new Debug(form_game);
+            renderInit = new RenderInit(mainForm);
+            renderFunctions = new RenderFunctions(mainForm);
+            debug = new Debug(mainForm);
         }
 
         public void Board_Click(object sender)
@@ -56,21 +56,21 @@ namespace Desktop_Chess
                     break;
                 case "Gui_Figure":
                     Gui_Figure guiFigure = (Gui_Figure)sender;
-                    guiCell = gui_Grid[guiFigure.X, guiFigure.Y];
+                    guiCell = guiGrid[guiFigure.X, guiFigure.Y];
                     Figure modelFigure = modelGrid[guiFigure.X, guiFigure.Y].Figure;
                     if (!modelFigure.Kick)
                     {
+                        if (oldFigure != null)
+                        {
+                            oldFigure.BackColor = Color.Black;
+                        }
                         renderFunctions.DrawLegalPath(guiFigure);
                         clickedFigure = modelGrid[guiFigure.X, guiFigure.Y].Figure;
+                        oldFigure = guiFigure;
                     }
                     else
                     {
-                        
-                        guiFigure.Location = new Point(RenderInit.cellSize * 0, RenderInit.cellSize * 7);
-                        guiFigure.Kick = false;
-                        
-                        
-                        
+                        renderFunctions.KickFigure(guiFigure);
                         renderFunctions.MoveFigure(clickedFigure, guiCell, renderInit.Skin);
                         guiFigure.BringToFront();
                         clickedFigure = null;

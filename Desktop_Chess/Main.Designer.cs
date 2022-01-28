@@ -1,7 +1,7 @@
 ﻿
 namespace Desktop_Chess
 {
-    partial class Form_Game
+    partial class Main
     {
         /// <summary>
         ///  Required designer variable.

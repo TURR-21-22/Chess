@@ -3,14 +3,14 @@ using System.Windows.Forms;
 
 namespace Desktop_Chess
 {
-    public partial class Form_Game : Form
+    public partial class Main : Form
     {
         static Debug debug;
         static RenderMain render;
         static RenderFunctions renderFunctions;
         public bool debugIs = true;
 
-        public Form_Game()
+        public Main()
         {
             render = new RenderMain(this);
             renderFunctions = new RenderFunctions(this);

@@ -11,21 +11,21 @@ namespace Desktop_Chess
 {
     class RenderFunctions
     {
-        Form_Game form_game = null;
+        Main mainForm = null;
         public static RenderMain renderMain;
         //static RenderInit renderInit;
         static Debug debug;
-        private static Gui_Cell[,] guiGrid = RenderInit.gui_Grid;
+        private static Gui_Cell[,] guiGrid = RenderInit.guiGrid;
         private static Label[,] debugGrid =  Debug.debugGrid;
         private static Board model_Board = RenderInit.model_Board;
         private static Cell[,] modelGrid = model_Board.theGrid;
-        public RenderFunctions(Form_Game ob)
+        public RenderFunctions(Main ob)
         {
-            this.form_game = ob;
+            this.mainForm = ob;
             
-            renderMain = new RenderMain(form_game);
-            debug = new Debug(form_game);
-            //renderInit = new RenderInit(form_game);
+            renderMain = new RenderMain(mainForm);
+            debug = new Debug(mainForm);
+            //renderInit = new RenderInit(mainForm);
             
         }
 
@@ -38,9 +38,17 @@ namespace Desktop_Chess
             Cell modelCell = modelGrid[sourceX, sourceY];
             //Figure modelFigure = modelCell.Figure;
             model_Board.MarkNextLegalMove(modelCell, figureType);
+            source.BackColor = Color.Yellow;
             debugMain(new Point(sourceX, sourceY), figureType);
             debug.drawDebug(modelGrid);
         }
+
+        public void KickFigure(Gui_Figure guiFigure) 
+        {
+            guiFigure.Location = new Point(RenderInit.cellSize * 0, RenderInit.cellSize * 7);
+            guiFigure.Kick = false;
+        }
+
         public void MoveFigure(Figure source, Gui_Cell targetGuiCell, string skin)
         {
             if (source == null)
@@ -77,18 +85,17 @@ namespace Desktop_Chess
             {
                 case "light":
                 guiFigure.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject(
-                        $"{ skin}_figure_" +
+                        $"{ skin }_figure_" +
                         $"{ source.Side }_" +
                         $"{ "light" }_" +
                         $"{ source.Type }");
-
                     break;
                 case "dark":
                 guiFigure.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject(
-                        $"{skin}_figure_" +
-                        $"{source.Side}_" +
-                        $"{"dark"}_" +
-                        $"{source.Type}");
+                        $"{ skin }_figure_" +
+                        $"{ source.Side }_" +
+                        $"{ "dark" }_" +
+                        $"{ source.Type }");
                     break;
             }
             clearMainboardCellsBorder();
@@ -100,7 +107,7 @@ namespace Desktop_Chess
 
         public void debugMain(Point location, string figureType)
         {
-            if (form_game.debugIs)
+            if (mainForm.debugIs)
             {
                 clearMainboardCellsBorder();
                 for (int x = 0; x < model_Board.Size; x++)
