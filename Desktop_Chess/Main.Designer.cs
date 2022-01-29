@@ -29,6 +29,7 @@ namespace Desktop_Chess
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.label_Skins = new System.Windows.Forms.Label();
             this.panel_ChessBoard = new System.Windows.Forms.Panel();
             this.panel_Container_Top = new System.Windows.Forms.Panel();
@@ -37,6 +38,8 @@ namespace Desktop_Chess
             this.panel_Container_Left = new System.Windows.Forms.Panel();
             this.panel_Debug = new System.Windows.Forms.Panel();
             this.panel_Container_Right = new System.Windows.Forms.Panel();
+            this.comboBox_Debug = new System.Windows.Forms.ComboBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.panel_kicked_container_black = new System.Windows.Forms.Panel();
             this.panel_kicked_black = new System.Windows.Forms.Panel();
             this.panel_kicked_container_white = new System.Windows.Forms.Panel();
@@ -101,7 +104,7 @@ namespace Desktop_Chess
             this.label_DebugSwitch.AutoSize = true;
             this.label_DebugSwitch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label_DebugSwitch.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label_DebugSwitch.Location = new System.Drawing.Point(292, 559);
+            this.label_DebugSwitch.Location = new System.Drawing.Point(265, 579);
             this.label_DebugSwitch.Name = "label_DebugSwitch";
             this.label_DebugSwitch.Padding = new System.Windows.Forms.Padding(2);
             this.label_DebugSwitch.Size = new System.Drawing.Size(64, 27);
@@ -116,7 +119,7 @@ namespace Desktop_Chess
             this.panel_Container_Left.Controls.Add(this.panel_ChessBoard);
             this.panel_Container_Left.Location = new System.Drawing.Point(12, 63);
             this.panel_Container_Left.Name = "panel_Container_Left";
-            this.panel_Container_Left.Size = new System.Drawing.Size(589, 592);
+            this.panel_Container_Left.Size = new System.Drawing.Size(589, 633);
             this.panel_Container_Left.TabIndex = 1;
             // 
             // panel_Debug
@@ -131,6 +134,8 @@ namespace Desktop_Chess
             // panel_Container_Right
             // 
             this.panel_Container_Right.BackColor = System.Drawing.Color.Transparent;
+            this.panel_Container_Right.Controls.Add(this.comboBox_Debug);
+            this.panel_Container_Right.Controls.Add(this.listBox1);
             this.panel_Container_Right.Controls.Add(this.panel_kicked_container_black);
             this.panel_Container_Right.Controls.Add(this.label_DebugSwitch);
             this.panel_Container_Right.Controls.Add(this.panel_kicked_container_white);
@@ -138,8 +143,29 @@ namespace Desktop_Chess
             this.panel_Container_Right.Location = new System.Drawing.Point(607, 63);
             this.panel_Container_Right.Name = "panel_Container_Right";
             this.panel_Container_Right.Padding = new System.Windows.Forms.Padding(6);
-            this.panel_Container_Right.Size = new System.Drawing.Size(365, 592);
+            this.panel_Container_Right.Size = new System.Drawing.Size(365, 633);
             this.panel_Container_Right.TabIndex = 0;
+            // 
+            // comboBox_Debug
+            // 
+            this.comboBox_Debug.FormattingEnabled = true;
+            this.comboBox_Debug.Items.AddRange(new object[] {
+            "model",
+            "gui"});
+            this.comboBox_Debug.Location = new System.Drawing.Point(138, 585);
+            this.comboBox_Debug.Name = "comboBox_Debug";
+            this.comboBox_Debug.Size = new System.Drawing.Size(121, 23);
+            this.comboBox_Debug.TabIndex = 7;
+            this.comboBox_Debug.SelectedIndexChanged += new System.EventHandler(this.comboBox_Debug_SelectedIndexChanged);
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 15;
+            this.listBox1.Location = new System.Drawing.Point(6, 211);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(350, 244);
+            this.listBox1.TabIndex = 6;
             // 
             // panel_kicked_container_black
             // 
@@ -192,6 +218,7 @@ namespace Desktop_Chess
             this.Controls.Add(this.panel_Container_Top);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Chess";
@@ -221,6 +248,8 @@ namespace Desktop_Chess
         public System.Windows.Forms.Panel panel_kicked_container_black;
         public System.Windows.Forms.Panel panel_kicked_white;
         public System.Windows.Forms.Panel panel_kicked_black;
+        public System.Windows.Forms.ListBox listBox1;
+        public System.Windows.Forms.ComboBox comboBox_Debug;
     }
 }
 

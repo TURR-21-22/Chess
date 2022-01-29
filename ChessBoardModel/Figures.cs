@@ -24,16 +24,16 @@ namespace ChessBoardModel
             { "bastya",new int[]{0, 7 }},
         };
 
-        private List<Figure> model_whiteFiguresON = new List<Figure>();
-        private List<Figure> model_blackFiguresON = new List<Figure>();
-        private List<Figure> model_whiteFiguresOFF = new List<Figure>();
-        private List<Figure> model_blackFiguresOFF = new List<Figure>();
+        public static List<Figure> model_whiteFiguresON = new List<Figure>();
+        public static List<Figure> model_blackFiguresON = new List<Figure>();
+        public static List<Figure> model_whiteFiguresOFF = new List<Figure>();
+        public static List<Figure> model_blackFiguresOFF = new List<Figure>();
         public List<Figure> Model_whiteFiguresON { get { return model_whiteFiguresON; } set { model_whiteFiguresON = value; } }
         public List<Figure> Model_blackFiguresON { get { return model_blackFiguresON; } set { model_blackFiguresON = value; } }
-        public List<Figure> Model_whiteFiguresOFF { get { return model_whiteFiguresOFF; } set { model_whiteFiguresOFF = value; } }
-        public List<Figure> Model_blackFiguresOFF { get { return model_blackFiguresOFF; } set { model_blackFiguresOFF = value; } }
+        //public List<Figure> Model_whiteFiguresOFF { get { return model_whiteFiguresOFF; } set { model_whiteFiguresOFF = value; } }
+        //public List<Figure> Model_blackFiguresOFF { get { return model_blackFiguresOFF; } set { model_blackFiguresOFF = value; } }
 
-        public void createFigures(int y, string side, List<Figure> list, int direction)
+        private void createFigures(int y, string side, List<Figure> list, int direction)
         {
             int x;
             string type;
@@ -64,7 +64,7 @@ namespace ChessBoardModel
                 { 3, 0, "white", "futo", 1 },
                 { 5, 5, "white", "gyalog", 1 },
                 { 3, 5, "white", "gyalog", 2 },
-                { 7, 0, "white", "gyalog", 3 }
+                { 7, 1, "white", "gyalog", 3 }
             };
             object[,] blackGroup = new object[8,5] {
                 { 0, 0, "black", "kiraly",1 },
@@ -74,7 +74,7 @@ namespace ChessBoardModel
                 { 4, 5, "black", "futo", 1 },
                 { 5, 4, "black", "gyalog", 1 },
                 { 6, 2, "black", "gyalog", 2 },
-                { 6, 7, "black", "gyalog", 3 }
+                { 0, 4, "black", "gyalog", 3 }
             };
            
             for (int i = 0; i < whiteGroup.GetLength(0); i++)

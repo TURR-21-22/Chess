@@ -13,7 +13,8 @@ namespace ChessBoardModel
         public Cell[,] theGrid { get; set; }
         public static Figures model_Figures = new Figures();
         public bool CellProps = true;
-
+        //public List<Figure> white;
+        //public List<Figure> black;
         public Board (int s)
         {
             Size = s;

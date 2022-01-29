@@ -24,11 +24,14 @@ namespace Desktop_Chess
         public static Panel divTop, divLeft, divRight, divChess, kickedWhitesContainer, kickedBlacksContainer, kickedWhites, kickedBlacks;
         public string Skin;
         public static int cellSize;
+        public static int kickedCellSize;
+        public static Point[] kickedPanelCoords;
+        public bool CellProps = true;
 
         //public Dictionary<string, Image[]> gui_figureImagesWhite = new Dictionary<string, Image[]>();
         //public Dictionary<string, Image[]> gui_figureImagesBlack = new Dictionary<string, Image[]>();
 
-        public bool CellProps = false;
+        
 
         // game board containers layout width/height in percent of Form_Game
         private static object[,] Layout = new object[3, 3] {
@@ -49,7 +52,7 @@ namespace Desktop_Chess
             kickedBlacksContainer = mainForm.panel_kicked_container_black;
             kickedWhites = mainForm.panel_kicked_white;
             kickedBlacks = mainForm.panel_kicked_black;
-           
+            
             Init("wood");
         }
 
@@ -92,7 +95,8 @@ namespace Desktop_Chess
 
             headerControlls();
             kickedPanels();
-            populaBoardteGrid(skin);
+            populaBoardGuiGrid(skin);
+            
         }
 
         private void headerControlls()
@@ -106,18 +110,71 @@ namespace Desktop_Chess
 
         private void kickedPanels()
         {
-            kickedWhitesContainer.Size = new Size(divRight.Width - 24, (divRight.Width/8)*2);
+            kickedWhitesContainer.Size = new Size(divRight.Width - 40, (divRight.Width/8)*2);
             kickedBlacksContainer.Size = kickedWhitesContainer.Size;
             kickedWhitesContainer.Location = new Point(12, 12);
             kickedBlacksContainer.Location = new Point(12, kickedWhitesContainer.Location.Y + kickedWhitesContainer.Height + 6);
-            kickedWhites.Size = new Size(kickedWhitesContainer.Width - 16, ((kickedWhitesContainer.Width - 38) / 8) * 2);
-            kickedWhites.Location = new Point(8, 8);
+            kickedWhites.Size = new Size(kickedWhitesContainer.Width -40, ((kickedWhitesContainer.Width - 38) / 8) * 2);
+            kickedWhites.Padding = new Padding(0, 0, 0, 0);
+            kickedWhites.Location = new Point((kickedWhitesContainer.Width - kickedWhites.Width) / 2, 8);
             kickedBlacks.Size = kickedWhites.Size;
-            kickedBlacks.Location = new Point(8, 8);
-            kickedWhites.Tag = new Point(0, 0);
-            kickedBlacks.Tag = new Point(0, 0);
+            kickedBlacks.Padding = new Padding(0, 0, 0, 0);
+            kickedBlacks.Location = new Point((kickedBlacksContainer.Width - kickedBlacks.Width) / 2, 8);
+            mainForm.listBox1.Location = new Point(12, kickedBlacksContainer.Location.Y + kickedBlacksContainer.Height + 6);
+            mainForm.listBox1.Width = divRight.Width - 24;
+            mainForm.listBox1.Height = mainForm.label_DebugSwitch.Location.Y - 6;
+
+            kickedPanelCoords = new Point[16];
+            kickedCellSize = (kickedWhitesContainer.Width - 38) / 8;
+            Point baseLocation;
+            int counter = 0;
+            for (int y = 0; y < 2; y++)
+            {
+                baseLocation = new Point(0, 0 + (kickedCellSize * y));
+                for (int x = 0; x < 8; x++)
+                {
+                    kickedPanelCoords[counter] = new Point(kickedCellSize * x, baseLocation.Y);
+                    counter++;
+                }
+            }
+            makeKickedCells(kickedWhites);
+            makeKickedCells(kickedBlacks);
         }
 
+        private void makeKickedCells(Panel panel)
+        {
+            int counter = 0;
+            Point baseLocation;
+            for (int y = 0; y < 2; y++)
+            {
+                baseLocation = new Point(0, 0 + (kickedCellSize * y));
+                CellProps = !CellProps;
+                for (int x = 0; x < 8; x++)
+                {
+                    CellProps = !CellProps;
+                    Label kickedCell = new Label();
+                    kickedCell.Width = kickedCellSize;
+                    kickedCell.Height = kickedCellSize;
+                    if (CellProps)
+                    {
+                        kickedCell.ForeColor = Color.White;
+                        kickedCell.BackColor = Color.Black;
+                    }
+                    else
+                    {
+                        kickedCell.ForeColor = Color.Black;
+                        kickedCell.BackColor = Color.White;
+                    }
+                    kickedCell.BorderStyle = BorderStyle.None;
+                    //kickedCell.Type = false;
+                    //kickedCell.Pupet = null;
+                    //kickedCell.Click += mainForm.Board_Click;
+                    kickedCell.Location = kickedPanelCoords[counter];
+                    panel.Controls.Add(kickedCell);
+                    counter++;
+                }
+            }
+        }
 
         private Size ContainerSize(int width, int height, Form container)
         {
@@ -166,22 +223,25 @@ namespace Desktop_Chess
             return tmp;
         }
 
-        public void populaBoardteGrid(string skin)
+        public void populaBoardGuiGrid(string skin)
         {
             cellSize = divChess.Width / model_Board.Size;
             divChess.Height = divChess.Width;
-            for (int x = 0; x < model_Board.Size; x++)
+            int x = 0;
+            int y = 0;
+            for ( x = 0; x < model_Board.Size; x++)
             {
-                for (int y = 0; y < model_Board.Size; y++)
+                for ( y = 0; y < model_Board.Size; y++)
                 {
-
                     Gui_Cell gui_Cell = new Gui_Cell(x, y);
                     guiGrid[x, y] = gui_Cell;
-                    gui_Cell.LegalNextMove = model_Board.theGrid[x, y].LegalNextMove;
                     gui_Cell.Width = cellSize;
                     gui_Cell.Height = cellSize;
                     gui_Cell.ForeColor = Color.White;
                     gui_Cell.BackColor = Color.Black;
+                    gui_Cell.Type = false;
+                    gui_Cell.Pupet = null;
+                    gui_Cell.Click += mainForm.Board_Click;
                     switch (model_Board.theGrid[x, y].CellBkgColor)
                     {
                         case "light":
@@ -193,118 +253,102 @@ namespace Desktop_Chess
                                 $"{skin}_cell_black");
                             break;
                     }
-                    gui_Cell.Click += mainForm.Board_Click;
                     gui_Cell.Location = new Point(x * cellSize, y * cellSize);
                     divChess.Controls.Add(gui_Cell);
                 }
             }
+
+            Figure modelFigure;
+            x = 0;
+            y = 0;
+
+            for (int i = 0; i < model_Figures.Model_whiteFiguresON.Count; i++)
+            {
+                x = model_Figures.Model_whiteFiguresON[i].X;
+                y = model_Figures.Model_whiteFiguresON[i].Y;
+                guiGrid[x, y].X = x;
+                guiGrid[x, y].Y = y;
+                guiGrid[x, y].Pupet = model_Figures.Model_whiteFiguresON[i];
+                guiGrid[x, y].Type = true;
+                if (model_Board.theGrid[x, y].Figure != null)
+                {
+                    modelFigure = model_Board.theGrid[x, y].Figure;
+                    loadFiguresSkin(skin, guiGrid[x, y], modelFigure, model_Board.theGrid[x, y]);
+                }
+            }
+            x = 0;
+            y = 0;
+            
             for (int i = 0; i < model_Figures.Model_blackFiguresON.Count; i++)
             {
-                gui_whiteFigures.Add(new Gui_Figure());
-
-                Figure model_FigureWhite = model_Figures.Model_whiteFiguresON[i];
-                
-                Cell model_CellWhite = model_Board.theGrid[model_FigureWhite.X, model_FigureWhite.Y];
-                Gui_Figure gui_FigureWhite = gui_whiteFigures[i];
-                Gui_Cell gui_CellWhite = guiGrid[model_FigureWhite.X, model_FigureWhite.Y];
-
-                gui_blackFigures.Add(new Gui_Figure());
-                Figure model_FigureBlack = model_Figures.Model_blackFiguresON[i];
-                Cell model_CellBlack = model_Board.theGrid[model_FigureBlack.X, model_FigureBlack.Y];
-                Gui_Figure gui_FigureBlack = gui_blackFigures[i];
-                Gui_Cell gui_CellBlack = guiGrid[model_FigureBlack.X, model_FigureBlack.Y];
-
-                setFigure(skin, gui_FigureWhite, model_FigureWhite, gui_CellWhite, model_CellWhite, cellSize, i);
-                setFigure(skin, gui_FigureBlack, model_FigureBlack, gui_CellBlack, model_CellBlack, cellSize, i);
+                x = model_Figures.Model_blackFiguresON[i].X;
+                y = model_Figures.Model_blackFiguresON[i].Y;
+                guiGrid[x, y].X = x;
+                guiGrid[x, y].Y = y;
+                guiGrid[x, y].Pupet = model_Figures.Model_blackFiguresON[i];
+                guiGrid[x, y].Type = true;
+                if (model_Board.theGrid[x, y].Figure != null)
+                {
+                    modelFigure = model_Board.theGrid[x, y].Figure;
+                    loadFiguresSkin(skin, guiGrid[x, y], modelFigure, model_Board.theGrid[x, y]);
+                }
             }
-        }
-
-        private void setFigure(string skin, Gui_Figure gui_Figure, Figure modelFigure, Gui_Cell gui_Cell, Cell modelCell, int size, int cnt)
-        {
-            gui_Cell.Figure = gui_Figure;
-            gui_Figure.X = modelCell.X;
-            gui_Figure.Y = modelCell.Y;
-            gui_Figure.Side = modelFigure.Side;
-            gui_Figure.Type = modelFigure.Type;
-            gui_Figure.LegalNextMove = modelFigure.LegalNextMove;
-            gui_Figure.Kick = modelFigure.Kick;
-            gui_Figure.Height = size;
-            gui_Figure.Width = size;
-            loadFiguresSkin(skin, gui_Figure, modelFigure, modelCell);
-            gui_Figure.Font = new Font("Impact", 16);
-            gui_Figure.BackgroundImageLayout = ImageLayout.Stretch;
-            gui_Figure.Margin = new Padding(0, 0, 0, 0);
-            gui_Figure.Padding = new Padding(0, 0, 0, 0);
-            gui_Figure.Location = new Point(modelFigure.X * size, modelFigure.Y * size);
-            gui_Figure.Click += mainForm.Board_Click;
-            divChess.Controls.Add(gui_Figure);
-            gui_Figure.BringToFront();
         }
 
         public void RestartGui(string skin)
         {
-            Skin = skin;
             mainForm.BackgroundImage = gui_backgroundImages[skin][0];
-            for (int y = 0; y < model_Board.Size; y++)
+            /*
+            for (int x = 0; x < model_Board.Size; x++)
             {
-                for (int x = 0; x < model_Board.Size; x++)
+                for (int y = 0; y < model_Board.Size; y++)
                 {
-                    //guiGrid[y, x].ForeColor = Color.White;
-                    //guiGrid[y, x].BackColor = Color.Black;
-                    switch (model_Board.theGrid[x, y].CellBkgColor)
+                    if (model_Board.theGrid[x, y].Figure != null) // ha van rajta pápet
                     {
-                        case "light":
-                            guiGrid[y, x].BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject(
-                                $"{skin}_cell_white");
-                                
-                            break;
-                        case "dark":
-                            guiGrid[y, x].BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject(
-                                $"{skin}_cell_black");
-                            break;
+                        Figure modelFigure = model_Board.theGrid[x, y].Figure;
+                        loadFiguresSkin(skin, guiGrid[x, y], modelFigure, model_Board.theGrid[x, y]);
+                    }
+                    else
+                    {
+                        switch (model_Board.theGrid[x,y].CellBkgColor)
+                        {
+                            case "light":
+                                guiGrid[y, x].BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject(
+                                    $"{skin}_cell_white");
+
+                                break;
+                            case "dark":
+                                guiGrid[y, x].BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject(
+                                    $"{skin}_cell_black");
+                                break;
+                        }
                     }
                 }
             }
-
-            for (int i = 0; i < gui_whiteFigures.Count; i++)
-            {
-                Gui_Figure guiFigureWhite = gui_whiteFigures[i];
-                Gui_Figure guiFigureBlack = gui_blackFigures[i];
-                
-                Figure modelFigureWhite = model_Figures.Model_whiteFiguresON[i];
-                Figure modelFigureBlack = model_Figures.Model_blackFiguresON[i];
-
-                Cell modelCellWhite = model_Board.theGrid[modelFigureWhite.X, modelFigureWhite.Y];
-                Cell modelCellBlack = model_Board.theGrid[modelFigureBlack.X, modelFigureBlack.Y];
-
-                loadFiguresSkin(skin, guiFigureWhite, modelFigureWhite, modelCellWhite);
-                loadFiguresSkin(skin, guiFigureBlack, modelFigureBlack, modelCellBlack);
-
-            }
+            */
         }
-        public void loadFiguresSkin(string skin, Gui_Figure guiFigure, Figure modelFigure, Cell modelCell)
+        public void loadFiguresSkin(string skin, Gui_Cell guiCell, Figure modelFigure, Cell modelCell)
         {
-            guiFigure.ForeColor = Color.White;
-            guiFigure.BackColor = Color.Black;
+            guiCell.ForeColor = Color.White;
+            guiCell.BackColor = Color.Black;
             switch (modelCell.CellBkgColor)
             {
                 case "light":
-                    guiFigure.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_figure_" +
+                    guiCell.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_figure_" +
                         $"{modelFigure.Side}_" +
                         $"{"light"}_" +
                         $"{modelFigure.Type}");
 
                     break;
                 case "dark":
-                    guiFigure.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_figure_" +
+                    guiCell.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_figure_" +
                         $"{modelFigure.Side}_" +
                         $"{"dark"}_" +
                         $"{modelFigure.Type}");
                     break;
             }
         }
-
-        
+       
 
 
     }

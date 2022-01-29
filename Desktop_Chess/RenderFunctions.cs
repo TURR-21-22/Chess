@@ -13,98 +13,133 @@ namespace Desktop_Chess
     {
         Main mainForm = null;
         public static RenderMain renderMain;
-        static Debug debug;
+        public static Debug debug;
         private static Gui_Cell[,] guiGrid = RenderInit.guiGrid;
         private static Label[,] debugGrid =  Debug.debugGrid;
         private static Board model_Board = RenderInit.model_Board;
         private static Cell[,] modelGrid = model_Board.theGrid;
+        public static int whiteFiguresCounter = Board.model_Figures.Model_blackFiguresON.Count;
+        public static int blackFiguresCounter = Board.model_Figures.Model_blackFiguresON.Count;
+        public static int whiteKickedFiguresCounter;
+        public static int blackKickedFiguresCounter;
+        public static List<Gui_Figure> kickedWhites = new List<Gui_Figure>();
+        public static List<Gui_Figure> kickedBlacks = new List<Gui_Figure>();
+        public static Point[] kickedPanelCoords;
+        
         public RenderFunctions(Main ob)
         {
             this.mainForm = ob;
-            
             renderMain = new RenderMain(mainForm);
             debug = new Debug(mainForm);
-            //renderInit = new RenderInit(mainForm);
-            
+            kickedPanelCoords = RenderInit.kickedPanelCoords;
+            whiteKickedFiguresCounter = 0;
+            blackKickedFiguresCounter = 0;
         }
 
-        public void DrawLegalPath(Gui_Figure source)
+        public void DrawLegalPath(Gui_Cell source, string type)
         {
-            //Gui_Figure guiFigure = (Gui_Figure)source;
-            int sourceX = source.X;
-            int sourceY = source.Y;
-            string figureType = source.Type;
-            Cell modelCell = modelGrid[sourceX, sourceY];
-            //Figure modelFigure = modelCell.Figure;
-            model_Board.MarkNextLegalMove(modelCell, figureType);
+            Cell modelCell = modelGrid[source.X, source.Y];
+            model_Board.MarkNextLegalMove(modelCell, type);
             source.BackColor = Color.Yellow;
-            debugMain(new Point(sourceX, sourceY), figureType);
-            debug.drawDebug(modelGrid);
+            displayPath(new Point(source.X, source.Y), type);
+            debug.draw2Debug(Debug.currentDebugArray);
         }
 
-        public void KickFigure(Gui_Figure guiFigure) 
-        {
-            guiFigure.Location = new Point(RenderInit.cellSize * 0, RenderInit.cellSize * 7);
+        public void KickFigure(Gui_Cell targetGuiCell, Cell sourceCell, string skin) 
+        {/*
+            int kickedCellSize = RenderInit.kickedCellSize;
+            int cellSize = RenderInit.cellSize;
+            
+            Figure modelFigure = modelGrid[guiFigure.X, guiFigure.Y].Figure;
+            
             guiFigure.Kick = false;
+            guiFigure.LegalNextMove = false;
+            modelFigure.Kick = false;
+            modelFigure.LegalNextMove = false;
+            guiFigure.Size = new Size(kickedCellSize, kickedCellSize);
+            switch (modelFigure.Side)
+            {
+                case "white":
+
+                    //model_whiteFiguresOFF.Add(modelFigure);
+                    
+                    //mainForm.panel_kicked_white.Controls.Remove(guiFigure);
+                    mainForm.panel_kicked_white.Controls.Add(guiFigure);
+                    
+                    //guiFigure.Location = kickedPanelCoords[model_whiteFiguresOFF.Count-1];
+                    guiFigure.Location = kickedPanelCoords[whiteKickedFiguresCounter];
+                    //mainForm.listBox1.Items.Add(model_whiteFiguresOFF.Count);
+                    whiteKickedFiguresCounter++;
+                    break;
+                case "black":
+                    //model_blackFiguresOFF.Add(modelFigure);
+                    
+                    //mainForm.panel_kicked_black.Controls.Remove(guiFigure);
+                    mainForm.panel_kicked_black.Controls.Add(guiFigure);
+                    
+                    //guiFigure.Location = kickedPanelCoords[model_blackFiguresOFF.Count-1];
+                    guiFigure.Location = kickedPanelCoords[blackKickedFiguresCounter];
+                    //mainForm.listBox1.Items.Add(model_blackFiguresOFF.Count);
+                    blackKickedFiguresCounter++;
+                    break;
+            }
+            guiFigure.Click -= mainForm.Board_Click;
+
+
+            /*
+            for (int i = 0; i < kickedPanelCoords.Length; i++)
+            {
+                mainForm.listBox1.Items.Add(kickedPanelCoords[i]);
+            }
+            */
+
+            //guiFigure.Click += 
+
+            //Debug.debugLabel.Text = $"{whiteFiguresCounter}";
+            //Debug.debugLabel.Text = $"{kickedCellSize}";
+            // figureCounter--
+            // if figurecounter == 0 game over
+            // figure property: Cell = null, LegalNextMove = false, Kick = false
+            //int size = RenderInit.kickedCellSize;
+            //guiGrid[guiFigure.X, guiFigure.Y].Visible = false;
+            //guiGrid[guiFigure.X, guiFigure.Y].Figure.Visible = false;
+            //guiFigure.Visible = false;
+            //mainForm.panel_ChessBoard.Controls.Remove(guiGrid[guiFigure.X, guiFigure.Y].Figure);
+            //guiGrid[guiFigure.X, guiFigure.Y].Figure = null;
+
+            
+            //guiFigure.Location = new Point(RenderInit.cellSize * 0, RenderInit.cellSize * 7);
+            //RenderMain.guiGrid[guiFigure.X, guiFigure.Y].Figure.Location = new Point(RenderInit.cellSize * 0, RenderInit.cellSize * 7);
+            //guiFigure.Kick = false;
         }
 
-        public void MoveFigure(Figure source, Gui_Cell targetGuiCell, string skin)
+        public void MoveFigure(Gui_Cell targeGuitCell, Cell sourceCell, string skin)
         {
-            if (source == null)
-            {
-                return;
-            }
-            // set target_modelCell props ( clickedFigure, Occupied = true)
-            // set source modelCell props (Figure Cell = null, Occupied = false)
-            // set source modelFigure props (targetX,targetY, target_modelCell)
-            
-            // set target_guiCell props ( Gui_Figure Figure,      //Occupied = true)
-            // set source guiFigure props ( targetX,targetY)
-            // set source guiFigure location to target_guiCell.Location
-
-            Cell target_modelCell = modelGrid[targetGuiCell.X, targetGuiCell.Y];
-            target_modelCell.Occupied = true;
-            target_modelCell.Figure = source;
-
-            Cell source_modelCell = modelGrid[source.X, source.Y];
-            source_modelCell.Figure = null;
-            source_modelCell.Occupied = false;
-            Gui_Figure guiFigure = guiGrid[source.X, source.Y].Figure;
-
-            source.X = targetGuiCell.X;
-            source.Y = targetGuiCell.Y;
-            source.Cell = target_modelCell;
-            targetGuiCell.Figure = guiFigure;
-
-            guiFigure.X = targetGuiCell.X;
-            guiFigure.Y = targetGuiCell.Y;
-            guiFigure.Location = targetGuiCell.Location;
-            
-            switch (target_modelCell.CellBkgColor)
-            {
-                case "light":
-                guiFigure.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject(
-                        $"{ skin }_figure_" +
-                        $"{ source.Side }_" +
-                        $"{ "light" }_" +
-                        $"{ source.Type }");
-                    break;
-                case "dark":
-                guiFigure.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject(
-                        $"{ skin }_figure_" +
-                        $"{ source.Side }_" +
-                        $"{ "dark" }_" +
-                        $"{ source.Type }");
-                    break;
-            }
+            Gui_Cell sourceGuiCell = guiGrid[sourceCell.X, sourceCell.Y];
+            Cell targetCell = modelGrid[targeGuitCell.X, targeGuitCell.Y];
+            string backColor = "";
+            if (targetCell.CellBkgColor == "light") { backColor = "light"; } else { backColor = "dark"; };
+            targeGuitCell.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject(
+                $"{skin}_figure_{sourceCell.Figure.Side}_{backColor}_{sourceCell.Figure.Type}");
+            if (sourceCell.CellBkgColor == "light") { backColor = "white"; } else { backColor = "black"; };
+            sourceGuiCell.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_cell_{backColor}");
+            targetCell.Occupied = true;
+            targetCell.Figure = sourceCell.Figure;
+            targetCell.Figure.X = targetCell.X;
+            targetCell.Figure.Y = targetCell.Y;
+            sourceCell.Occupied = false;
+            sourceCell.Figure = null;
+            targeGuitCell.Type = true;
+            targeGuitCell.Pupet = sourceGuiCell.Pupet;
+            sourceGuiCell.Type = false;
+            sourceGuiCell.Pupet = null;
             clearMainboardCellsBorder();
             model_Board.ClearBoard();
-            debug.drawDebug(modelGrid);
-            
+            debug.draw2Debug(Debug.currentDebugArray);
         }
 
 
-        public void debugMain(Point location, string figureType)
+        public void displayPath(Point location, string figureType)
         {
             if (mainForm.debugIs)
             {
@@ -119,9 +154,9 @@ namespace Desktop_Chess
                         {
                             if (modelCell.Figure != null && modelCell.Figure.Kick)
                             {
-                                if (guiCell.Figure != null)
+                                if (guiCell.Type)
                                 {
-                                    guiCell.Figure.BackColor = Color.Red;
+                                    guiCell.BackColor = Color.Red;
                                 }
                                 guiCell.BackColor = Color.Red;
                             }

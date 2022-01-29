@@ -25,14 +25,15 @@ namespace Desktop_Chess
         public static Label[,] debugGrid = Debug.debugGrid;
         
         public static int clickCounter = 0;
-        public Figure clickedFigure = null;
-        public Gui_Figure oldFigure = null;
+        //public Figure clickedFigure = null;
+        public Cell clickedCell = null;
+        //public Gui_Figure clickedGuiFigure = null;
 
         public RenderMain(Main ob)
         {
             this.mainForm = ob;
         }
-
+        
         public void Init() 
         {
             renderInit = new RenderInit(mainForm);
@@ -42,20 +43,59 @@ namespace Desktop_Chess
 
         public void Board_Click(object sender)
         {
+            Gui_Cell guiCell = (Gui_Cell)sender;
+            Cell modelCell = modelGrid[guiCell.X, guiCell.Y];
+            Figure modelFigure = modelGrid[guiCell.X, guiCell.Y].Figure;
+            switch (guiCell.Type)
+            {
+                case true:
+                    if (!modelFigure.Kick)
+                    {
+                        renderFunctions.DrawLegalPath( guiCell, modelFigure.Type);
+                        clickedCell = modelCell;
+                    }
+                    else
+                    {
+                        renderFunctions.KickFigure(guiCell, modelCell, renderInit.Skin);
+                    }
+                    break;
+                case false:
+                    if (modelCell.LegalNextMove)
+                    {
+                        renderFunctions.MoveFigure( guiCell, clickedCell, renderInit.Skin );
+                    }
+                    break;
+            }
+
+
+            //mainForm.listBox1.Items.Add(guiCell.Type);
+            /*
             Gui_Cell guiCell;
             switch (sender.GetType().Name)
             {
                 case "Gui_Cell":
-                    guiCell = (Gui_Cell)sender;
-                    Cell modelCell = modelGrid[guiCell.X, guiCell.Y];
+                    Gui_Cell tmpCell = (Gui_Cell)sender;
+                    Cell modelCell = modelGrid[tmpCell.X, tmpCell.Y];
                     if (modelCell.LegalNextMove)
                     {
-                        renderFunctions.MoveFigure(clickedFigure, guiCell, renderInit.Skin);
+                        //guiGrid[tmpCell.X, tmpCell.Y].Visible = false;
+                        //renderFunctions.MoveFigure(clickedFigure, clickedGuiFigure, guiCell, renderInit.Skin);
                         clickedFigure = null;
                     }
                     break;
                 case "Gui_Figure":
                     Gui_Figure guiFigure = (Gui_Figure)sender;
+                    //mainForm.listBox1.Items.Add(guiGrid[guiFigure.X, guiFigure.Y].FigureNr);
+                    mainForm.listBox1.Items.Add(guiFigure.FigureNr);
+                    guiFigure.Visible = false;
+
+                    //RenderInit.gui_whiteFigures[guiFigure.FigureNr].Visible = false;
+
+                    //guiGrid[1, 1].Visible = false;
+                    //guiGrid[1, 1].Figure.Visible = false;
+                    //guiFigure.Visible = false;
+                    //guiGrid[1, 0].Visible = false;
+
                     guiCell = guiGrid[guiFigure.X, guiFigure.Y];
                     Figure modelFigure = modelGrid[guiFigure.X, guiFigure.Y].Figure;
                     if (!modelFigure.Kick)
@@ -64,20 +104,28 @@ namespace Desktop_Chess
                         {
                             oldFigure.BackColor = Color.Black;
                         }
+                        
                         renderFunctions.DrawLegalPath(guiFigure);
+
+                        
+                        //guiGrid[guiFigure.X, guiFigure.Y].Visible = false;
+                        //guiGrid[guiFigure.X, guiFigure.Y].Figure.Visible = false;
+
                         clickedFigure = modelGrid[guiFigure.X, guiFigure.Y].Figure;
-                        oldFigure = guiFigure;
+                        //clickedGuiFigure = guiCell;
+                        //oldFigure = guiFigure;
                     }
                     else
                     {
                         renderFunctions.KickFigure(guiFigure);
-                        renderFunctions.MoveFigure(clickedFigure, guiCell, renderInit.Skin);
+                        renderFunctions.MoveFigure(clickedFigure, clickedGuiFigure, guiCell, renderInit.Skin);
                         guiFigure.BringToFront();
                         clickedFigure = null;
+                        clickedGuiFigure = null;
                     }
                     break;
-            }
-            
+                }
+*/
         }
 
         public void SelectSkin(object sender)

@@ -29,6 +29,7 @@ namespace Desktop_Chess
             render.Init();
             debug = new Debug(this);
             debug.GUIdebug();
+            comboBox_Debug.Text = "model";
         }
        
         private void comboBox_Skins(object sender, EventArgs e)
@@ -39,6 +40,12 @@ namespace Desktop_Chess
         private void label_DebugSwitch_Click(object sender, EventArgs e)
         {
             debug.debugSwitch();
+        }
+
+        private void comboBox_Debug_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cmb = (ComboBox)sender;
+            debug.setMonitoredArray(cmb.SelectedItem.ToString());
         }
     }
 }
