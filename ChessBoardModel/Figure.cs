@@ -24,7 +24,6 @@ namespace ChessBoardModel
             Side = side;
             Type = type;
             ID = id;
-            //Cell = figureCell;
         }
     }
 }

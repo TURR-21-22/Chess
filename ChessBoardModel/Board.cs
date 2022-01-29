@@ -13,8 +13,7 @@ namespace ChessBoardModel
         public Cell[,] theGrid { get; set; }
         public static Figures model_Figures = new Figures();
         public bool CellProps = true;
-        //public List<Figure> white;
-        //public List<Figure> black;
+        public int[] listCount;
         public Board (int s)
         {
             Size = s;
@@ -43,11 +42,13 @@ namespace ChessBoardModel
                 theGrid[white[i].X, white[i].Y].Occupied = true;
                 theGrid[white[i].X, white[i].Y].Figure = white[i];
                 white[i].Cell = theGrid[white[i].X, white[i].Y];
+
                 theGrid[black[i].X, black[i].Y].Occupied = true;
                 theGrid[black[i].X, black[i].Y].Figure = black[i];
                 black[i].Cell = theGrid[black[i].X, black[i].Y];
-
             }
+    
+
         }
 
         public void ClearBoard()
@@ -64,6 +65,7 @@ namespace ChessBoardModel
 
         public void MarkNextLegalMove(Cell currentCell, string chessPiece)
         {
+  
             ClearBoard();
             switch (chessPiece)
             {

@@ -13,15 +13,14 @@ namespace Desktop_Chess
     {
 
         Main mainForm = null;
-
         public static Board model_Board = new Board(8);
         public static Figures model_Figures = new Figures();
         public static Gui_Cell[,] guiGrid = new Gui_Cell[model_Board.Size, model_Board.Size];
-        public static List<Gui_Figure> gui_whiteFigures = new List<Gui_Figure>(16);
-        public static List<Gui_Figure> gui_blackFigures = new List<Gui_Figure>(16);
+        public static List<Gui_Cell> guiKickedWhites = new List<Gui_Cell>(16);
+        public static List<Gui_Cell> guiKickedBlacks = new List<Gui_Cell>(16);
         public static Dictionary<string, Image[]> gui_cellImages = new Dictionary<string, Image[]>();
         public static Dictionary<string, Image[]> gui_backgroundImages = new Dictionary<string, Image[]>();
-        public static Panel divTop, divLeft, divRight, divChess, kickedWhitesContainer, kickedBlacksContainer, kickedWhites, kickedBlacks;
+        public static Panel divTop, divLeft, divRight, divChess, kickedWhitesContainer, kickedBlacksContainer, kickedWhitesPanel, kickedBlacksPanel;
         public string Skin;
         public static int cellSize;
         public static int kickedCellSize;
@@ -31,15 +30,11 @@ namespace Desktop_Chess
         //public Dictionary<string, Image[]> gui_figureImagesWhite = new Dictionary<string, Image[]>();
         //public Dictionary<string, Image[]> gui_figureImagesBlack = new Dictionary<string, Image[]>();
 
-        
-
-        // game board containers layout width/height in percent of Form_Game
         private static object[,] Layout = new object[3, 3] {
             { "Top",100, 6},
             { "Left",60, 94 },
             { "Right",40, 94}
         };
-                
         
         public RenderInit(Main ob)
         {
@@ -50,9 +45,8 @@ namespace Desktop_Chess
             divRight = mainForm.panel_Container_Right;
             kickedWhitesContainer = mainForm.panel_kicked_container_white;
             kickedBlacksContainer = mainForm.panel_kicked_container_black;
-            kickedWhites = mainForm.panel_kicked_white;
-            kickedBlacks = mainForm.panel_kicked_black;
-            
+            kickedWhitesPanel = mainForm.panel_kicked_white;
+            kickedBlacksPanel = mainForm.panel_kicked_black;
             Init("wood");
         }
 
@@ -96,7 +90,9 @@ namespace Desktop_Chess
             headerControlls();
             kickedPanels();
             populaBoardGuiGrid(skin);
-            
+
+            int anyad = model_Figures.Model_whiteFiguresOFF.Count;
+            mainForm.listBox1.Items.Add(anyad);
         }
 
         private void headerControlls()
@@ -114,12 +110,12 @@ namespace Desktop_Chess
             kickedBlacksContainer.Size = kickedWhitesContainer.Size;
             kickedWhitesContainer.Location = new Point(12, 12);
             kickedBlacksContainer.Location = new Point(12, kickedWhitesContainer.Location.Y + kickedWhitesContainer.Height + 6);
-            kickedWhites.Size = new Size(kickedWhitesContainer.Width -40, ((kickedWhitesContainer.Width - 38) / 8) * 2);
-            kickedWhites.Padding = new Padding(0, 0, 0, 0);
-            kickedWhites.Location = new Point((kickedWhitesContainer.Width - kickedWhites.Width) / 2, 8);
-            kickedBlacks.Size = kickedWhites.Size;
-            kickedBlacks.Padding = new Padding(0, 0, 0, 0);
-            kickedBlacks.Location = new Point((kickedBlacksContainer.Width - kickedBlacks.Width) / 2, 8);
+            kickedWhitesPanel.Size = new Size(kickedWhitesContainer.Width -40, ((kickedWhitesContainer.Width - 38) / 8) * 2);
+            kickedWhitesPanel.Padding = new Padding(0, 0, 0, 0);
+            kickedWhitesPanel.Location = new Point((kickedWhitesContainer.Width - kickedWhitesPanel.Width) / 2, 8);
+            kickedBlacksPanel.Size = kickedWhitesPanel.Size;
+            kickedBlacksPanel.Padding = new Padding(0, 0, 0, 0);
+            kickedBlacksPanel.Location = new Point((kickedBlacksContainer.Width - kickedBlacksPanel.Width) / 2, 8);
             mainForm.listBox1.Location = new Point(12, kickedBlacksContainer.Location.Y + kickedBlacksContainer.Height + 6);
             mainForm.listBox1.Width = divRight.Width - 24;
             mainForm.listBox1.Height = mainForm.label_DebugSwitch.Location.Y - 6;
@@ -137,11 +133,42 @@ namespace Desktop_Chess
                     counter++;
                 }
             }
-            makeKickedCells(kickedWhites);
-            makeKickedCells(kickedBlacks);
+            makeKickedCells(kickedWhitesPanel, guiKickedWhites );
+            makeKickedCells(kickedBlacksPanel, guiKickedBlacks );
+
+            
+            //testFillKickeds(model_Figures.Model_whiteFiguresOFF, guiKickedWhites);
+            //testFillKickeds(model_Figures.Model_blackFiguresOFF, guiKickedBlacks);
         }
 
-        private void makeKickedCells(Panel panel)
+        private void testFillKickeds( List<Figure> kickedModelList, List<Gui_Cell> kickedGuiList )
+        {
+            for (int i = 0; i < kickedModelList.Count; i++)
+            {
+                CellProps = !CellProps;
+                kickedGuiList[i].Type = true;
+                kickedGuiList[i].Pupet = kickedModelList[i];
+                if (CellProps)
+                {
+                    kickedGuiList[i].BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{Skin}_figure_" +
+                        $"{kickedGuiList[i].Pupet.Side}_" +
+                        $"{"dark"}_" +
+                        $"{kickedGuiList[i].Pupet.Type}");
+                }
+                else
+                {
+                    kickedGuiList[i].BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{Skin}_figure_" +
+                        $"{kickedGuiList[i].Pupet.Side}_" +
+                        $"{"light"}_" +
+                        $"{kickedGuiList[i].Pupet.Type}");
+                }
+
+                
+            }
+
+        }
+
+        private void makeKickedCells(Panel panel, List<Gui_Cell> list1)
         {
             int counter = 0;
             Point baseLocation;
@@ -152,25 +179,26 @@ namespace Desktop_Chess
                 for (int x = 0; x < 8; x++)
                 {
                     CellProps = !CellProps;
-                    Label kickedCell = new Label();
+                    Gui_Cell kickedCell = new Gui_Cell(x, y);
                     kickedCell.Width = kickedCellSize;
                     kickedCell.Height = kickedCellSize;
+                    kickedCell.ForeColor = Color.White;
+                    kickedCell.BackColor = Color.Black;
                     if (CellProps)
                     {
-                        kickedCell.ForeColor = Color.White;
-                        kickedCell.BackColor = Color.Black;
+                        kickedCell.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{Skin}_cell_white");
                     }
                     else
                     {
-                        kickedCell.ForeColor = Color.Black;
-                        kickedCell.BackColor = Color.White;
+                        kickedCell.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{Skin}_cell_black");
                     }
                     kickedCell.BorderStyle = BorderStyle.None;
-                    //kickedCell.Type = false;
-                    //kickedCell.Pupet = null;
+                    kickedCell.Type = false;
+                    kickedCell.Pupet = null;
                     //kickedCell.Click += mainForm.Board_Click;
                     kickedCell.Location = kickedPanelCoords[counter];
                     panel.Controls.Add(kickedCell);
+                    list1.Add(kickedCell);
                     counter++;
                 }
             }
@@ -257,7 +285,7 @@ namespace Desktop_Chess
                     divChess.Controls.Add(gui_Cell);
                 }
             }
-
+            
             Figure modelFigure;
             x = 0;
             y = 0;
@@ -276,6 +304,8 @@ namespace Desktop_Chess
                     loadFiguresSkin(skin, guiGrid[x, y], modelFigure, model_Board.theGrid[x, y]);
                 }
             }
+
+
             x = 0;
             y = 0;
             
@@ -293,6 +323,7 @@ namespace Desktop_Chess
                     loadFiguresSkin(skin, guiGrid[x, y], modelFigure, model_Board.theGrid[x, y]);
                 }
             }
+            
         }
 
         public void RestartGui(string skin)

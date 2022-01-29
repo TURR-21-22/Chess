@@ -15,25 +15,16 @@ namespace Desktop_Chess
         public static RenderMain renderMain;
         public static Debug debug;
         private static Gui_Cell[,] guiGrid = RenderInit.guiGrid;
-        private static Label[,] debugGrid =  Debug.debugGrid;
+        //private static Label[,] debugGrid =  Debug.debugGrid;
         private static Board model_Board = RenderInit.model_Board;
         private static Cell[,] modelGrid = model_Board.theGrid;
-        public static int whiteFiguresCounter = Board.model_Figures.Model_blackFiguresON.Count;
-        public static int blackFiguresCounter = Board.model_Figures.Model_blackFiguresON.Count;
-        public static int whiteKickedFiguresCounter;
-        public static int blackKickedFiguresCounter;
-        public static List<Gui_Figure> kickedWhites = new List<Gui_Figure>();
-        public static List<Gui_Figure> kickedBlacks = new List<Gui_Figure>();
-        public static Point[] kickedPanelCoords;
+        
         
         public RenderFunctions(Main ob)
         {
             this.mainForm = ob;
             renderMain = new RenderMain(mainForm);
             debug = new Debug(mainForm);
-            kickedPanelCoords = RenderInit.kickedPanelCoords;
-            whiteKickedFiguresCounter = 0;
-            blackKickedFiguresCounter = 0;
         }
 
         public void DrawLegalPath(Gui_Cell source, string type)
@@ -45,8 +36,36 @@ namespace Desktop_Chess
             debug.draw2Debug(Debug.currentDebugArray);
         }
 
-        public void KickFigure(Gui_Cell targetGuiCell, Cell sourceCell, string skin) 
-        {/*
+        public void KickFigure(Gui_Cell targetGuiCell, Cell sourceModelCell, string skin) 
+        {
+            Gui_Cell sourceGuiCell = guiGrid[sourceModelCell.X, sourceModelCell.Y];
+            Cell targetModelCell = modelGrid[targetGuiCell.X, targetGuiCell.Y];
+            Figure targetModelFigure = targetModelCell.Figure;
+
+            
+            // kickedPanelCoords
+            // kickedWhitesPanel.Size
+            
+            switch (targetModelFigure.Side)
+            {
+                case "white":
+                    //kickedWhitesList.Add(targetModelFigure);
+                    
+                    
+                    
+                    // kickedWhitesPanel
+
+                    break;
+                case "black":
+                    //kickedBlacksList.Add(targetModelFigure);
+                    
+
+                    // kickedBlacksPanel
+                    break;
+            }
+
+
+            /*
             int kickedCellSize = RenderInit.kickedCellSize;
             int cellSize = RenderInit.cellSize;
             
@@ -107,7 +126,7 @@ namespace Desktop_Chess
             //mainForm.panel_ChessBoard.Controls.Remove(guiGrid[guiFigure.X, guiFigure.Y].Figure);
             //guiGrid[guiFigure.X, guiFigure.Y].Figure = null;
 
-            
+
             //guiFigure.Location = new Point(RenderInit.cellSize * 0, RenderInit.cellSize * 7);
             //RenderMain.guiGrid[guiFigure.X, guiFigure.Y].Figure.Location = new Point(RenderInit.cellSize * 0, RenderInit.cellSize * 7);
             //guiFigure.Kick = false;
@@ -171,11 +190,6 @@ namespace Desktop_Chess
         }
         public void clearMainboardCellsBorder()
         {
-            for (int i = 0; i < RenderInit.gui_whiteFigures.Count; i++)
-            {
-                RenderInit.gui_whiteFigures[i].BackColor = Color.Black;
-                RenderInit.gui_blackFigures[i].BackColor = Color.Black;
-            }
             foreach (var item in guiGrid) { item.BackColor = Color.Black; }
         }
         

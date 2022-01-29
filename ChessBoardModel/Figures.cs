@@ -10,9 +10,10 @@ namespace ChessBoardModel
     {
         public Figures()
         {
-            //createFigures(0, "black", model_blackFiguresON, 1 );
-            //createFigures(7, "white", model_whiteFiguresON, -1 );
-            testFigures();
+            createFigures(0, "black", model_blackFiguresON, 1 );
+            createFigures(7, "white", model_whiteFiguresON, -1 );
+            //model_whiteFiguresOFF.Add(new Figure(0, 0, "black", "futo", 1));
+            //testFigures();
         }
 
         private Dictionary<string, int[]> nobles = new Dictionary<string, int[]>()
@@ -30,8 +31,8 @@ namespace ChessBoardModel
         public static List<Figure> model_blackFiguresOFF = new List<Figure>();
         public List<Figure> Model_whiteFiguresON { get { return model_whiteFiguresON; } set { model_whiteFiguresON = value; } }
         public List<Figure> Model_blackFiguresON { get { return model_blackFiguresON; } set { model_blackFiguresON = value; } }
-        //public List<Figure> Model_whiteFiguresOFF { get { return model_whiteFiguresOFF; } set { model_whiteFiguresOFF = value; } }
-        //public List<Figure> Model_blackFiguresOFF { get { return model_blackFiguresOFF; } set { model_blackFiguresOFF = value; } }
+        public List<Figure> Model_whiteFiguresOFF { get { return model_whiteFiguresOFF; } set { model_whiteFiguresOFF = value; } }
+        public List<Figure> Model_blackFiguresOFF { get { return model_blackFiguresOFF; } set { model_blackFiguresOFF = value; } }
 
         private void createFigures(int y, string side, List<Figure> list, int direction)
         {
@@ -56,7 +57,6 @@ namespace ChessBoardModel
         private void testFigures()
         {
             object[,] whiteGroup = new object[8, 5]{
-
                 { 4, 3, "white", "kiraly",1 },
                 { 7, 7, "white", "kiralyno",1 },
                 { 7, 2, "white", "bastya", 1 },
@@ -76,7 +76,27 @@ namespace ChessBoardModel
                 { 6, 2, "black", "gyalog", 2 },
                 { 0, 4, "black", "gyalog", 3 }
             };
-           
+            object[,] whiteKickedGroup = new object[8, 5]{
+                { 4, 3, "white", "bastya",1 },
+                { 7, 7, "white", "huszar",1 },
+                { 7, 2, "white", "futo", 1 },
+                { 4, 2, "white", "gyalog", 4 },
+                { 3, 0, "white", "gyalog", 5 },
+                { 5, 5, "white", "gyalog", 6 },
+                { 3, 5, "white", "gyalog", 7 },
+                { 7, 1, "white", "gyalog", 8 }
+            };
+            object[,] blackKickedGroup = new object[8, 5] {
+                { 4, 3, "black", "bastya",1 },
+                { 7, 7, "black", "huszar",1 },
+                { 7, 2, "black", "futo", 1 },
+                { 4, 2, "black", "gyalog", 4 },
+                { 3, 0, "black", "gyalog", 5 },
+                { 5, 5, "black", "gyalog", 6 },
+                { 3, 5, "black", "gyalog", 7 },
+                { 7, 1, "black", "gyalog", 8 }
+            };
+
             for (int i = 0; i < whiteGroup.GetLength(0); i++)
             {
                 model_whiteFiguresON.Add(new Figure(
@@ -85,13 +105,39 @@ namespace ChessBoardModel
                     (string)whiteGroup[i,2],
                     (string)whiteGroup[i,3],
                     (int)whiteGroup[i,4]));
-                model_blackFiguresON.Add(new Figure(
-                    (int)blackGroup[i,0],
-                    (int)blackGroup[i,1],
-                    (string)blackGroup[i,2],
-                    (string)blackGroup[i,3],
-                    (int)blackGroup[i,4]));
             };
+
+            for (int i = 0; i < blackGroup.GetLength(0); i++)
+            {
+                model_blackFiguresON.Add(new Figure(
+                    (int)blackGroup[i, 0],
+                    (int)blackGroup[i, 1],
+                    (string)blackGroup[i, 2],
+                    (string)blackGroup[i, 3],
+                    (int)blackGroup[i, 4]));
+            }
+
+            for (int i = 0; i < 8; i++)
+            {
+                model_whiteFiguresOFF.Add(new Figure(
+                    (int)whiteKickedGroup[i, 0],
+                    (int)whiteKickedGroup[i, 1],
+                    (string)whiteKickedGroup[i, 2],
+                    (string)whiteKickedGroup[i, 3],
+                    (int)whiteKickedGroup[i, 4]));
+            };
+
+            for (int i = 0; i < 8; i++)
+            {
+                model_blackFiguresOFF.Add(new Figure(
+                   (int)blackKickedGroup[i, 0],
+                   (int)blackKickedGroup[i, 1],
+                   (string)blackKickedGroup[i, 2],
+                   (string)blackKickedGroup[i, 3],
+                   (int)blackKickedGroup[i, 4]));
+            }
+
+
         }
     }
 }
