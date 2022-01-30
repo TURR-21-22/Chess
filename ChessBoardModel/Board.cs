@@ -15,6 +15,8 @@ namespace ChessBoardModel
         public bool CellProps = true;
         public static WhitePlayer whitePlayer = new WhitePlayer();
         public static BlackPlayer blackPlayer = new BlackPlayer();
+        public static int opening = 2;
+
         //public int[] listCount;
         public Board (int s)
         {
@@ -114,6 +116,7 @@ namespace ChessBoardModel
                 steps = 1;
                 arr = stepsBlack; 
             }
+
             for (int i = 0; i < arr.GetLength(0); i++)
             {
                 if (currentCell.X + arr[i, 0] >= 0 &&

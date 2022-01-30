@@ -39,15 +39,22 @@ namespace Desktop_Chess
             CheckIfPawnCanSwitch(modelCell);
         }
 
-        public void GetBackFigure(Cell cell)
+        public void handlePawnSwitch(Cell cell)
         {
+            cell.Figure.Replaceable = true;
             switch (cell.Figure.Side)
             {
                 case "white":
                     RenderInit.kickedWhitesContainer.BackColor = Color.Red;
+                    RenderMain.whitePlayerCanExchange = true;
+                    RenderMain.exchangeCell = cell;
+                    RenderMain.exchangeDone = false;
                     break;
                 case "black":
                     RenderInit.kickedBlacksContainer.BackColor = Color.Red;
+                    RenderMain.blackPlayerCanExchange = true;
+                    RenderMain.exchangeCell = cell;
+                    RenderMain.exchangeDone = false;
                     break;
             }
         }
@@ -63,16 +70,37 @@ namespace Desktop_Chess
                     container = RenderInit.guiKickedWhites[model_Figures.Model_whiteFiguresOFF.Count - 1];
                     setKickedSkin(container, targetModelCell, skin);
                     container.Pupet = targetModelCell.Figure;
+                    RenderMain.whiteFiguresCount--;
+                    ChkFiguresCount(RenderMain.whiteFiguresCount, "white");
                     break;
                 case "black":
                     model_Figures.Model_blackFiguresOFF.Add(targetModelCell.Figure);
                     container = RenderInit.guiKickedBlacks[model_Figures.Model_blackFiguresOFF.Count - 1];
                     setKickedSkin(container, targetModelCell, skin);
                     container.Pupet = targetModelCell.Figure;
+                    RenderMain.blackFiguresCount--;
+                    ChkFiguresCount(RenderMain.blackFiguresCount, "black");
                     break;
             }
             MoveFigure(targetGuiCell, sourceModelCell, skin);
             debug.draw2Debug(Debug.currentDebugArray);
+            CheckIfPawnCanSwitch(targetModelCell);
+        }
+
+        private void ChkFiguresCount(int count, string side)
+        {
+            if (count == 1)
+            {
+                switch (side)
+                {
+                    case "white":
+                        mainForm.label_Results.Text = "Fekete játékos nyert !";
+                        break;
+                    case "black":
+                        mainForm.label_Results.Text = "Fehér játékos nyert !";
+                        break;
+                }
+            }
         }
 
         private void setKickedSkin(Gui_Cell container, Cell targetModelCell, string skin)
@@ -95,6 +123,10 @@ namespace Desktop_Chess
 
         public void MoveFigure(Gui_Cell targeGuitCell, Cell sourceCell, string skin)
         {
+            if (Board.opening != 0)
+            {
+                Board.opening--;
+            }
             Gui_Cell sourceGuiCell = guiGrid[sourceCell.X, sourceCell.Y];
             Cell targetCell = modelGrid[targeGuitCell.X, targeGuitCell.Y];
             string backColor = "";
@@ -128,13 +160,14 @@ namespace Desktop_Chess
                     case "white":
                         if (cell.Figure.Y == 0)
                         {
-                            GetBackFigure(cell);
+                            handlePawnSwitch(cell);
+                            
                         }
                         break;
                     case "black":
                         if (cell.Figure.Y == 7)
                         {
-                            GetBackFigure(cell);
+                            handlePawnSwitch(cell);
                         }
                         break;
                 }

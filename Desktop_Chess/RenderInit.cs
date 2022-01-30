@@ -20,15 +20,20 @@ namespace Desktop_Chess
         public static List<Gui_Cell> guiKickedBlacks = new List<Gui_Cell>();
         public static Dictionary<string, Image[]> gui_cellImages = new Dictionary<string, Image[]>();
         public static Dictionary<string, Image[]> gui_backgroundImages = new Dictionary<string, Image[]>();
-        public static Panel divTop, divLeft, divRight, divChess, kickedWhitesContainer, kickedBlacksContainer, kickedWhitesPanel, kickedBlacksPanel;
+        public static Panel divTop, divLeft, divRight, divChess,
+            kickedWhitesContainer, kickedBlacksContainer,
+            kickedWhitesPanel, kickedBlacksPanel, infoPanel;
         public string Skin;
         public static int cellSize;
         public static int kickedCellSize;
         public static Point[] kickedPanelCoords;
         public bool CellProps = true;
-
+        public static Color[] kickedcontainerColors = new Color[2] { Color.White, Color.Black };
+        public static Label infoLabel1, infoLabel2, labelDebug, whiteLabel, whiteCount, blackLabel, blackCount, results;
         //public Dictionary<string, Image[]> gui_figureImagesWhite = new Dictionary<string, Image[]>();
         //public Dictionary<string, Image[]> gui_figureImagesBlack = new Dictionary<string, Image[]>();
+
+        
 
         private static object[,] Layout = new object[3, 3] {
             { "Top",100, 6},
@@ -47,9 +52,18 @@ namespace Desktop_Chess
             kickedBlacksContainer = mainForm.panel_kicked_container_black;
             kickedWhitesPanel = mainForm.panel_kicked_white;
             kickedBlacksPanel = mainForm.panel_kicked_black;
+            infoPanel = mainForm.panel_Info;
+            infoLabel1 = mainForm.label_info_1;
+            infoLabel2 = mainForm.label_info_2;
+            labelDebug = mainForm.label_DebugSwitch;
+            whiteLabel = mainForm.label_White_label;
+            whiteCount = mainForm.label_white_count;
+            blackLabel = mainForm.label_black_label;
+            blackCount = mainForm.label_black_count;
+            results = mainForm.label_Results;
             Init("wood");
         }
-
+        
         public void Init(string skin)
         {
             Skin = skin;
@@ -90,9 +104,8 @@ namespace Desktop_Chess
             headerControlls();
             populaBoardGuiGrid(skin);
             kickedPanels();
-            mainForm.listBox1.Items.Add(guiKickedWhites.Count);
-            mainForm.listBox1.Items.Add(model_Figures.Model_whiteFiguresOFF.Count);
-            mainForm.listBox1.Items.Add(model_Figures.Model_whiteFiguresON.Count);
+            infoLabel2.Text = "Fehér játékos.";
+
         }
 
         private void headerControlls()
@@ -108,17 +121,36 @@ namespace Desktop_Chess
         {
             kickedWhitesContainer.Size = new Size(divRight.Width - 40, (divRight.Width/8)*2);
             kickedBlacksContainer.Size = kickedWhitesContainer.Size;
+            kickedWhitesContainer.BackColor = kickedcontainerColors[0];
+            kickedBlacksContainer.BackColor = kickedcontainerColors[1];
             kickedWhitesContainer.Location = new Point(12, 12);
             kickedBlacksContainer.Location = new Point(12, kickedWhitesContainer.Location.Y + kickedWhitesContainer.Height + 6);
+            
             kickedWhitesPanel.Size = new Size(kickedWhitesContainer.Width -40, ((kickedWhitesContainer.Width - 38) / 8) * 2);
             kickedWhitesPanel.Padding = new Padding(0, 0, 0, 0);
             kickedWhitesPanel.Location = new Point((kickedWhitesContainer.Width - kickedWhitesPanel.Width) / 2, 8);
+            
             kickedBlacksPanel.Size = kickedWhitesPanel.Size;
             kickedBlacksPanel.Padding = new Padding(0, 0, 0, 0);
             kickedBlacksPanel.Location = new Point((kickedBlacksContainer.Width - kickedBlacksPanel.Width) / 2, 8);
-            mainForm.listBox1.Location = new Point(12, kickedBlacksContainer.Location.Y + kickedBlacksContainer.Height + 6);
-            mainForm.listBox1.Width = divRight.Width - 24;
-            mainForm.listBox1.Height = mainForm.label_DebugSwitch.Location.Y - 6;
+
+
+            infoPanel.Size = new Size(divRight.Width - 40, labelDebug.Location.Y - 24 );
+            infoPanel.Location = new Point(kickedBlacksContainer.Location.X, kickedBlacksContainer.Location.Y + kickedBlacksContainer.Height + 6);
+            infoLabel1.Location = new Point(6, 6);
+            infoLabel2.Location = new Point(infoLabel1.Location.X + infoLabel1.Width + 6, 6);
+
+
+            whiteLabel.Location = new Point(infoLabel1.Location.X, infoLabel1.Location.Y + infoLabel1.Height + 6);
+            whiteCount.Location = new Point(whiteLabel.Location.X + whiteLabel.Width + 6, whiteLabel.Location.Y);
+            blackLabel.Location = new Point(whiteLabel.Location.X, whiteLabel.Location.Y + whiteLabel.Height + 6);
+            blackCount.Location = new Point(blackLabel.Location.X + blackLabel.Width + 6, blackLabel.Location.Y);
+            whiteCount.Text = $"{model_Figures.Model_whiteFiguresON.Count}";
+            blackCount.Text = $"{model_Figures.Model_blackFiguresON.Count}";
+
+            results.Location = new Point(blackLabel.Location.X, blackLabel.Location.Y + blackLabel.Height + 6);
+            results.Size = new Size(infoPanel.Width -12, infoPanel.Height - results.Location.Y- 6);
+
 
             kickedPanelCoords = new Point[16];
             kickedCellSize = (kickedWhitesContainer.Width - 38) / 8;
@@ -136,12 +168,14 @@ namespace Desktop_Chess
             makeKickedCells(kickedWhitesPanel, guiKickedWhites );
             makeKickedCells(kickedBlacksPanel, guiKickedBlacks );
 
-            testFillKickeds(model_Figures.Model_whiteFiguresOFF, guiKickedWhites);
-            testFillKickeds(model_Figures.Model_blackFiguresOFF, guiKickedBlacks);
+            RefreshKickeds(model_Figures.Model_whiteFiguresOFF, guiKickedWhites);
+            RefreshKickeds(model_Figures.Model_blackFiguresOFF, guiKickedBlacks);
         }
 
-        private void testFillKickeds( List<Figure> kickedModelList, List<Gui_Cell> kickedGuiList )
+        public void RefreshKickeds( List<Figure> kickedModelList, List<Gui_Cell> kickedGuiList )
         {
+
+
             for (int i = 0; i < kickedModelList.Count; i++)
             {
                 CellProps = !CellProps;
@@ -193,7 +227,7 @@ namespace Desktop_Chess
                     kickedCell.BorderStyle = BorderStyle.None;
                     kickedCell.Type = false;
                     kickedCell.Pupet = null;
-                    //kickedCell.Click += mainForm.Board_Click;
+                    kickedCell.Click += mainForm.Kicked_Click;
                     kickedCell.Location = kickedPanelCoords[counter];
                     panel.Controls.Add(kickedCell);
                     list1.Add(kickedCell);

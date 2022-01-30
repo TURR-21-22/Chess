@@ -38,8 +38,15 @@ namespace Desktop_Chess
             this.panel_Container_Left = new System.Windows.Forms.Panel();
             this.panel_Debug = new System.Windows.Forms.Panel();
             this.panel_Container_Right = new System.Windows.Forms.Panel();
+            this.panel_Info = new System.Windows.Forms.Panel();
+            this.label_Results = new System.Windows.Forms.Label();
+            this.label_black_count = new System.Windows.Forms.Label();
+            this.label_black_label = new System.Windows.Forms.Label();
+            this.label_white_count = new System.Windows.Forms.Label();
+            this.label_White_label = new System.Windows.Forms.Label();
+            this.label_info_2 = new System.Windows.Forms.Label();
+            this.label_info_1 = new System.Windows.Forms.Label();
             this.comboBox_Debug = new System.Windows.Forms.ComboBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.panel_kicked_container_black = new System.Windows.Forms.Panel();
             this.panel_kicked_black = new System.Windows.Forms.Panel();
             this.panel_kicked_container_white = new System.Windows.Forms.Panel();
@@ -47,6 +54,7 @@ namespace Desktop_Chess
             this.panel_Container_Top.SuspendLayout();
             this.panel_Container_Left.SuspendLayout();
             this.panel_Container_Right.SuspendLayout();
+            this.panel_Info.SuspendLayout();
             this.panel_kicked_container_black.SuspendLayout();
             this.panel_kicked_container_white.SuspendLayout();
             this.SuspendLayout();
@@ -134,8 +142,8 @@ namespace Desktop_Chess
             // panel_Container_Right
             // 
             this.panel_Container_Right.BackColor = System.Drawing.Color.Transparent;
+            this.panel_Container_Right.Controls.Add(this.panel_Info);
             this.panel_Container_Right.Controls.Add(this.comboBox_Debug);
-            this.panel_Container_Right.Controls.Add(this.listBox1);
             this.panel_Container_Right.Controls.Add(this.panel_kicked_container_black);
             this.panel_Container_Right.Controls.Add(this.label_DebugSwitch);
             this.panel_Container_Right.Controls.Add(this.panel_kicked_container_white);
@@ -145,6 +153,92 @@ namespace Desktop_Chess
             this.panel_Container_Right.Padding = new System.Windows.Forms.Padding(6);
             this.panel_Container_Right.Size = new System.Drawing.Size(365, 633);
             this.panel_Container_Right.TabIndex = 0;
+            // 
+            // panel_Info
+            // 
+            this.panel_Info.BackColor = System.Drawing.Color.MediumSpringGreen;
+            this.panel_Info.Controls.Add(this.label_Results);
+            this.panel_Info.Controls.Add(this.label_black_count);
+            this.panel_Info.Controls.Add(this.label_black_label);
+            this.panel_Info.Controls.Add(this.label_white_count);
+            this.panel_Info.Controls.Add(this.label_White_label);
+            this.panel_Info.Controls.Add(this.label_info_2);
+            this.panel_Info.Controls.Add(this.label_info_1);
+            this.panel_Info.Location = new System.Drawing.Point(6, 209);
+            this.panel_Info.Margin = new System.Windows.Forms.Padding(0);
+            this.panel_Info.Name = "panel_Info";
+            this.panel_Info.Size = new System.Drawing.Size(327, 241);
+            this.panel_Info.TabIndex = 6;
+            // 
+            // label_Results
+            // 
+            this.label_Results.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.label_Results.Font = new System.Drawing.Font("Impact", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label_Results.Location = new System.Drawing.Point(16, 151);
+            this.label_Results.Name = "label_Results";
+            this.label_Results.Size = new System.Drawing.Size(133, 29);
+            this.label_Results.TabIndex = 6;
+            this.label_Results.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label_black_count
+            // 
+            this.label_black_count.AutoSize = true;
+            this.label_black_count.Font = new System.Drawing.Font("Impact", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label_black_count.Location = new System.Drawing.Point(150, 99);
+            this.label_black_count.Name = "label_black_count";
+            this.label_black_count.Size = new System.Drawing.Size(103, 29);
+            this.label_black_count.TabIndex = 5;
+            this.label_black_count.Text = "dsfdsfsdf";
+            // 
+            // label_black_label
+            // 
+            this.label_black_label.AutoSize = true;
+            this.label_black_label.Font = new System.Drawing.Font("Impact", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label_black_label.Location = new System.Drawing.Point(11, 99);
+            this.label_black_label.Name = "label_black_label";
+            this.label_black_label.Size = new System.Drawing.Size(146, 29);
+            this.label_black_label.TabIndex = 4;
+            this.label_black_label.Text = "Fekete bábuk:";
+            // 
+            // label_white_count
+            // 
+            this.label_white_count.AutoSize = true;
+            this.label_white_count.Font = new System.Drawing.Font("Impact", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label_white_count.Location = new System.Drawing.Point(150, 58);
+            this.label_white_count.Name = "label_white_count";
+            this.label_white_count.Size = new System.Drawing.Size(115, 29);
+            this.label_white_count.TabIndex = 3;
+            this.label_white_count.Text = "dfsdfsdfds";
+            // 
+            // label_White_label
+            // 
+            this.label_White_label.AutoSize = true;
+            this.label_White_label.Font = new System.Drawing.Font("Impact", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label_White_label.Location = new System.Drawing.Point(11, 58);
+            this.label_White_label.Name = "label_White_label";
+            this.label_White_label.Size = new System.Drawing.Size(138, 29);
+            this.label_White_label.TabIndex = 2;
+            this.label_White_label.Text = "Fehér bábuk:";
+            // 
+            // label_info_2
+            // 
+            this.label_info_2.AutoSize = true;
+            this.label_info_2.Font = new System.Drawing.Font("Impact", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label_info_2.Location = new System.Drawing.Point(150, 11);
+            this.label_info_2.Name = "label_info_2";
+            this.label_info_2.Size = new System.Drawing.Size(146, 29);
+            this.label_info_2.TabIndex = 1;
+            this.label_info_2.Text = "sfsdfgdfsgdfg";
+            // 
+            // label_info_1
+            // 
+            this.label_info_1.AutoSize = true;
+            this.label_info_1.Font = new System.Drawing.Font("Impact", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label_info_1.Location = new System.Drawing.Point(11, 11);
+            this.label_info_1.Name = "label_info_1";
+            this.label_info_1.Size = new System.Drawing.Size(133, 29);
+            this.label_info_1.TabIndex = 0;
+            this.label_info_1.Text = "Jelenleg lép:";
             // 
             // comboBox_Debug
             // 
@@ -157,15 +251,6 @@ namespace Desktop_Chess
             this.comboBox_Debug.Size = new System.Drawing.Size(121, 23);
             this.comboBox_Debug.TabIndex = 7;
             this.comboBox_Debug.SelectedIndexChanged += new System.EventHandler(this.comboBox_Debug_SelectedIndexChanged);
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(6, 211);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(350, 244);
-            this.listBox1.TabIndex = 6;
             // 
             // panel_kicked_container_black
             // 
@@ -228,6 +313,8 @@ namespace Desktop_Chess
             this.panel_Container_Left.ResumeLayout(false);
             this.panel_Container_Right.ResumeLayout(false);
             this.panel_Container_Right.PerformLayout();
+            this.panel_Info.ResumeLayout(false);
+            this.panel_Info.PerformLayout();
             this.panel_kicked_container_black.ResumeLayout(false);
             this.panel_kicked_container_white.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -248,8 +335,15 @@ namespace Desktop_Chess
         public System.Windows.Forms.Panel panel_kicked_container_black;
         public System.Windows.Forms.Panel panel_kicked_white;
         public System.Windows.Forms.Panel panel_kicked_black;
-        public System.Windows.Forms.ListBox listBox1;
         public System.Windows.Forms.ComboBox comboBox_Debug;
+        public System.Windows.Forms.Panel panel_Info;
+        public System.Windows.Forms.Label label_info_2;
+        public System.Windows.Forms.Label label_info_1;
+        public System.Windows.Forms.Label label_black_count;
+        public System.Windows.Forms.Label label_black_label;
+        public System.Windows.Forms.Label label_white_count;
+        public System.Windows.Forms.Label label_White_label;
+        public System.Windows.Forms.Label label_Results;
     }
 }
 

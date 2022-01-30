@@ -8,7 +8,7 @@ namespace ChessBoardModel
 {
     public class WhitePlayer
     {
-        private List<int[]> switchableCells = new List<int[]>();
-        public List<int[]> SwitchableCells { get { return switchableCells; } set { switchableCells = value; } }
+        private List<Cell[]> switchableCells = new List<Cell[]>();
+        public List<Cell[]> SwitchableCells { get { return switchableCells; } set { switchableCells = value; } }
     }
 }

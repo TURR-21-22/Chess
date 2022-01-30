@@ -8,7 +8,7 @@ namespace Desktop_Chess
         static Debug debug;
         static RenderMain render;
         static RenderFunctions renderFunctions;
-        public bool debugIs = true;
+        public bool debugIs = false;
         public bool testMode = true;
 
         public Main()
@@ -23,6 +23,11 @@ namespace Desktop_Chess
         public void Board_Click(object sender, EventArgs e)
         {
             render.Board_Click(sender);
+        }
+
+        public void Kicked_Click(object sender, EventArgs e)
+        {
+            render.Kicked_Click(sender);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -48,5 +53,6 @@ namespace Desktop_Chess
             ComboBox cmb = (ComboBox)sender;
             debug.setMonitoredArray(cmb.SelectedItem.ToString());
         }
+
     }
 }
