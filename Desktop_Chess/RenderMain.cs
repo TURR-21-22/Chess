@@ -37,10 +37,10 @@ namespace Desktop_Chess
         }
 
         public void Board_Click(object sender)
-        {                                                                   // source clickedCell
-            Gui_Cell guiCell = (Gui_Cell)sender;                            // target clicked gui cell
-            Cell modelCell = modelGrid[guiCell.X, guiCell.Y];               // target clicked model cell
-            Figure modelFigure = modelGrid[guiCell.X, guiCell.Y].Figure;    // target clicked modell cell figure
+        {
+            Gui_Cell guiCell = (Gui_Cell)sender;
+            Cell modelCell = modelGrid[guiCell.X, guiCell.Y];
+            Figure modelFigure = modelGrid[guiCell.X, guiCell.Y].Figure;
             switch (guiCell.Type)
             {
                 case true:
@@ -50,7 +50,7 @@ namespace Desktop_Chess
                         clickedCell = modelCell;
                     }
                     else
-                    {                           
+                    {                           // target
                         renderFunctions.KickFigure(guiCell, clickedCell,  renderInit.Skin);
                     }
                     break;

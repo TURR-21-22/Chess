@@ -9,6 +9,7 @@ namespace Desktop_Chess
         static RenderMain render;
         static RenderFunctions renderFunctions;
         public bool debugIs = true;
+        public bool testMode = true;
 
         public Main()
         {

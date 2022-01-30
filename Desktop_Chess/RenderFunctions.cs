@@ -14,18 +14,23 @@ namespace Desktop_Chess
         Main mainForm = null;
         public static RenderMain renderMain;
         public static Debug debug;
+        public static RenderInit renderInit;
         private static Gui_Cell[,] guiGrid = RenderInit.guiGrid;
         private static Board model_Board = RenderInit.model_Board;
+        private static Figures model_Figures = RenderInit.model_Figures;
+        //private static List<Gui_Cell> guiKickedWhites = RenderInit.guiKickedWhites;
         private static Cell[,] modelGrid = model_Board.theGrid;
         public RenderFunctions(Main ob)
         {
             this.mainForm = ob;
             renderMain = new RenderMain(mainForm);
+            //renderInit = new RenderInit(mainForm);
             debug = new Debug(mainForm);
         }
 
         public void DrawLegalPath(Gui_Cell source, string type)
         {
+            clearMainboardCellsBorder();
             Cell modelCell = modelGrid[source.X, source.Y];
             model_Board.MarkNextLegalMove(modelCell, type);
             source.BackColor = Color.Yellow;
@@ -35,34 +40,43 @@ namespace Desktop_Chess
 
         public void KickFigure(Gui_Cell targetGuiCell, Cell sourceModelCell, string skin) 
         {
-            Gui_Cell sourceGuiCell = guiGrid[sourceModelCell.X, sourceModelCell.Y];
             Cell targetModelCell = modelGrid[targetGuiCell.X, targetGuiCell.Y];
-            Figure targetModelFigure = targetModelCell.Figure;
-
-            // clear from grid
-            // copy cell figures props to kicked cell props
-            
-
-            // kickedPanelCoords
-            // kickedWhitesPanel.Size
-            
-            switch (targetModelFigure.Side)
+            Gui_Cell container;
+            switch (targetModelCell.Figure.Side)
             {
                 case "white":
-                    //kickedWhitesList.Add(targetModelFigure);
-                    
-                    
-                    
-                    // kickedWhitesPanel
-
+                    model_Figures.Model_whiteFiguresOFF.Add(targetModelCell.Figure);
+                    container = RenderInit.guiKickedWhites[model_Figures.Model_whiteFiguresOFF.Count - 1];
+                    setKickedSkin(container, targetModelCell, skin);
+                    container.Pupet = targetModelCell.Figure;
                     break;
                 case "black":
-                    //kickedBlacksList.Add(targetModelFigure);
-                    
-
-                    // kickedBlacksPanel
+                    model_Figures.Model_blackFiguresOFF.Add(targetModelCell.Figure);
+                    container = RenderInit.guiKickedBlacks[model_Figures.Model_blackFiguresOFF.Count - 1];
+                    setKickedSkin(container, targetModelCell, skin);
+                    container.Pupet = targetModelCell.Figure;
                     break;
             }
+            MoveFigure(targetGuiCell, sourceModelCell, skin);
+            debug.draw2Debug(Debug.currentDebugArray);
+        }
+
+        private void setKickedSkin(Gui_Cell container, Cell targetModelCell, string skin)
+        {
+            string mod = "";
+            switch (container.KickedBkgColor)
+            {
+                case "white":
+                    mod = "light";
+                    break;
+                case "black":
+                    mod = "dark";
+                    break;
+            }
+            container.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_figure_" +
+                               $"{targetModelCell.Figure.Side}_" +
+                               $"{mod}_" +
+                               $"{targetModelCell.Figure.Type}");
         }
 
         public void MoveFigure(Gui_Cell targeGuitCell, Cell sourceCell, string skin)

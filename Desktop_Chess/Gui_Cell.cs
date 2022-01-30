@@ -18,6 +18,7 @@ namespace Desktop_Chess
         public int Y { get; set; }
         public bool Type { get; set; } // true = figure; false = cell
         public Figure Pupet { get; set; }
+        public string KickedBkgColor { get; set; }
 
         public Gui_Cell(int x, int y)
         {

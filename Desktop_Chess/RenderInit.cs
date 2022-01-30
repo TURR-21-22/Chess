@@ -16,8 +16,8 @@ namespace Desktop_Chess
         public static Board model_Board = new Board(8);
         public static Figures model_Figures = new Figures();
         public static Gui_Cell[,] guiGrid = new Gui_Cell[model_Board.Size, model_Board.Size];
-        public static List<Gui_Cell> guiKickedWhites = new List<Gui_Cell>(16);
-        public static List<Gui_Cell> guiKickedBlacks = new List<Gui_Cell>(16);
+        public static List<Gui_Cell> guiKickedWhites = new List<Gui_Cell>();
+        public static List<Gui_Cell> guiKickedBlacks = new List<Gui_Cell>();
         public static Dictionary<string, Image[]> gui_cellImages = new Dictionary<string, Image[]>();
         public static Dictionary<string, Image[]> gui_backgroundImages = new Dictionary<string, Image[]>();
         public static Panel divTop, divLeft, divRight, divChess, kickedWhitesContainer, kickedBlacksContainer, kickedWhitesPanel, kickedBlacksPanel;
@@ -136,9 +136,8 @@ namespace Desktop_Chess
             makeKickedCells(kickedWhitesPanel, guiKickedWhites );
             makeKickedCells(kickedBlacksPanel, guiKickedBlacks );
 
-            
-            //testFillKickeds(model_Figures.Model_whiteFiguresOFF, guiKickedWhites);
-            //testFillKickeds(model_Figures.Model_blackFiguresOFF, guiKickedBlacks);
+            testFillKickeds(model_Figures.Model_whiteFiguresOFF, guiKickedWhites);
+            testFillKickeds(model_Figures.Model_blackFiguresOFF, guiKickedBlacks);
         }
 
         private void testFillKickeds( List<Figure> kickedModelList, List<Gui_Cell> kickedGuiList )
@@ -162,10 +161,7 @@ namespace Desktop_Chess
                         $"{"light"}_" +
                         $"{kickedGuiList[i].Pupet.Type}");
                 }
-
-                
             }
-
         }
 
         private void makeKickedCells(Panel panel, List<Gui_Cell> list1)
@@ -187,10 +183,12 @@ namespace Desktop_Chess
                     if (CellProps)
                     {
                         kickedCell.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{Skin}_cell_white");
+                        kickedCell.KickedBkgColor = "white";
                     }
                     else
                     {
                         kickedCell.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{Skin}_cell_black");
+                        kickedCell.KickedBkgColor = "black";
                     }
                     kickedCell.BorderStyle = BorderStyle.None;
                     kickedCell.Type = false;

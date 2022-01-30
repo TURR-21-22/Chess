@@ -11,10 +11,10 @@ namespace ChessBoardModel
 
         public Figures()
         {
-            createFigures(0, "black", model_blackFiguresON, 1);
-            createFigures(7, "white", model_whiteFiguresON, -1);
-            //model_whiteFiguresOFF.Add(new Figure(0, 0, "black", "futo", 1));
-            //testFigures();
+            //createFigures(0, "black", model_blackFiguresON, 1);
+            //createFigures(7, "white", model_whiteFiguresON, -1);
+            
+            testFigures();
         }
 
         private List<Figure> model_whiteFiguresON = new List<Figure>();
