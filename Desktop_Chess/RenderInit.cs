@@ -23,6 +23,7 @@ namespace Desktop_Chess
         public static Panel divTop, divLeft, divRight, divChess,
             kickedWhitesContainer, kickedBlacksContainer,
             kickedWhitesPanel, kickedBlacksPanel, infoPanel;
+        public static Button quitButton, restartButton;
         public string Skin;
         public static int cellSize;
         public static int kickedCellSize;
@@ -61,6 +62,9 @@ namespace Desktop_Chess
             blackLabel = mainForm.label_black_label;
             blackCount = mainForm.label_black_count;
             results = mainForm.label_Results;
+            quitButton = mainForm.button_Quit;
+            restartButton = mainForm.button_Restart;
+
             Init("wood");
         }
         
@@ -115,6 +119,8 @@ namespace Desktop_Chess
             skinsCombo.Location = new Point(32, (divTop.Height / 2) - (skinsCombo.Height / 2));
             skinsLabel.Location = new Point( skinsCombo.Location.X + skinsCombo.Width +6, (divTop.Height / 2) - (skinsCombo.Height / 2));
             skinsLabel.BackColor = Color.White;
+            quitButton.Location = new Point(divTop.Width - quitButton.Width -32, (divTop.Height / 2) - (quitButton.Height / 2) );
+            restartButton.Location = new Point(quitButton.Location.X - restartButton.Width - 12, (divTop.Height / 2) - (quitButton.Height / 2));
         }
 
         private void kickedPanels()
@@ -135,7 +141,7 @@ namespace Desktop_Chess
             kickedBlacksPanel.Location = new Point((kickedBlacksContainer.Width - kickedBlacksPanel.Width) / 2, 8);
 
 
-            infoPanel.Size = new Size(divRight.Width - 40, labelDebug.Location.Y - 24 );
+            infoPanel.Size = new Size(divRight.Width - 40, labelDebug.Location.Y - labelDebug.Height );
             infoPanel.Location = new Point(kickedBlacksContainer.Location.X, kickedBlacksContainer.Location.Y + kickedBlacksContainer.Height + 6);
             infoLabel1.Location = new Point(6, 6);
             infoLabel2.Location = new Point(infoLabel1.Location.X + infoLabel1.Width + 6, 6);

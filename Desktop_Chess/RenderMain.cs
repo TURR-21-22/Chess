@@ -168,7 +168,7 @@ namespace Desktop_Chess
                         swithcPlayer();
                         mainForm.label_white_count.Text = $"{whiteFiguresCount}";
                         mainForm.label_black_count.Text = $"{blackFiguresCount}";
-                        ChkSakk();
+                        //ChkSakk();
                     }
                     break;
                 case false:
@@ -179,7 +179,7 @@ namespace Desktop_Chess
                         swithcPlayer();
                         mainForm.label_white_count.Text = $"{whiteFiguresCount}";
                         mainForm.label_black_count.Text = $"{blackFiguresCount}";
-                        ChkSakk();
+                        //ChkSakk();
                     }
                     break;
             }

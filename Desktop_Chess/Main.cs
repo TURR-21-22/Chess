@@ -54,5 +54,14 @@ namespace Desktop_Chess
             debug.setMonitoredArray(cmb.SelectedItem.ToString());
         }
 
+        private void button_Quit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void button_Restart_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
     }
 }

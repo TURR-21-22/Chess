@@ -102,6 +102,15 @@ namespace ChessBoardModel
 
         private void gyalog(Cell currentCell)
         {
+            int stepsMod = 0;
+            if (opening > 0)
+            {
+                stepsMod = 2;
+            }
+            else
+            {
+                stepsMod = 1;
+            }
             int steps;
             int x = currentCell.X;
             int y = currentCell.Y;
@@ -116,7 +125,6 @@ namespace ChessBoardModel
                 steps = 1;
                 arr = stepsBlack; 
             }
-
             for (int i = 0; i < arr.GetLength(0); i++)
             {
                 if (currentCell.X + arr[i, 0] >= 0 &&
@@ -136,13 +144,19 @@ namespace ChessBoardModel
             
             x = currentCell.X;
             y = currentCell.Y;
-            if ( y + steps >= 0 && y + steps < Size)
+            
+            
+            for (int i = 1; i <= stepsMod; i++)
             {
-                if (!theGrid[x, y + steps].Occupied)
+                if (y + (steps*i) >= 0 && y + (steps*i) < Size)
                 {
-                    theGrid[x, y + steps].LegalNextMove = true;
+                    if (!theGrid[x, y + (steps * i)].Occupied)
+                    {
+                        theGrid[x, y + (steps * i)].LegalNextMove = true;
+                    }
                 }
             }
+
         }
 
 
