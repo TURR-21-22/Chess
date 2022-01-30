@@ -47,57 +47,57 @@ namespace ChessBoardModel
                 {
                     x = nobles.ElementAt(i).Value[j];
                     type = nobles.ElementAt(i).Key;
-                    list.Add(new Figure(x, y, side, type, j));
+                    list.Add(new Figure(x, y, side, type, j, false));
                 }
             }
             for (int i = 0; i < 8; i++)
             {
-                list.Add(new Figure(i, y + direction, side, "gyalog", i));
+                list.Add(new Figure(i, y + direction, side, "gyalog", i, false));
             }
         }
 
 
         private void testFigures()
         {
-            object[,] whiteGroup = new object[8, 5]{
-                { 4, 3, "white", "kiraly",1 },
-                { 7, 7, "white", "kiralyno",1 },
-                { 7, 2, "white", "bastya", 1 },
-                { 4, 2, "white", "huszar", 1 },
-                { 3, 0, "white", "futo", 1 },
-                { 5, 5, "white", "gyalog", 1 },
-                { 3, 5, "white", "gyalog", 2 },
-                { 7, 1, "white", "gyalog", 3 }
+            object[,] whiteGroup = new object[8, 6]{
+                { 4, 3, "white", "kiraly",1,false },
+                { 7, 7, "white", "kiralyno",1,false },
+                { 7, 2, "white", "bastya", 1,false },
+                { 4, 2, "white", "huszar", 1,false },
+                { 3, 0, "white", "futo", 1,false },
+                { 5, 5, "white", "gyalog", 1,false },
+                { 3, 5, "white", "gyalog", 2,false },
+                { 7, 1, "white", "gyalog", 3,false }
             };
-            object[,] blackGroup = new object[8,5] {
-                { 0, 0, "black", "kiraly",1 },
-                { 1, 1, "black", "kiralyno",1 },
-                { 2, 4, "black", "bastya", 1 },
-                { 6, 6, "black", "huszar", 1 },
-                { 4, 5, "black", "futo", 1 },
-                { 5, 4, "black", "gyalog", 1 },
-                { 6, 2, "black", "gyalog", 2 },
-                { 0, 4, "black", "gyalog", 3 }
+            object[,] blackGroup = new object[8,6] {
+                { 0, 0, "black", "kiraly",1,false },
+                { 1, 1, "black", "kiralyno",1,false },
+                { 2, 4, "black", "bastya", 1,false },
+                { 6, 6, "black", "huszar", 1,false },
+                { 4, 5, "black", "futo", 1,false },
+                { 5, 4, "black", "gyalog", 1,false },
+                { 6, 2, "black", "gyalog", 2,false },
+                { 0, 4, "black", "gyalog", 3,false }
             };
-            object[,] whiteKickedGroup = new object[8, 5]{
-                { 4, 3, "white", "bastya",1 },
-                { 7, 7, "white", "huszar",1 },
-                { 7, 2, "white", "futo", 1 },
-                { 4, 2, "white", "gyalog", 4 },
-                { 3, 0, "white", "gyalog", 5 },
-                { 5, 5, "white", "gyalog", 6 },
-                { 3, 5, "white", "gyalog", 7 },
-                { 7, 1, "white", "gyalog", 8 }
+            object[,] whiteKickedGroup = new object[8, 6]{
+                { 4, 3, "white", "bastya",1,false },
+                { 7, 7, "white", "huszar",1,false },
+                { 7, 2, "white", "futo", 1,false },
+                { 4, 2, "white", "gyalog", 4,false },
+                { 3, 0, "white", "gyalog", 5,true },
+                { 5, 5, "white", "gyalog", 6,false },
+                { 3, 5, "white", "gyalog", 7,false },
+                { 7, 1, "white", "gyalog", 8,false }
             };
-            object[,] blackKickedGroup = new object[8, 5] {
-                { 4, 3, "black", "bastya",1 },
-                { 7, 7, "black", "huszar",1 },
-                { 7, 2, "black", "futo", 1 },
-                { 4, 2, "black", "gyalog", 4 },
-                { 3, 0, "black", "gyalog", 5 },
-                { 5, 5, "black", "gyalog", 6 },
-                { 3, 5, "black", "gyalog", 7 },
-                { 7, 1, "black", "gyalog", 8 }
+            object[,] blackKickedGroup = new object[8, 6] {
+                { 4, 3, "black", "bastya",1,false },
+                { 7, 7, "black", "huszar",1,false },
+                { 7, 2, "black", "futo", 1,false },
+                { 4, 2, "black", "gyalog", 4,false },
+                { 3, 0, "black", "gyalog", 5,false },
+                { 5, 5, "black", "gyalog", 6,false },
+                { 3, 5, "black", "gyalog", 7,false },
+                { 7, 1, "black", "gyalog", 8,false }
             };
 
             for (int i = 0; i < whiteGroup.GetLength(0); i++)
@@ -107,7 +107,9 @@ namespace ChessBoardModel
                     (int)whiteGroup[i,1],
                     (string)whiteGroup[i,2],
                     (string)whiteGroup[i,3],
-                    (int)whiteGroup[i,4]));
+                    (int)whiteGroup[i,4],
+                    (bool)whiteGroup[i, 5]
+                    ));
             };
 
             for (int i = 0; i < blackGroup.GetLength(0); i++)
@@ -117,27 +119,33 @@ namespace ChessBoardModel
                     (int)blackGroup[i, 1],
                     (string)blackGroup[i, 2],
                     (string)blackGroup[i, 3],
-                    (int)blackGroup[i, 4]));
+                    (int)blackGroup[i, 4],
+                    (bool)whiteGroup[i, 5]
+                    ));
             }
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < whiteKickedGroup.GetLength(0); i++)
             {
                 model_whiteFiguresOFF.Add(new Figure(
                     (int)whiteKickedGroup[i, 0],
                     (int)whiteKickedGroup[i, 1],
                     (string)whiteKickedGroup[i, 2],
                     (string)whiteKickedGroup[i, 3],
-                    (int)whiteKickedGroup[i, 4]));
+                    (int)whiteKickedGroup[i, 4],
+                    (bool)whiteGroup[i, 5]
+                    ));
             };
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < blackKickedGroup.GetLength(0); i++)
             {
                 model_blackFiguresOFF.Add(new Figure(
                    (int)blackKickedGroup[i, 0],
                    (int)blackKickedGroup[i, 1],
                    (string)blackKickedGroup[i, 2],
                    (string)blackKickedGroup[i, 3],
-                   (int)blackKickedGroup[i, 4]));
+                   (int)blackKickedGroup[i, 4],
+                   (bool)whiteGroup[i, 5]
+                   ));
             }
 
 

@@ -22,7 +22,7 @@ namespace Desktop_Chess
         private static Cell[,] modelGrid = model_Board.theGrid;
         public static Gui_Cell[,] guiGrid = RenderInit.guiGrid;
         public static Label[,] debugGrid = Debug.debugGrid;
-        public static int clickCounter = 0;
+        public static string currentPlayer = "white";
         public Cell clickedCell = null;
 
         public RenderMain(Main ob)
@@ -46,21 +46,32 @@ namespace Desktop_Chess
                 case true:
                     if (!modelFigure.Kick)
                     {
-                        renderFunctions.DrawLegalPath( guiCell, modelFigure.Type);
-                        clickedCell = modelCell;
+                        if (currentPlayer == modelFigure.Side)
+                        {
+                            renderFunctions.DrawLegalPath(guiCell, modelFigure.Type);
+                            clickedCell = modelCell;
+                        }
                     }
                     else
-                    {                           // target
+                    {
                         renderFunctions.KickFigure(guiCell, clickedCell,  renderInit.Skin);
+                        swithcPlayer();
                     }
                     break;
                 case false:
                     if (modelCell.LegalNextMove)
                     {
                         renderFunctions.MoveFigure( guiCell, clickedCell, renderInit.Skin );
+                        swithcPlayer();
                     }
                     break;
             }
+        }
+
+        private void swithcPlayer()
+        {
+            if (currentPlayer == "white") { currentPlayer = "black"; }
+            else { currentPlayer = "white"; }
         }
 
         public void SelectSkin(object sender)

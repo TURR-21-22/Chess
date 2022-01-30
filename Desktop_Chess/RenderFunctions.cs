@@ -36,6 +36,20 @@ namespace Desktop_Chess
             source.BackColor = Color.Yellow;
             displayPath(new Point(source.X, source.Y), type);
             debug.draw2Debug(Debug.currentDebugArray);
+            CheckIfPawnCanSwitch(modelCell);
+        }
+
+        public void GetBackFigure(Cell cell)
+        {
+            switch (cell.Figure.Side)
+            {
+                case "white":
+                    RenderInit.kickedWhitesContainer.BackColor = Color.Red;
+                    break;
+                case "black":
+                    RenderInit.kickedBlacksContainer.BackColor = Color.Red;
+                    break;
+            }
         }
 
         public void KickFigure(Gui_Cell targetGuiCell, Cell sourceModelCell, string skin) 
@@ -102,8 +116,30 @@ namespace Desktop_Chess
             clearMainboardCellsBorder();
             model_Board.ClearBoard();
             debug.draw2Debug(Debug.currentDebugArray);
+            CheckIfPawnCanSwitch(targetCell);
         }
 
+        private void CheckIfPawnCanSwitch(Cell cell)
+        {
+            if (cell.Figure.Type == "gyalog")
+            {
+                switch (cell.Figure.Side)
+                {
+                    case "white":
+                        if (cell.Figure.Y == 0)
+                        {
+                            GetBackFigure(cell);
+                        }
+                        break;
+                    case "black":
+                        if (cell.Figure.Y == 7)
+                        {
+                            GetBackFigure(cell);
+                        }
+                        break;
+                }
+            }
+        }
 
         public void displayPath(Point location, string figureType)
         {

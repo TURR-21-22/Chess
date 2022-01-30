@@ -13,7 +13,9 @@ namespace ChessBoardModel
         public Cell[,] theGrid { get; set; }
         public static Figures model_Figures = new Figures();
         public bool CellProps = true;
-        public int[] listCount;
+        public static WhitePlayer whitePlayer = new WhitePlayer();
+        public static BlackPlayer blackPlayer = new BlackPlayer();
+        //public int[] listCount;
         public Board (int s)
         {
             Size = s;
@@ -42,10 +44,12 @@ namespace ChessBoardModel
                 theGrid[white[i].X, white[i].Y].Occupied = true;
                 theGrid[white[i].X, white[i].Y].Figure = white[i];
                 white[i].Cell = theGrid[white[i].X, white[i].Y];
+                white[i].Cell = theGrid[white[i].X, white[i].Y];
+                theGrid[white[i].X, white[i].Y].Figure.Replaceable = white[i].Replaceable;
 
                 theGrid[black[i].X, black[i].Y].Occupied = true;
                 theGrid[black[i].X, black[i].Y].Figure = black[i];
-                black[i].Cell = theGrid[black[i].X, black[i].Y];
+                theGrid[black[i].X, black[i].Y].Figure.Replaceable = black[i].Replaceable;
             }
     
 
