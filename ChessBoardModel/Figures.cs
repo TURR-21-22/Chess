@@ -8,13 +8,24 @@ namespace ChessBoardModel
 {
     public class Figures
     {
+
         public Figures()
         {
-            createFigures(0, "black", model_blackFiguresON, 1 );
-            createFigures(7, "white", model_whiteFiguresON, -1 );
+            createFigures(0, "black", model_blackFiguresON, 1);
+            createFigures(7, "white", model_whiteFiguresON, -1);
             //model_whiteFiguresOFF.Add(new Figure(0, 0, "black", "futo", 1));
             //testFigures();
         }
+
+        private List<Figure> model_whiteFiguresON = new List<Figure>();
+        private List<Figure> model_blackFiguresON = new List<Figure>();
+        private List<Figure> model_whiteFiguresOFF = new List<Figure>();
+        private List<Figure> model_blackFiguresOFF = new List<Figure>();
+        public List<Figure> Model_whiteFiguresON { get { return model_whiteFiguresON; } set { model_whiteFiguresON = value; } }
+        public List<Figure> Model_blackFiguresON { get { return model_blackFiguresON; } set { model_blackFiguresON = value; } }
+        public List<Figure> Model_whiteFiguresOFF { get { return model_whiteFiguresOFF; } set { model_whiteFiguresOFF = value; } }
+        public List<Figure> Model_blackFiguresOFF { get { return model_blackFiguresOFF; } set { model_blackFiguresOFF = value; } }
+
 
         private Dictionary<string, int[]> nobles = new Dictionary<string, int[]>()
         {
@@ -25,15 +36,7 @@ namespace ChessBoardModel
             { "bastya",new int[]{0, 7 }},
         };
 
-        public static List<Figure> model_whiteFiguresON = new List<Figure>();
-        public static List<Figure> model_blackFiguresON = new List<Figure>();
-        public static List<Figure> model_whiteFiguresOFF = new List<Figure>();
-        public static List<Figure> model_blackFiguresOFF = new List<Figure>();
-        public List<Figure> Model_whiteFiguresON { get { return model_whiteFiguresON; } set { model_whiteFiguresON = value; } }
-        public List<Figure> Model_blackFiguresON { get { return model_blackFiguresON; } set { model_blackFiguresON = value; } }
-        public List<Figure> Model_whiteFiguresOFF { get { return model_whiteFiguresOFF; } set { model_whiteFiguresOFF = value; } }
-        public List<Figure> Model_blackFiguresOFF { get { return model_blackFiguresOFF; } set { model_blackFiguresOFF = value; } }
-
+        
         private void createFigures(int y, string side, List<Figure> list, int direction)
         {
             int x;

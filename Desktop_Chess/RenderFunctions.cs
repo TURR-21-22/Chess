@@ -15,11 +15,8 @@ namespace Desktop_Chess
         public static RenderMain renderMain;
         public static Debug debug;
         private static Gui_Cell[,] guiGrid = RenderInit.guiGrid;
-        //private static Label[,] debugGrid =  Debug.debugGrid;
         private static Board model_Board = RenderInit.model_Board;
         private static Cell[,] modelGrid = model_Board.theGrid;
-        
-        
         public RenderFunctions(Main ob)
         {
             this.mainForm = ob;
@@ -42,7 +39,10 @@ namespace Desktop_Chess
             Cell targetModelCell = modelGrid[targetGuiCell.X, targetGuiCell.Y];
             Figure targetModelFigure = targetModelCell.Figure;
 
+            // clear from grid
+            // copy cell figures props to kicked cell props
             
+
             // kickedPanelCoords
             // kickedWhitesPanel.Size
             
@@ -63,73 +63,6 @@ namespace Desktop_Chess
                     // kickedBlacksPanel
                     break;
             }
-
-
-            /*
-            int kickedCellSize = RenderInit.kickedCellSize;
-            int cellSize = RenderInit.cellSize;
-            
-            Figure modelFigure = modelGrid[guiFigure.X, guiFigure.Y].Figure;
-            
-            guiFigure.Kick = false;
-            guiFigure.LegalNextMove = false;
-            modelFigure.Kick = false;
-            modelFigure.LegalNextMove = false;
-            guiFigure.Size = new Size(kickedCellSize, kickedCellSize);
-            switch (modelFigure.Side)
-            {
-                case "white":
-
-                    //model_whiteFiguresOFF.Add(modelFigure);
-                    
-                    //mainForm.panel_kicked_white.Controls.Remove(guiFigure);
-                    mainForm.panel_kicked_white.Controls.Add(guiFigure);
-                    
-                    //guiFigure.Location = kickedPanelCoords[model_whiteFiguresOFF.Count-1];
-                    guiFigure.Location = kickedPanelCoords[whiteKickedFiguresCounter];
-                    //mainForm.listBox1.Items.Add(model_whiteFiguresOFF.Count);
-                    whiteKickedFiguresCounter++;
-                    break;
-                case "black":
-                    //model_blackFiguresOFF.Add(modelFigure);
-                    
-                    //mainForm.panel_kicked_black.Controls.Remove(guiFigure);
-                    mainForm.panel_kicked_black.Controls.Add(guiFigure);
-                    
-                    //guiFigure.Location = kickedPanelCoords[model_blackFiguresOFF.Count-1];
-                    guiFigure.Location = kickedPanelCoords[blackKickedFiguresCounter];
-                    //mainForm.listBox1.Items.Add(model_blackFiguresOFF.Count);
-                    blackKickedFiguresCounter++;
-                    break;
-            }
-            guiFigure.Click -= mainForm.Board_Click;
-
-
-            /*
-            for (int i = 0; i < kickedPanelCoords.Length; i++)
-            {
-                mainForm.listBox1.Items.Add(kickedPanelCoords[i]);
-            }
-            */
-
-            //guiFigure.Click += 
-
-            //Debug.debugLabel.Text = $"{whiteFiguresCounter}";
-            //Debug.debugLabel.Text = $"{kickedCellSize}";
-            // figureCounter--
-            // if figurecounter == 0 game over
-            // figure property: Cell = null, LegalNextMove = false, Kick = false
-            //int size = RenderInit.kickedCellSize;
-            //guiGrid[guiFigure.X, guiFigure.Y].Visible = false;
-            //guiGrid[guiFigure.X, guiFigure.Y].Figure.Visible = false;
-            //guiFigure.Visible = false;
-            //mainForm.panel_ChessBoard.Controls.Remove(guiGrid[guiFigure.X, guiFigure.Y].Figure);
-            //guiGrid[guiFigure.X, guiFigure.Y].Figure = null;
-
-
-            //guiFigure.Location = new Point(RenderInit.cellSize * 0, RenderInit.cellSize * 7);
-            //RenderMain.guiGrid[guiFigure.X, guiFigure.Y].Figure.Location = new Point(RenderInit.cellSize * 0, RenderInit.cellSize * 7);
-            //guiFigure.Kick = false;
         }
 
         public void MoveFigure(Gui_Cell targeGuitCell, Cell sourceCell, string skin)

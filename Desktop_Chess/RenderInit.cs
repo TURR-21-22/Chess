@@ -35,7 +35,7 @@ namespace Desktop_Chess
             { "Left",60, 94 },
             { "Right",40, 94}
         };
-        
+
         public RenderInit(Main ob)
         {
             this.mainForm = ob;
@@ -88,11 +88,11 @@ namespace Desktop_Chess
             divRight.BackColor = Color.FromArgb(96, 0, 0, 0);
 
             headerControlls();
-            kickedPanels();
             populaBoardGuiGrid(skin);
-
-            int anyad = model_Figures.Model_whiteFiguresOFF.Count;
-            mainForm.listBox1.Items.Add(anyad);
+            kickedPanels();
+            mainForm.listBox1.Items.Add(guiKickedWhites.Count);
+            mainForm.listBox1.Items.Add(model_Figures.Model_whiteFiguresOFF.Count);
+            mainForm.listBox1.Items.Add(model_Figures.Model_whiteFiguresON.Count);
         }
 
         private void headerControlls()
