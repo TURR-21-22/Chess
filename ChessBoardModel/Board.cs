@@ -16,7 +16,7 @@ namespace ChessBoardModel
         public static WhitePlayer whitePlayer = new WhitePlayer();
         public static BlackPlayer blackPlayer = new BlackPlayer();
         public static int opening = 2;
-
+        public static bool sakkMatt = false;
         //public int[] listCount;
         public Board (int s)
         {
@@ -69,30 +69,30 @@ namespace ChessBoardModel
             }
         }
 
-        public void MarkNextLegalMove(Cell currentCell, string chessPiece)
+        public void MarkNextLegalMove(Cell currentCell, string chessPiece, bool sakkChk)
         {
   
             ClearBoard();
             switch (chessPiece)
             {
                 case "huszar":
-                    OneStepPath(currentCell,new int[8,2] { { 2, 1 }, { -2, 1 }, { +2, -1 }, { -2, -1 }, { 1, 2 }, { -1, 2 }, { 1, -2 }, { -1, -2 } });
+                    OneStepPath(currentCell,new int[8,2] { { 2, 1 }, { -2, 1 }, { +2, -1 }, { -2, -1 }, { 1, 2 }, { -1, 2 }, { 1, -2 }, { -1, -2 } }, sakkChk);
                     break;
                 case "kiraly":
-                    OneStepPath(currentCell, new int[8,2] { { -1, -1 }, { 0, -1 }, { 1, -1 }, { 1, 0 }, { 1, 1 }, { 0, 1 }, { -1, 1 }, { -1,  0} });
+                    OneStepPath(currentCell, new int[8,2] { { -1, -1 }, { 0, -1 }, { 1, -1 }, { 1, 0 }, { 1, 1 }, { 0, 1 }, { -1, 1 }, { -1,  0} }, sakkChk);
                     break;
                 case "bastya":
-                    LinearPath(currentCell);
+                    LinearPath(currentCell, sakkChk);
                     break;
                 case "futo":
-                    DiagonalPath(currentCell);
+                    DiagonalPath(currentCell, sakkChk);
                     break;
                 case "kiralyno":
-                    LinearPath(currentCell);
-                    DiagonalPath(currentCell);
+                    LinearPath(currentCell, sakkChk);
+                    DiagonalPath(currentCell, sakkChk);
                     break;
                 case "gyalog":
-                    gyalog(currentCell);
+                    gyalog(currentCell, sakkChk);
                     break;
                 default:
                     break;
@@ -100,7 +100,7 @@ namespace ChessBoardModel
         }
 
 
-        private void gyalog(Cell currentCell)
+        private void gyalog(Cell currentCell, bool sakkChk)
         {
             int stepsMod = 0;
             if (opening > 0)
@@ -136,8 +136,15 @@ namespace ChessBoardModel
                     y = currentCell.Y + arr[i, 1];
                     if (theGrid[x, y].Occupied && theGrid[x, y].Figure.Side != side)
                     {
-                        theGrid[x, y].LegalNextMove = true;
-                        theGrid[x, y].Figure.Kick = true;
+                        if (sakkChk && theGrid[x, y].Figure.Type == "kiraly")
+                        {
+                            sakkMatt = true;
+                        }
+                        else
+                        {
+                            theGrid[x, y].LegalNextMove = true;
+                            theGrid[x, y].Figure.Kick = true;
+                        }
                     }
                 }
             }
@@ -160,7 +167,7 @@ namespace ChessBoardModel
         }
 
 
-        private void OneStepPath(Cell currentCell, int[,] arr)
+        private void OneStepPath(Cell currentCell, int[,] arr, bool sakkChk)
         {
             string side = currentCell.Figure.Side;
             int x = currentCell.X;
@@ -180,14 +187,21 @@ namespace ChessBoardModel
                     }
                     else if (theGrid[x, y].Figure.Side != side)
                     {
-                        theGrid[x, y].LegalNextMove = true;
-                        theGrid[x, y].Figure.Kick = true;
+                        if (sakkChk && theGrid[x, y].Figure.Type == "kiraly")
+                        {
+                            sakkMatt = true;
+                        }
+                        else
+                        {
+                            theGrid[x, y].LegalNextMove = true;
+                            theGrid[x, y].Figure.Kick = true;
+                        }
                     }
                 }
             }
         }
 
-        private void LinearPath(Cell currentCell)
+        private void LinearPath(Cell currentCell, bool sakkChk)
         {
             string side = currentCell.Figure.Side;
             int[,] linearSteps = new int[4, 2] { { 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 } };
@@ -220,8 +234,15 @@ namespace ChessBoardModel
                     {
                         if (theGrid[x, y].Figure.Side != side)
                         {
-                            theGrid[x, y].LegalNextMove = true;
-                            theGrid[x, y].Figure.Kick = true;
+                            if (sakkChk && theGrid[x, y].Figure.Type == "kiraly")
+                            {
+                                sakkMatt = true;
+                            }
+                            else
+                            {
+                                theGrid[x, y].LegalNextMove = true;
+                                theGrid[x, y].Figure.Kick = true;
+                            }
                         }
                         break;
                     }
@@ -229,7 +250,7 @@ namespace ChessBoardModel
                 }
             }
         }
-        private void DiagonalPath(Cell currentCell)
+        private void DiagonalPath(Cell currentCell, bool sakkChk)
         {
             string side = currentCell.Figure.Side;
             int[,] diagonalSteps = new int[4, 4] { { -1, -1, 0, 0 }, { 1, -1, Size - 1, 0 }, { 1, 1, Size - 1, Size - 1 }, { -1, 1, 0, Size - 1 } };
@@ -247,8 +268,15 @@ namespace ChessBoardModel
                     {
                         if (theGrid[x, y].Figure.Side != side)
                         {
-                            theGrid[x, y].LegalNextMove = true;
-                            theGrid[x, y].Figure.Kick = true;
+                            if (sakkChk && theGrid[x, y].Figure.Type == "kiraly")
+                            {
+                                sakkMatt = true;
+                            }
+                            else
+                            {
+                                theGrid[x, y].LegalNextMove = true;
+                                theGrid[x, y].Figure.Kick = true;
+                            }
                             break;
                         }
                         else
@@ -260,7 +288,5 @@ namespace ChessBoardModel
                 }
             }
         }
-
-
     }
 }

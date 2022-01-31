@@ -109,7 +109,6 @@ namespace Desktop_Chess
             populaBoardGuiGrid(skin);
             kickedPanels();
             infoLabel2.Text = "Fehér játékos.";
-
         }
 
         private void headerControlls()

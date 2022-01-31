@@ -32,6 +32,46 @@ namespace Desktop_Chess
         public static int blackFiguresCount = model_Figures.Model_blackFiguresON.Count;
 
 
+
+        public void Board_Click(object sender)
+        {
+            Gui_Cell guiCell = (Gui_Cell)sender;
+            Cell modelCell = modelGrid[guiCell.X, guiCell.Y];
+            Figure modelFigure = modelGrid[guiCell.X, guiCell.Y].Figure;
+            if (!exchangeDone)
+            {
+                return;
+            }
+            switch (guiCell.Type)
+            {
+                case true:
+                    if (!modelFigure.Kick)
+                    {
+                        if (currentPlayer == modelFigure.Side)
+                        {
+                            renderFunctions.DrawLegalPath(guiCell, modelFigure.Type, false);
+                            clickedCell = modelCell;
+                        }
+                    }
+                    else
+                    {
+                        renderFunctions.KickFigure(guiCell, clickedCell, renderInit.Skin);
+                        renderFunctions.CheckSakkKick(guiCell, true);
+                        switchAndClear();
+                    }
+                    break;
+                case false:
+                    if (modelCell.LegalNextMove)
+                    {
+                        renderFunctions.MoveFigure(guiCell, clickedCell, renderInit.Skin);
+                        //renderFunctions.CheckSakkMove(guiCell, true);
+                        switchAndClear();
+                    }
+                    break;
+            }
+        }
+
+
         public void ChkSakk()
         {
             for (int x = 0; x < model_Board.Size; x++)
@@ -141,50 +181,14 @@ namespace Desktop_Chess
             renderFunctions = new RenderFunctions(mainForm);
         }
 
-        public void Board_Click(object sender)
+        
+
+        private void switchAndClear()
         {
-            Gui_Cell guiCell = (Gui_Cell)sender;
-            Cell modelCell = modelGrid[guiCell.X, guiCell.Y];
-            Figure modelFigure = modelGrid[guiCell.X, guiCell.Y].Figure;
-            if (!exchangeDone)
-            {
-                return;
-            }
-            switch (guiCell.Type)
-            {
-                case true:
-                    if (!modelFigure.Kick)
-                    {
-                        if (currentPlayer == modelFigure.Side)
-                        {
-                            renderFunctions.DrawLegalPath(guiCell, modelFigure.Type);
-                            clickedCell = modelCell;
-                        }
-                    }
-                    else
-                    {
-                        renderFunctions.KickFigure(guiCell, clickedCell,  renderInit.Skin);
-                        
-                        swithcPlayer();
-                        mainForm.label_white_count.Text = $"{whiteFiguresCount}";
-                        mainForm.label_black_count.Text = $"{blackFiguresCount}";
-                        //ChkSakk();
-                    }
-                    break;
-                case false:
-                    if (modelCell.LegalNextMove)
-                    {
-                        renderFunctions.MoveFigure( guiCell, clickedCell, renderInit.Skin );
-
-                        swithcPlayer();
-                        mainForm.label_white_count.Text = $"{whiteFiguresCount}";
-                        mainForm.label_black_count.Text = $"{blackFiguresCount}";
-                        //ChkSakk();
-                    }
-                    break;
-            }
+            swithcPlayer();
+            mainForm.label_white_count.Text = $"{RenderMain.whiteFiguresCount}";
+            mainForm.label_black_count.Text = $"{RenderMain.blackFiguresCount}";
         }
-
 
         private void swithcPlayer()
         {
@@ -198,7 +202,7 @@ namespace Desktop_Chess
                 currentPlayer = "white";
                 RenderInit.infoLabel2.Text = "Fehér játékos.";
             }
-            
+
         }
 
         public void SelectSkin(object sender)

@@ -28,11 +28,52 @@ namespace Desktop_Chess
             debug = new Debug(mainForm);
         }
 
-        public void DrawLegalPath(Gui_Cell source, string type)
+        public void GameOver()
+        {
+            string txt = "";
+            switch (RenderMain.currentPlayer)
+            {
+                case "white":
+                    txt = "fehér";
+                    break;
+                case "black":
+                    txt = "fekete";
+                    break;
+            }
+            txt = $"Sakk Matt !" +
+               $"\nA {txt} játékos nyert !";
+            mainForm.label_Results.Text = txt;
+        }
+
+        public void CheckSakkKick(Gui_Cell source, bool chkSakk) // , string type
         {
             clearMainboardCellsBorder();
             Cell modelCell = modelGrid[source.X, source.Y];
-            model_Board.MarkNextLegalMove(modelCell, type);
+            model_Board.MarkNextLegalMove(modelCell, source.Pupet.Type, chkSakk);
+            if (Board.sakkMatt) { GameOver(); }
+            
+        }
+
+        public void CheckSakkMove(Gui_Cell source, bool chkSakk)
+        {
+            clearMainboardCellsBorder();
+            Cell modelCell = modelGrid[source.X, source.Y];
+            //model_Board.MarkNextLegalMove(modelCell, source.Pupet.Type, chkSakk);
+            if (Board.sakkMatt) { GameOver(); }
+           
+        }
+
+        
+
+
+        
+
+
+        public void DrawLegalPath(Gui_Cell source, string type, bool chkSakk)
+        {
+            clearMainboardCellsBorder();
+            Cell modelCell = modelGrid[source.X, source.Y];
+            model_Board.MarkNextLegalMove(modelCell, type, chkSakk);
             source.BackColor = Color.Yellow;
             displayPath(new Point(source.X, source.Y), type);
             debug.draw2Debug(Debug.currentDebugArray);
@@ -71,7 +112,7 @@ namespace Desktop_Chess
                     setKickedSkin(container, targetModelCell, skin);
                     container.Pupet = targetModelCell.Figure;
                     RenderMain.whiteFiguresCount--;
-                    ChkFiguresCount(RenderMain.whiteFiguresCount, "white");
+                    ChkFiguresCount(RenderMain.whiteFiguresCount);
                     break;
                 case "black":
                     model_Figures.Model_blackFiguresOFF.Add(targetModelCell.Figure);
@@ -79,7 +120,7 @@ namespace Desktop_Chess
                     setKickedSkin(container, targetModelCell, skin);
                     container.Pupet = targetModelCell.Figure;
                     RenderMain.blackFiguresCount--;
-                    ChkFiguresCount(RenderMain.blackFiguresCount, "black");
+                    ChkFiguresCount(RenderMain.blackFiguresCount);
                     break;
             }
             MoveFigure(targetGuiCell, sourceModelCell, skin);
@@ -87,19 +128,11 @@ namespace Desktop_Chess
             CheckIfPawnCanSwitch(targetModelCell);
         }
 
-        private void ChkFiguresCount(int count, string side)
+        private void ChkFiguresCount(int count)
         {
-            if (count == 1)
+            if (count == 0)
             {
-                switch (side)
-                {
-                    case "white":
-                        mainForm.label_Results.Text = "Fekete játékos nyert !";
-                        break;
-                    case "black":
-                        mainForm.label_Results.Text = "Fehér játékos nyert !";
-                        break;
-                }
+                GameOver();
             }
         }
 
@@ -131,8 +164,10 @@ namespace Desktop_Chess
             Cell targetCell = modelGrid[targeGuitCell.X, targeGuitCell.Y];
             string backColor = "";
             if (targetCell.CellBkgColor == "light") { backColor = "light"; } else { backColor = "dark"; };
+            
             targeGuitCell.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject(
                 $"{skin}_figure_{sourceCell.Figure.Side}_{backColor}_{sourceCell.Figure.Type}");
+ 
             if (sourceCell.CellBkgColor == "light") { backColor = "white"; } else { backColor = "black"; };
             sourceGuiCell.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"{skin}_cell_{backColor}");
             targetCell.Occupied = true;
