@@ -17,7 +17,8 @@ namespace ChessBoardModel
         public bool LegalNextMove { get; set; }
         public Cell Cell { get; set; }
         public bool Kick { get; set; }
-        
+        public bool Sakk { get; set; }
+
 
         public Figure(int x, int y, string side, string type, int id, bool replaceable)
         {

@@ -45,11 +45,12 @@ namespace Desktop_Chess
             mainForm.label_Results.Text = txt;
         }
 
-        public void CheckSakkKick(Gui_Cell source, bool chkSakk) // , string type
+        public void CheckSakkKick(Gui_Cell source, bool chkSakk)
         {
+            
             clearMainboardCellsBorder();
             Cell modelCell = modelGrid[source.X, source.Y];
-            model_Board.MarkNextLegalMove(modelCell, source.Pupet.Type, chkSakk);
+            model_Board.MarkNextLegalMove(modelCell, modelCell.Figure.Type, chkSakk);
             if (Board.sakkMatt) { GameOver(); }
             
         }
@@ -58,16 +59,10 @@ namespace Desktop_Chess
         {
             clearMainboardCellsBorder();
             Cell modelCell = modelGrid[source.X, source.Y];
-            //model_Board.MarkNextLegalMove(modelCell, source.Pupet.Type, chkSakk);
+            model_Board.MarkNextLegalMove(modelCell, source.Pupet.Type, chkSakk);
             if (Board.sakkMatt) { GameOver(); }
            
         }
-
-        
-
-
-        
-
 
         public void DrawLegalPath(Gui_Cell source, string type, bool chkSakk)
         {

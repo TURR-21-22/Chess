@@ -42,7 +42,7 @@ namespace Desktop_Chess
             {
                 return;
             }
-            switch (guiCell.Type)
+            switch (guiCell.Type)       // true = figure; false = cell
             {
                 case true:
                     if (!modelFigure.Kick)
